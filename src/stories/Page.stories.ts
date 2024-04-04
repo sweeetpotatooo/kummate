@@ -30,3 +30,14 @@ export const LoggedIn: Story = {
     await expect(logoutButton).toBeInTheDocument();
   },
 };
+
+export const myStory = {
+  parameters: {
+    design: {
+      type: "figma",
+      url: "https://www.figma.com/file/mU8kd8r8RG63Emlntu0Fyg/%EA%B9%80%EC%84%B8%ED%98%84's-team-library?type=design&node-id=2329%3A2&mode=design&t=knHkTkE7MjnXqtOm-1",
+    },
+  },
+};
+
+
