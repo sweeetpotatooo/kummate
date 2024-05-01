@@ -1,13 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { Button } from './stories/Button'; // Button 컴포넌트를 가져오기
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-export default function App() {
-  return (
-    <div>
-      <Button label='button'/> 
-    </div>
-  );
-}
+import HomeView from "./views/HomeView";
 
+const App = () => {
+    return (
+    <BrowserRouter>
+        <Routes>
+            <Route path="/" element={<HomeView />} />
+        </Routes>
+    </BrowserRouter>
+    );
+};
+
+export default App;
