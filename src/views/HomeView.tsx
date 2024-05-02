@@ -1,9 +1,12 @@
 import React from "react";
-import Group from "../components/Group";
+import Body from "../components/Body";
+import Header from "../components/Header"
+
 const HomeView = () => {
     return (
     <>
-        <Group/>
+        <Header/>
+        <Body/>
     </>
     );
 };

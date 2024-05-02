@@ -1,0 +1,57 @@
+.child {
+  position: absolute;
+  top: 0px;
+  left: calc(50% - 508.5px);
+  border-bottom: 1px solid #8a8a8a;
+  box-sizing: border-box;
+  width: 1017px;
+  height: 77px;
+}
+.div3 {
+  position: absolute;
+  top: 0px;
+  left: 347px;
+}
+.div4 {
+  position: absolute;
+  top: 0px;
+  left: 190px;
+}
+.div5 {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.div2 {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 406px;
+  height: 23px;
+}
+.div1 {
+  position: absolute;
+  top: 32px;
+  left: 582px;
+  width: 406px;
+  height: 23px;
+}
+.kummate {
+  position: absolute;
+  top: 26px;
+  left: 16px;
+  font-size: 30px;
+  display: inline-block;
+  width: 186px;
+  height: 29px;
+  }
+.div {
+  width: 100%;
+  position: relative;
+  height: 77px;
+  text-align: left;
+  font-size: 16px;
+  color: #000;
+  font-family: 'Noto Sans KR';
+}
+
