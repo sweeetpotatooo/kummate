@@ -1,212 +1,107 @@
-.groupChild {
+.child {
   position: absolute;
+  top: 0px;
+  left: 0px;
   border-radius: 20px;
   background-color: #fff;
   width: 209px;
   height: 209px;
 }
-.child {
-  position: absolute;
-  left: 0px;
-  border-radius: 20px;
-  width: 90px;
-  height: 25px;
-  transform:  rotate(-0.9deg);
-}
-.b {
-  position: absolute;
-  top: 2.6px;
-  left: 4.56px;
-}
-.div2 {
-  position: absolute;
-  top: 2px;
-  left: 0px;
-  width: 90px;
-  height: 25px;
-}
 .item {
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 106.6px;
+  left: 159.56px;
   border-radius: 20px;
   background-color: #81c147;
   width: 46px;
   height: 25px;
 }
-.b1 {
+.b {
   position: absolute;
-  top: 2px;
-  left: 10px;
-}
-.div3 {
-  position: absolute;
-  top: 0px;
-  left: 158px;
-  width: 46px;
-  height: 25px;
-  text-align: left;
-}
-.div1 {
-  position: absolute;
-  width: 204px;
-  height: 27px;
-  text-align: center;
+  top: 109.6px;
+  left: 171.56px;
 }
 .title {
   position: absolute;
-  top: 41.32px;
-  left: 79.21px;
+  top: 52px;
+  left: 78px;
   font-size: 20px;
   font-weight: 500;
   color: #000;
-}
-.div4 {
-  position: absolute;
-  color: #8a8a8a;
-}
-.groupItem {
-  position: absolute;
-  top: 129.32px;
-  left: 1.21px;
-  border-radius: 0px 0px 20px 20px;
-  background-color: #e5e5e5;
-  width: 209px;
-  height: 71px;
-}
-.parent {
-  position: absolute;
-  width: 210.2px;
-  height: 200.3px;
 }
 .inner {
   position: absolute;
-  top: 0px;
-  left: 0px;
+  top: 16px;
+  left: 2px;
   border-radius: 20px;
-  width: 67.5px;
-  height: 25px;
-  transform:  rotate(-0.9deg);
-}
-.b2 {
-  position: absolute;
-  top: 2px;
-  left: 6.5px;
-  display: inline-block;
-  width: 80px;
-}
-.div5 {
-  position: absolute;
-  top: 156.4px;
-  left: 21.94px;
-  width: 86.5px;
-  height: 25px;
-}
-.groupInner {
-  position: absolute;
-  border-radius: 20px;
-  width: 67.5px;
-  height: 25px;
-  transform:  rotate(-0.9deg);
-}
-.rectangleParent {
-  width: 212.4px;
-  height: 214.4px;
-}
-.b3 {
-  position: absolute;
-  top: 2.6px;
-  left: 12.56px;
-}
-.div7 {
-  position: absolute;
-  top: 0px;
-  left: 0px;
   width: 90px;
   height: 25px;
 }
-.b4 {
+.b1 {
   position: absolute;
-  top: 3px;
-  left: 12px;
-}
-.div8 {
-  position: absolute;
-  top: 90.6px;
-  left: 157.56px;
-  width: 46px;
-  height: 25px;
-  text-align: left;
-}
-.div6 {
-  position: absolute;
-  top: 3.31px;
-  left: 3.18px;
-  width: 203.6px;
-  height: 115.6px;
+  top: 18.6px;
+  left: 14.56px;
   text-align: center;
 }
-.title1 {
+.div1 {
   position: absolute;
-  top: 39.31px;
-  left: 79.18px;
-  font-size: 20px;
-  font-weight: 500;
-  color: #000;
-}
-.div9 {
-  position: absolute;
-  top: 95.31px;
-  left: 70.18px;
+  top: 108px;
+  left: 69px;
   color: #8a8a8a;
 }
-.groupChild1 {
+.rectangleDiv {
   position: absolute;
-  top: 127.31px;
-  left: 1.18px;
+  top: 140px;
+  left: 0px;
   border-radius: 0px 0px 20px 20px;
   background-color: #e5e5e5;
   width: 209px;
   height: 71px;
 }
-.group {
+.rectangleIcon {
   position: absolute;
-  top: 16.09px;
-  left: 2.26px;
-  width: 210.1px;
-  height: 198.3px;
-}
-.groupChild2 {
-  position: absolute;
-  top: 158px;
-  left: 95px;
+  top: 154.6px;
+  left: 97.57px;
   border-radius: 20px;
   width: 67.5px;
   height: 25px;
-  transform:  rotate(-0.9deg);
 }
-.b6 {
+.b2 {
   position: absolute;
-  top: 159px;
-  left: 107px;
-  display: inline-block;
-  width: 43.5px;
-}
-.b7 {
-  position: absolute;
-  top: 4px;
-  left: 188px;
+  top: 17.6px;
+  left: 184.57px;
   display: inline-block;
   color: #000;
   width: 11px;
   height: 14px;
 }
+.child1 {
+  position: absolute;
+  top: 153px;
+  left: 18.5px;
+  border-radius: 20px;
+  width: 67.5px;
+  height: 25px;
+}
+.b3 {
+  position: absolute;
+  top: 156.6px;
+  left: 104.07px;
+  display: inline-block;
+  width: 80px;
+}
+.b4 {
+  position: absolute;
+  top: 155px;
+  left: 25px;
+  display: inline-block;
+  width: 80px;
+}
 .div {
   width: 100%;
   position: relative;
-  height: 214.4px;
-  transform:  rotate(0.9deg);
-  transform-origin: 0 0;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  height: 211px;
   text-align: left;
   font-size: 14px;
   color: #fff;

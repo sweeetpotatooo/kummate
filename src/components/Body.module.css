@@ -1,15 +1,23 @@
-.bodyContainer {
+.bodyContainer1 {
   position: absolute;
   top: auto;
   bottom:auto;
   left: calc(50% - 508.5px);
+  width: 1017px;
+}
+.bodyContainer2 {
+  position: absolute;
+  top: 500px;
+  bottom:auto;
+  left: calc(50% - 508.5px);
+  width: 1017px;
 }
 .groupContainer {
   display: flex;
   align-items: center;
 }
 .title{
-  font-size: 40pt;
+  font-size: 30pt;
   color: #38773e
 }
 
