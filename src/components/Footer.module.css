@@ -3,7 +3,7 @@
   top: 0px;
   left: 0px;
   background-color: #38773e;
-  width: 1440px;
+  width: 100%;
   height: 108px;
 }
 .kummate {
@@ -25,13 +25,21 @@
   height: 61px;
 }
 .footer {
-  width: 100%;
   position: absolute;
   bottom: 0;
+  width: 100%; 
   height: 108px;
   text-align: left;
   font-size: 35px;
-  color: #fff;
   font-family: Inter;
+  color: #fff;
 }
 
+.socialButtons {
+  position: relative; 
+  display: flex; 
+  align-items: center; 
+  width: 100%; 
+  height: 100%; 
+  justify-content: flex-end;
+}
