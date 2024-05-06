@@ -1,24 +1,56 @@
 .bodyContainer1 {
   position: absolute;
   top: auto;
-  bottom:auto;
-  left: calc(50% - 508.5px);
-  width: 1017px;
-  
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%; /* Adjust as needed */
+  max-width: 1017px; /* Limit maximum width */
 }
+
 .bodyContainer2 {
   position: absolute;
-  top: 500px;
-  bottom:auto;
-  left: calc(50% - 508.5px);
-  width: 1017px;
+  top: 500px; 
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%; 
+  max-width: 1017px; 
+  border:10px solid;
 }
+
+
 .groupContainer {
   display: flex;
   align-items: center;
-}
-.title{
-  font-size: 30pt;
-  color: #38773e
+  border:10px solid;
+  position: absolute;
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%; 
+  max-width: 1017px; 
 }
 
+.title {
+  font-size: 30pt;
+  color: #38773e;
+}
+
+.polygonIcon1,
+.polygonIcon2 {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.polygonIcon1 {
+  left: 0;
+}
+
+.polygonIcon2 {
+  right: 0;
+}
