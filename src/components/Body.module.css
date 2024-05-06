@@ -4,8 +4,8 @@
   bottom: auto;
   left: 50%;
   transform: translateX(-50%);
-  width: 90%; /* Adjust as needed */
-  max-width: 1017px; /* Limit maximum width */
+  width: 90%; 
+  max-width: 1017px; 
 }
 
 .bodyContainer2 {
@@ -16,25 +16,13 @@
   transform: translateX(-50%);
   width: 90%; 
   max-width: 1017px; 
-  border:10px solid;
 }
 
-
-.groupContainer {
-  display: flex;
-  align-items: center;
-  border:10px solid;
-  position: absolute;
-  bottom: auto;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%; 
-  max-width: 1017px; 
-}
 
 .title {
   font-size: 30pt;
   color: #38773e;
+  margin-left: 5%; /* 왼쪽 여백 조정 */
 }
 
 .polygonIcon1,
@@ -45,6 +33,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+
 }
 
 .polygonIcon1 {
@@ -53,4 +42,25 @@
 
 .polygonIcon2 {
   right: 0;
+}
+
+.groupContainer {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%; 
+  max-width: 1017px; 
+}
+
+.groupAndArrowContainer {
+  position: absolute;
+  transform: translateY(-50%);
+  top:250px;
+  width: 90%; 
+  max-width: 1017px; 
+  display: flex;
+  align-items: center;
 }
