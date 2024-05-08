@@ -2,7 +2,7 @@
   position: absolute;
   top: calc(50% - 295.5px);
   left: calc(50% - 306px);
-  border-radius: 0px 20px 20px 0px;
+  border-radius: 20px 20px 20px 20px;
   background-color: #fff;
   width: 612px;
   height: 591px;
@@ -14,6 +14,7 @@
   font-size: 24px;
   font-weight: 500;
   color: #81c147;
+
 }
 .div {
   position: absolute;
@@ -28,13 +29,13 @@
   left: 0px;
   border-radius: 10px;
   background-color: #38773e;
-  width: 352px;
+  width: 370px;
   height: 51px;
 }
 .b {
   position: absolute;
   top: 16px;
-  left: 157px;
+  left: 50%;
 }
 .div1 {
   position: absolute;
@@ -43,6 +44,23 @@
   width: 352px;
   height: 51px;
 }
+.div2 {
+  position: absolute;
+  top: 74px;
+  left: calc(50% - 176px);
+  width: 352px;
+  height: 56px;
+  font-size: 16px;
+}
+.div3 {
+  position: absolute;
+  top: 112px;
+  left: calc(50% - 176px);
+  width: 352px;
+  height: 56px;
+  font-size: 16px;
+}
+
 .wrapper {
   position: absolute;
   top: 185px;
@@ -60,19 +78,29 @@
   width: 352px;
   height: 56px;
 }
+
+.input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.label {
+  top: 0px;
+  left: calc(50% - 176px);
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
 .email {
   position: absolute;
   top: 16px;
   left: 27px;
 }
-.div2 {
-  position: absolute;
-  top: 74px;
-  left: calc(50% - 176px);
-  width: 352px;
-  height: 56px;
-  font-size: 16px;
-}
+
 .password {
   position: absolute;
   top: 17px;
@@ -136,4 +164,3 @@
   color: #b9b9b9;
   font-family: 'Noto Sans KR';
 }
-

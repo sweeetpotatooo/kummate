@@ -19,12 +19,14 @@ const Login:FunctionComponent = () => {
               							</div>
             						</div>
             						<div className={styles.div2}>
-              							<div className={styles.item} />
-              							<div className={styles.email}>Email</div>
+              							<label htmlFor="email" className={styles.label}>Email</label>
+  													<input type="email" id="email" className={styles.input} />
+														<div className={styles.item} />
             						</div>
             						<div className={styles.div3}>
-              							<div className={styles.item} />
-              							<div className={styles.password}>Password</div>
+              							<label htmlFor="password" className={styles.label}>Password</label>
+  													<input type="password" id="password" className={styles.input} />
+														<div className={styles.item} />
             						</div>
             						<img className={styles.googlelogin} alt="" src={Google} />
             						<img className={styles.kakaologin} alt="" src={Kakao} />
