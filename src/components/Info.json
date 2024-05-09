@@ -1,0 +1,10 @@
+{
+  Title: "아메리카노",
+  Dormtype: '쓴 맛',
+  Now_Num: 0,
+  Max_Num: 2,
+  Gender:'남',
+  Date: '2024-05-09',
+  Tag1: "신입생",
+  Tag2: "조용"
+} 

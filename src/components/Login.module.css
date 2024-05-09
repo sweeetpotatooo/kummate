@@ -51,14 +51,7 @@
   width: 352px;
   height: 56px;
   font-size: 16px;
-}
-.div3 {
-  position: absolute;
-  top: 112px;
-  left: calc(50% - 176px);
-  width: 352px;
-  height: 56px;
-  font-size: 16px;
+  border:10px solid;
 }
 
 .wrapper {
@@ -105,14 +98,6 @@
   position: absolute;
   top: 17px;
   left: 27px;
-}
-.div3 {
-  position: absolute;
-  top: 112px;
-  left: calc(50% - 176px);
-  width: 352px;
-  height: 56px;
-  font-size: 16px;
 }
 .googlelogin {
   position: absolute;

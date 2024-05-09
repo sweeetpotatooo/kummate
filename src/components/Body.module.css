@@ -59,8 +59,10 @@
   position: absolute;
   transform: translateY(-50%);
   top:250px;
+  height: 209px;
   width: 90%; 
   max-width: 1017px; 
   display: flex;
   align-items: center;
+  border: 10px solid;
 }

@@ -5,17 +5,18 @@ import styles from './Body.module.css';
 import arrow_left from '../assets/Polygon 1.svg'
 import arrow_right from '../assets/Polygon 2.svg'
 
+let Group_Array= []
 const Body = () => {
     return (
         <>
         <div className={styles.bodyContainer1}>
           <h2 className={styles.title}> 룸메이트 구해요</h2>
           <div className={styles.groupAndArrowContainer}>
-          <div className={styles.groupContainer}>
-              <Group />
-              <Group />
-              <Group />
-              <Group />
+            <div className={styles.groupContainer}>
+                <Group />
+                <Group />
+                <Group />
+                <Group />
             </div>
             <img className={styles.polygonIcon1} alt="" src={arrow_left} />
             <img className={styles.polygonIcon2} alt="" src={arrow_right} />
@@ -41,3 +42,4 @@ const Body = () => {
 };
 
 export default Body;
+
