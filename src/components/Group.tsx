@@ -3,7 +3,7 @@ import styles from './Group.module.css';
 import Rectangle from '../assets/Rectangle11.svg';
 
 interface GroupProps {
-  data: {
+  Info: {
     Title: string;
     Dormtype: string;
     Now_Num: number;
@@ -15,22 +15,22 @@ interface GroupProps {
   };
 }
 
-const Group: FunctionComponent<GroupProps> = ({ data }) => {
+const Group: FunctionComponent<GroupProps> = ({ Info }) => {
   return (
     <div className={styles.div}>
       <div className={styles.child} />
       <div className={styles.item} />
-      <b className={styles.b}>{data.Now_Num}/{data.Max_Num}</b>
-      <div className={styles.title}>{data.Title}</div>
+      <b className={styles.b}>{Info.Now_Num}/{Info.Max_Num}</b>
+      <div className={styles.title}>{Info.Title}</div>
       <img className={styles.inner} alt="" src={Rectangle} />
-      <b className={styles.b1}>{data.Dormtype}</b>
-      <div className={styles.div1}>{data.Date}</div>
+      <b className={styles.b1}>{Info.Dormtype}</b>
+      <div className={styles.div1}>{Info.Date}</div>
       <div className={styles.rectangleDiv} />
       <img className={styles.rectangleIcon} alt="" src={Rectangle} />
-      <b className={styles.b2}>{data.Gender}</b>
+      <b className={styles.b2}>{Info.Gender}</b>
       <img className={styles.child1} alt="" src={Rectangle} />
-      <b className={styles.b3}>{data.Tag1}</b>
-      <b className={styles.b4}># {data.Tag2}</b>
+      <b className={styles.b3}># {Info.Tag1}</b>
+      <b className={styles.b4}># {Info.Tag2}</b>
     </div>
   );
 };
