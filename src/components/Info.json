@@ -2,7 +2,7 @@
   "data1": {
     "Title": "컴공 선배님 모십니다",
     "Dormtype": "모시래 4인실",
-    "Now_Num": 0,
+    "Now_Num": 2,
     "Max_Num": 4,
     "Gender": "남",
     "Date": "2024-05-09",
@@ -12,7 +12,7 @@
   "data2": {
     "Title": "경영 신입생 구해요",
     "Dormtype": "해오름 2인실",
-    "Now_Num": 0,
+    "Now_Num": 1,
     "Max_Num": 2,
     "Gender": "여",
     "Date": "2024-05-10",
@@ -22,7 +22,7 @@
   "data3": {
     "Title": "운동 좋아하시는 분",
     "Dormtype": "모시래 4인실",
-    "Now_Num": 0,
+    "Now_Num": 1,
     "Max_Num": 4,
     "Gender": "남",
     "Date": "2024-05-08",
@@ -32,7 +32,7 @@
   "data4": {
     "Title": "영화 같이 보러갈 친구",
     "Dormtype": "모시래 3인실",
-    "Now_Num": 0,
+    "Now_Num": 2,
     "Max_Num": 3,
     "Gender": "여",
     "Date": "2024-05-08",

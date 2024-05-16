@@ -22,6 +22,7 @@
   left: calc(50% - 113px);
   color: #8a8a8a;
   white-space: pre-wrap;
+  
 }
 .child {
   position: absolute;
@@ -46,12 +47,19 @@
 }
 .div2 {
   position: absolute;
-  top: 74px;
+  top: 70px;
   left: calc(50% - 176px);
   width: 352px;
-  height: 56px;
+  height: 61px;
   font-size: 16px;
-  border:10px solid;
+}
+.div3 {
+  position: absolute;
+  top: 110px;
+  left: calc(50% - 176px);
+  width: 352px;
+  height: 61px;
+  font-size: 16px;
 }
 
 .wrapper {
@@ -88,17 +96,6 @@
   font-weight: bold;
 }
 
-.email {
-  position: absolute;
-  top: 16px;
-  left: 27px;
-}
-
-.password {
-  position: absolute;
-  top: 17px;
-  left: 27px;
-}
 .googlelogin {
   position: absolute;
   top: 328px;
@@ -121,7 +118,8 @@
   top: 52px;
   left: calc(50% - 175px);
   width: 352px;
-  height: 364px;
+  height: 450px;
+  
 }
 .rectangleParent {
   position: absolute;
@@ -148,4 +146,20 @@
   font-size: 14px;
   color: #b9b9b9;
   font-family: 'Noto Sans KR';
+}
+
+.input::placeholder {
+  color: #999;
+}
+
+.input:focus::placeholder {
+  color: #000;
+}
+
+input[type="password"]::placeholder {
+  color: #999;
+}
+
+input[type="password"]:focus::placeholder {
+  color: #000;
 }
