@@ -6,7 +6,6 @@
   background-color: #fff;
   width: 209px;
   height: 209px;
-  border:1px solid black;
 }
 .item {
   position: absolute;
@@ -29,7 +28,6 @@
   font-weight: 500;
   color: #000;
   text-align: center;
-  border: 1px solid black;
   width: 100%;
 }
 .inner {
