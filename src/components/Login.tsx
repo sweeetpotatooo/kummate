@@ -34,7 +34,7 @@ const Login: FunctionComponent = () => {
       <div className={styles.rectangleParent}>
         <div className={styles.groupChild} />
         <div className={styles.loginParent}>
-          <div className={styles.login}>LogIn</div>
+          <div className={styles.login}>Log In</div>
           <div className={styles.div}>아직 회원이 아니신가요? 회원가입하기</div>
           <div className={styles.wrapper}>
             <div className={styles.div1}>
