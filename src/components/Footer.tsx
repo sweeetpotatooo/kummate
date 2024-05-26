@@ -19,7 +19,7 @@ const Footer: FunctionComponent = () => {
     <div className={styles.footer}>
       <div className={styles.footerChild} />
       <div className={styles.kummateParent}>
-        <b className={styles.kummate}>KUMMATE</b>
+        <b className={styles.kummate}>KUMMATE<em>완벽한 룸메이트</em></b>
         <b className={styles.copyright2024}>{`Copyright ⓒ 2024 by Kummate`}</b>
       </div>
       <div className={styles.socialButtons}>

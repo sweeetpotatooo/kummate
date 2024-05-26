@@ -47,7 +47,7 @@ const Body = () => {
       </div>
 
       <div className={styles.bodyContainer2}>
-        <h2 className={styles.title}> KUMMATE에서 추천하는 룸메이트를 만나보세요</h2>
+        <h2 className={styles.title}> KUMMATE에서 추천하는 룸메이트를 만나보세요!</h2>
         <div className={styles.groupAndArrowContainer}>
           <div className={styles.groupContainer}>
           {Object.keys(recommendData).map((key, index) => (
