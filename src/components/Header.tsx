@@ -37,7 +37,7 @@ const Header:FunctionComponent = () => {
 					<div className={styles.div4}>룸메이트 구해요</div>
 				</div>
 			</div>
-			<b className={styles.kummate}>KUMMATE<em>완벽한 룸메이트</em></b>
+			<b className={styles.kummate}>KUMMATE</b>
 			<img className={styles.noticeIcon} alt="" src={Notice} />
 		</div>
 	</div>
