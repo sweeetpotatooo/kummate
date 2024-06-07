@@ -1,0 +1,165 @@
+.groupChild {
+  position: absolute;
+  top: calc(50% - 295.5px);
+  left: calc(50% - 306px);
+  border-radius: 20px 20px 20px 20px;
+  background-color: #fff;
+  width: 612px;
+  height: 591px;
+}
+.login {
+  position: absolute;
+  top: 0px;
+  left: calc(50% - 33px);
+  font-size: 24px;
+  font-weight: 500;
+  color: #81c147;
+
+}
+.div {
+  position: absolute;
+  top: 275px;
+  left: calc(50% - 113px);
+  color: #8a8a8a;
+  white-space: pre-wrap;
+  
+}
+.child {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  border-radius: 10px;
+  background-color: #38773e;
+  width: 370px;
+  height: 51px;
+}
+.b {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+}
+.div1 {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 352px;
+  height: 51px;
+}
+.div2 {
+  position: absolute;
+  top: 70px;
+  left: calc(50% - 176px);
+  width: 352px;
+  height: 61px;
+  font-size: 16px;
+}
+.div3 {
+  position: absolute;
+  top: 110px;
+  left: calc(50% - 176px);
+  width: 352px;
+  height: 61px;
+  font-size: 16px;
+}
+
+.wrapper {
+  position: absolute;
+  top: 185px;
+  left: 0px;
+  width: 352px;
+  height: 51px;
+  color: #fff;
+}
+.item {
+  position: absolute;
+  top: 0px;
+  left: calc(50% - 176px);
+  border-radius: 10px;
+  background-color: #e5e5e5;
+  width: 352px;
+  height: 56px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.label {
+  top: 0px;
+  left: calc(50% - 176px);
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.googlelogin {
+  position: absolute;
+  top: 328px;
+  left: 70px;
+  width: 212px;
+  height: 36px;
+  object-fit: cover;
+}
+.kakaologin {
+  position: absolute;
+  top: 378px;
+  left: 70px;
+  width: 212px;
+  height: 36px;
+  object-fit: cover;
+}
+
+.loginParent {
+  position: absolute;
+  top: 52px;
+  left: calc(50% - 175px);
+  width: 352px;
+  height: 450px;
+  
+}
+.rectangleParent {
+  position: absolute;
+  top: calc(50% - 296px);
+  left: calc(50% - 306px);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+  width: 612px;
+  height: 591px;
+}
+.kummate {
+  position: absolute;
+  top: 136px;
+  font-size: 30px;
+  color: #000;
+  left: calc(50% - 70px);
+}
+.page {
+  width: 100%;
+  position: relative;
+  background-color: #f5f5f5;
+  height: 1024px;
+  overflow: hidden;
+  text-align: left;
+  font-size: 14px;
+  color: #b9b9b9;
+  font-family: 'Noto Sans KR';
+}
+
+.input::placeholder {
+  color: #999;
+}
+
+.input:focus::placeholder {
+  color: #000;
+}
+
+input[type="password"]::placeholder {
+  color: #999;
+}
+
+input[type="password"]:focus::placeholder {
+  color: #000;
+}
