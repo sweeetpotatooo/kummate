@@ -10,7 +10,6 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<HomeView />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
                 </Routes>
             </BrowserRouter>
         </Provider>
