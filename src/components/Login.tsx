@@ -1,7 +1,9 @@
-import { FunctionComponent, useState } from 'react';
 import styles from './Login.module.css';
-import Google from '../assets/Google.png';
-import Kakao from '../assets/Kakao.png';
+import "antd";
+import { googleUserLogin, kakaoUserLogin } from "../api"
+import { FunctionComponent, useState } from 'react';
+import Googlebutton from '../assets/Google.png';
+import Kakaobutton from '../assets/Kakao.png';
 
 const Login: FunctionComponent = () => {
   const [email, setEmail] = useState("");
@@ -9,6 +11,15 @@ const Login: FunctionComponent = () => {
   const [emailPlaceholderVisible, setEmailPlaceholderVisible] = useState(true);
   const [passwordPlaceholderVisible, setPasswordPlaceholderVisible] = useState(true);
 
+
+  const kakao = () => {
+    window.location.href = kakaoUserLogin
+  }
+
+  const google = () => {
+    window.location.href = googleUserLogin
+  }
+  
   const handleEmailClick = () => {
     setEmailPlaceholderVisible(false);
   };
@@ -66,8 +77,8 @@ const Login: FunctionComponent = () => {
               onBlur={handlePasswordBlur}
             />
           </div>
-          <img className={styles.googlelogin} alt="Google 로그인" src={Google} />
-          <img className={styles.kakaologin} alt="Kakao 로그인" src={Kakao} />
+          <img className={styles.googlelogin} alt="Google 로그인" src={Googlebutton} onClick={google}/>
+          <img className={styles.kakaologin} alt="Kakao 로그인" src={Kakaobutton} onClick={kakao}/>
         </div>
       </div>
       <b className={styles.kummate}>KUMMATE</b>
