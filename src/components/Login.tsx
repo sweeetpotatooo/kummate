@@ -1,6 +1,5 @@
 import styles from './Login.module.css';
-import "antd";
-import { googleUserLogin, kakaoUserLogin } from "../api"
+import { googleUserLogin, kakaoUserLogin } from "../api";
 import { FunctionComponent, useState } from 'react';
 import Googlebutton from '../assets/Google.png';
 import Kakaobutton from '../assets/Kakao.png';
@@ -11,15 +10,14 @@ const Login: FunctionComponent = () => {
   const [emailPlaceholderVisible, setEmailPlaceholderVisible] = useState(true);
   const [passwordPlaceholderVisible, setPasswordPlaceholderVisible] = useState(true);
 
+  const handleKakaoLogin = () => {
+    window.location.href = kakaoUserLogin;
+  };
 
-  const kakao = () => {
-    window.location.href = kakaoUserLogin
-  }
+  const handleGoogleLogin = () => {
+    window.location.href = googleUserLogin;
+  };
 
-  const google = () => {
-    window.location.href = googleUserLogin
-  }
-  
   const handleEmailClick = () => {
     setEmailPlaceholderVisible(false);
   };
@@ -77,8 +75,8 @@ const Login: FunctionComponent = () => {
               onBlur={handlePasswordBlur}
             />
           </div>
-          <img className={styles.googlelogin} alt="Google 로그인" src={Googlebutton} onClick={google}/>
-          <img className={styles.kakaologin} alt="Kakao 로그인" src={Kakaobutton} onClick={kakao}/>
+          <img className={styles.googlelogin} alt="Google 로그인" src={Googlebutton} onClick={handleGoogleLogin}/>
+          <img className={styles.kakaologin} alt="Kakao 로그인" src={Kakaobutton} onClick={handleKakaoLogin}/>
         </div>
       </div>
       <b className={styles.kummate}>KUMMATE</b>
