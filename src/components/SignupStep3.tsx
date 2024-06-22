@@ -16,7 +16,7 @@ const SignupStep3: React.FC = () => {
 
   return (
     <div>
-      <h2>회원가입 - 3단계</h2>
+      <h2>회원가입</h2>
       <div>
         <h3>이런 룸메이트는 좋아요</h3>
         {preferences.map((pref) => (

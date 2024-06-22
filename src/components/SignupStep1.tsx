@@ -6,7 +6,7 @@ const SignupStep1: React.FC = () => {
 
   return (
     <div>
-      <h2>회원가입 - 1단계</h2>
+      <h2>회원가입</h2>
       <EmailVerification />
       <input
         type="password"

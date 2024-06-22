@@ -20,7 +20,7 @@ const SignupStep2: React.FC = () => {
 
   return (
     <div>
-      <h2>회원가입 - 2단계</h2>
+      <h2>회원가입</h2>
       <input
         type="text"
         value={nickname}
