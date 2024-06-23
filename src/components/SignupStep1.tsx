@@ -100,7 +100,6 @@ const SignupStep1: React.FC = () => {
           다음
         </button>
       </div>
-      <footer className={styles.footer}>FOOTER</footer>
     </div>
   );
 };
