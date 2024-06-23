@@ -163,3 +163,5 @@ input[type="password"]::placeholder {
 input[type="password"]:focus::placeholder {
   color: #000;
 }
+  
+  
