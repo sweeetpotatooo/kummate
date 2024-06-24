@@ -41,6 +41,14 @@
   font-size: 1rem;
 }
 
+.select {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  background-color: #fff;
+}
+
 .button {
   background-color: #4caf50;
   color: #fff;
@@ -64,9 +72,27 @@
   text-align: center;
 }
 
-.footer {
-  margin-top: 2rem;
-  text-align: center;
-  color: #4caf50;
-  font-size: 1.5rem;
+.specialNotes {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.specialNotesLabel {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.specialNoteGroup {
+  display: flex;
+  justify-content: space-between;
+}
+
+.specialNote {
+  display: flex;
+  align-items: center;
+}
+
+.specialNote label {
+  margin-left: 0.5rem;
 }

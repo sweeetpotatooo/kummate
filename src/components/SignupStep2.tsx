@@ -17,6 +17,13 @@ const SignupStep2: React.FC = () => {
     // Proceed to next step
   };
 
+  const mbtiOptions = [
+    '선택하세요', 'ISTJ', 'ISFJ', 'INFJ', 'INTJ', 
+    'ISTP', 'ISFP', 'INFP', 'INTP', 
+    'ESTP', 'ESFP', 'ENFP', 'ENTP', 
+    'ESTJ', 'ESFJ', 'ENFJ', 'ENTJ'
+  ];
+
   return (
     <div className={styles.container}>
       <div className={styles.formContainer}>
@@ -62,59 +69,53 @@ const SignupStep2: React.FC = () => {
           />
         </div>
         <div className={styles.inputField}>
-          <label className={styles.label}>프로필 이미지</label>
-          <input
-            type="file"
-            className={styles.input}
-            onChange={(e) => setProfileImage(e.target.files ? e.target.files[0] : null)}
-          />
-        </div>
-        <div className={styles.inputField}>
-          <label className={styles.label}>흡연유무</label>
-          <input
-            type="checkbox"
-            checked={smoking}
-            onChange={(e) => setSmoking(e.target.checked)}
-          />
-        </div>
-        <div className={styles.inputField}>
           <label className={styles.label}>MBTI</label>
-          <input
-            type="text"
-            className={styles.input}
+          <select
+            className={styles.select}
             value={mbti}
             onChange={(e) => setMbti(e.target.value)}
-          />
+            required
+          >
+            {mbtiOptions.map((option) => (
+              <option key={option} value={option === '선택하세요' ? '' : option}>
+                {option}
+              </option>
+            ))}
+          </select>
         </div>
-        <div className={styles.inputField}>
-          <label className={styles.label}>코골이 여부</label>
-          <input
-            type="checkbox"
-            checked={snoring}
-            onChange={(e) => setSnoring(e.target.checked)}
-          />
-        </div>
-        <div className={styles.inputField}>
-          <label className={styles.label}>이갈이 여부</label>
-          <input
-            type="checkbox"
-            checked={teethGrinding}
-            onChange={(e) => setTeethGrinding(e.target.checked)}
-          />
-        </div>
-        <div className={styles.inputField}>
-          <label className={styles.label}>세부사항</label>
-          <textarea
-            className={styles.input}
-            value={details}
-            onChange={(e) => setDetails(e.target.value)}
-          />
+        <div className={styles.specialNotes}>
+          <label className={styles.specialNotesLabel}>특이사항</label>
+          <div className={styles.specialNoteGroup}>
+            <div className={styles.specialNote}>
+              <input
+                type="checkbox"
+                checked={smoking}
+                onChange={(e) => setSmoking(e.target.checked)}
+              />
+              <label>흡연유무</label>
+            </div>
+            <div className={styles.specialNote}>
+              <input
+                type="checkbox"
+                checked={snoring}
+                onChange={(e) => setSnoring(e.target.checked)}
+              />
+              <label>코골이 여부</label>
+            </div>
+            <div className={styles.specialNote}>
+              <input
+                type="checkbox"
+                checked={teethGrinding}
+                onChange={(e) => setTeethGrinding(e.target.checked)}
+              />
+              <label>이갈이 여부</label>
+            </div>
+          </div>
         </div>
         <button className={styles.button} onClick={handleNextStep}>
           다음
         </button>
       </div>
-      <footer className={styles.footer}>FOOTER</footer>
     </div>
   );
 };
