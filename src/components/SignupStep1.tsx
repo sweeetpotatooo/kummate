@@ -45,19 +45,22 @@ const SignupStep1: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.formContainer}>
         <h2 className={styles.header}>회원가입</h2>
-        <div className={styles.inputField}>
-          <label className={styles.label}>이메일</label>
-          <input
-            type="email"
-            className={styles.input}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+        <div className={styles.inputFieldWithButton}>
+          <div className={styles.inputField}>
+            <label className={styles.label}>이메일</label>
+            <input
+              type="email"
+              className={styles.input}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <button className={styles.button} onClick={handleSendVerification}>
+            인증번호 전송
+          </button>
         </div>
-        <button className={styles.button} onClick={handleSendVerification}>
-          인증번호 전송
-        </button>
+        {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
         {verificationSent && (
           <>
             <div className={styles.inputField}>
@@ -95,8 +98,7 @@ const SignupStep1: React.FC = () => {
             required
           />
         </div>
-        {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
-        <button className={styles.button} onClick={handleNextStep}>
+        <button className={`${styles.button} ${styles.nextButton}`} onClick={handleNextStep}>
           다음
         </button>
       </div>

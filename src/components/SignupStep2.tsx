@@ -112,7 +112,7 @@ const SignupStep2: React.FC = () => {
             </div>
           </div>
         </div>
-        <button className={styles.button} onClick={handleNextStep}>
+        <button className={`${styles.button} ${styles.nextButton}`} onClick={handleNextStep}>
           다음
         </button>
       </div>
