@@ -1,42 +1,32 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
-import './RoommateArticle.module.css';
-
-Modal.setAppElement('#root');
+import './RoommateArticle.module.css'; // 스타일을 위한 CSS 파일 임포트
 
 interface Post {
-  id: number;
   title: string;
-  content: string;
+  date: string;
+  participants: string;
+  tags: string[];
 }
 
-const App: React.FC = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
+const RoommateArticle: React.FC = () => {
+  const [posts] = useState<Post[]>([
+    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'] },
+    // 12개의 게시물을 배열로 추가
+    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'] },
+    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'] },
+    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'] },
+    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'] },
+    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'] },
+    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'] },
+    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'] },
+    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'] },
+    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'] },
+    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'] },
+    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'] },
+  ]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
-
   const postsPerPage = 12;
   const totalPages = Math.ceil(posts.length / postsPerPage);
-
-  const openModal = (post: Post) => {
-    setSelectedPost(post);
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-    setSelectedPost(null);
-  };
-
-  const handleWritePost = () => {
-    const newPost: Post = {
-      id: posts.length + 1,
-      title: `Post ${posts.length + 1}`,
-      content: `This is the content of post ${posts.length + 1}.`,
-    };
-    setPosts([...posts, newPost]);
-  };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -44,43 +34,50 @@ const App: React.FC = () => {
 
   const renderPosts = () => {
     const startIndex = (currentPage - 1) * postsPerPage;
-    const currentPosts = posts.slice(startIndex, startIndex + postsPerPage);
-
-    return currentPosts.map((post) => (
-      <div key={post.id} className="post" onClick={() => openModal(post)}>
-        <h3>{post.title}</h3>
+    const selectedPosts = posts.slice(startIndex, startIndex + postsPerPage);
+    return selectedPosts.map((post, index) => (
+      <div key={index} className="post-card">
+        <div className="post-header">모시러 4인</div>
+        <div className="post-title">{post.title}</div>
+        <div className="post-date">{post.date}</div>
+        <div className="post-participants">{post.participants}</div>
+        <div className="post-tags">
+          {post.tags.map((tag, tagIndex) => (
+            <span key={tagIndex} className="post-tag">{tag}</span>
+          ))}
+        </div>
       </div>
     ));
   };
 
   const renderPagination = () => {
-    const pages = [];
+    const pageNumbers = [];
     for (let i = 1; i <= totalPages; i++) {
-      pages.push(
-        <button key={i} onClick={() => handlePageChange(i)} disabled={currentPage === i}>
-          {i}
-        </button>
-      );
+      pageNumbers.push(i);
     }
-    return pages;
+    return (
+      <div className="pagination">
+        {pageNumbers.map(number => (
+          <span
+            key={number}
+            className={`page-number ${currentPage === number ? 'active' : ''}`}
+            onClick={() => handlePageChange(number)}
+          >
+            {number}
+          </span>
+        ))}
+      </div>
+    );
   };
 
   return (
-    <div className="App">
-      <button onClick={handleWritePost}>글쓰기</button>
-      <div className="post-grid">{renderPosts()}</div>
-      <div className="pagination">{renderPagination()}</div>
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Post Modal">
-        {selectedPost && (
-          <div>
-            <h2>{selectedPost.title}</h2>
-            <p>{selectedPost.content}</p>
-            <button onClick={closeModal}>닫기</button>
-          </div>
-        )}
-      </Modal>
+    <div className="roommate-article">
+      <h1>룸메이트 구해요</h1>
+      <div className="posts-grid">{renderPosts()}</div>
+      {renderPagination()}
+      <div className="footer">FOOTER</div>
     </div>
   );
 };
 
-export default App;
+export default RoommateArticle;

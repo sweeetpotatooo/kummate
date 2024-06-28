@@ -1,26 +1,73 @@
-
-.App {
-  font-family: Arial, sans-serif;
+.roommate-article {
+  text-align: center;
   padding: 20px;
 }
 
-button {
-  margin: 5px;
-}
-
-.post-grid {
+.posts-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 20px;
+  margin: 20px 0;
 }
 
-.post {
-  border: 1px solid #ccc;
-  padding: 10px;
-  cursor: pointer;
-  text-align: center;
+.post-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: left;
+}
+
+.post-header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 5px;
+  border-radius: 5px 5px 0 0;
+}
+
+.post-title {
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.post-date, .post-participants {
+  color: #888;
+  margin: 5px 0;
+}
+
+.post-tags {
+  margin-top: 10px;
+}
+
+.post-tag {
+  background-color: #4CAF50;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 15px;
+  margin-right: 5px;
 }
 
 .pagination {
+  margin: 20px 0;
+}
+
+.page-number {
+  cursor: pointer;
+  padding: 5px 10px;
+  margin: 0 5px;
+  border: 1px solid #4CAF50;
+  color: #4CAF50;
+  border-radius: 5px;
+}
+
+.page-number.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.footer {
+  background-color: #4CAF50;
+  color: white;
+  padding: 20px;
   margin-top: 20px;
 }
