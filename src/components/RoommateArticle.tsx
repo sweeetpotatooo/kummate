@@ -57,7 +57,7 @@ const RoommateArticle: React.FC = () => {
     const selectedPosts = posts.slice(startIndex, startIndex + postsPerPage);
     return selectedPosts.map((post, index) => (
       <div key={index} className={styles['post-card']} onClick={() => openModal(post)}>
-        <div className={styles['post-header']}>모시러 4인</div>
+        <div className={styles['post-header']}>모시래 4인</div>
         <div className={styles['post-title']}>{post.title}</div>
         <div className={styles['post-date']}>{post.date}</div>
         <div className={styles['post-participants']}>{post.participants}</div>
