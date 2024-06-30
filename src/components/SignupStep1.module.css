@@ -1,73 +1,59 @@
-/* SignupStep1.module.css */
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.formContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 300px;
+/* 기존 스타일 */
+.roommate-article {
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  background-color: #fff;
 }
 
-.header {
-  margin-bottom: 20px;
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 }
 
-.inputField {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-  width: 100%;
-}
-
-.inputFieldWithButton {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-  width: 100%;
-}
-
-.label {
-  margin-bottom: 5px;
-}
-
-.input {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.button {
-  padding: 8px 15px;
-  margin-left: 10px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
+.post-card {
   cursor: pointer;
 }
 
-.button:hover {
-  background-color: #0056b3;
-}
-
-.nextButton {
-  width: 100%;
-  padding: 10px 0;
+.pagination {
+  display: flex;
+  justify-content: center;
   margin-top: 20px;
 }
 
-.errorMessage {
-  color: red;
-  margin-bottom: 10px;
+.page-number {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.page-number.active {
+  font-weight: bold;
+}
+
+/* 모달 스타일 */
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  outline: none;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
 }
