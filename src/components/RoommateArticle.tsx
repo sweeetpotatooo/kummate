@@ -1,35 +1,46 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
+import Group from './Group'; // Group 컴포넌트 경로를 맞게 수정하세요
 import styles from './RoommateArticle.module.css';
 
 Modal.setAppElement('#root'); // ReactModal의 접근성을 위한 설정
 
 interface Post {
-  title: string;
-  date: string;
-  participants: string;
-  tags: string[];
-  content: string;
+  Title: string;
+  Dormtype: string;
+  Now_Num: number;
+  Max_Num: number;
+  Gender: string;
+  Date: string;
+  Tag1: string;
+  Tag2: string;
+  Content: string;
 }
 
 const RoommateArticle: React.FC = () => {
   const [posts] = useState<Post[]>([
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
-    { title: 'TITLE', date: '2023-10-10', participants: '2/4', tags: ['실내형', '흡연'], content: 'This is the content of the post.' },
+    {
+      Title: 'TITLE',
+      Dormtype: '모시러 4인',
+      Now_Num: 2,
+      Max_Num: 4,
+      Gender: '남성',
+      Date: '2023-10-10',
+      Tag1: '실내형',
+      Tag2: '흡연',
+      Content: 'This is the content of the post.'
+    },
+    {
+      Title: 'TITLE',
+      Dormtype: '모시러 4인',
+      Now_Num: 2,
+      Max_Num: 4,
+      Gender: '남성',
+      Date: '2023-10-10',
+      Tag1: '실내형',
+      Tag2: '흡연',
+      Content: 'This is the content of the post.'
+    },
     // ... 나머지 게시물들
   ]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,15 +68,7 @@ const RoommateArticle: React.FC = () => {
     const selectedPosts = posts.slice(startIndex, startIndex + postsPerPage);
     return selectedPosts.map((post, index) => (
       <div key={index} className={styles['post-card']} onClick={() => openModal(post)}>
-        <div className={styles['post-header']}>모시래 4인</div>
-        <div className={styles['post-title']}>{post.title}</div>
-        <div className={styles['post-date']}>{post.date}</div>
-        <div className={styles['post-participants']}>{post.participants}</div>
-        <div className={styles['post-tags']}>
-          {post.tags.map((tag, tagIndex) => (
-            <span key={tagIndex} className={styles['post-tag']}>{tag}</span>
-          ))}
-        </div>
+        <Group Info={post} />
       </div>
     ));
   };
@@ -104,12 +107,13 @@ const RoommateArticle: React.FC = () => {
       >
         {selectedPost && (
           <div>
-            <h2>{selectedPost.title}</h2>
-            <p>{selectedPost.content}</p>
+            <h2>{selectedPost.Title}</h2>
+            <p>{selectedPost.Content}</p>
             <button onClick={closeModal}>Close</button>
           </div>
         )}
       </Modal>
+      <div className={styles.footer}>FOOTER</div>
     </div>
   );
 };
