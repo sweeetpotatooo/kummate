@@ -41,7 +41,6 @@ const RoommateArticle: React.FC = () => {
       Tag2: '흡연',
       Content: 'This is the content of the post.'
     },
-    // ... 나머지 게시물들
   ]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -113,7 +112,6 @@ const RoommateArticle: React.FC = () => {
           </div>
         )}
       </Modal>
-      <div className={styles.footer}>FOOTER</div>
     </div>
   );
 };
