@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import Modal from 'react-modal';
-import Group from './Group'; // Group 컴포넌트 경로를 맞게 수정하세요
+import ArticleCard from './ArticleCard';
+import Modal from './ArticleModal';
 import styles from './RoommateArticle.module.css';
-
-Modal.setAppElement('#root'); // ReactModal의 접근성을 위한 설정
+import Info from './Info.json';
 
 interface Post {
   Title: string;
@@ -12,36 +11,12 @@ interface Post {
   Max_Num: number;
   Gender: string;
   Date: string;
-  Tag1: string;
-  Tag2: string;
+  tags: string[];
   Content: string;
 }
 
 const RoommateArticle: React.FC = () => {
-  const [posts] = useState<Post[]>([
-    {
-      Title: 'TITLE',
-      Dormtype: '모시러 4인',
-      Now_Num: 2,
-      Max_Num: 4,
-      Gender: '남성',
-      Date: '2023-10-10',
-      Tag1: '실내형',
-      Tag2: '흡연',
-      Content: 'This is the content of the post.'
-    },
-    {
-      Title: 'TITLE',
-      Dormtype: '모시러 4인',
-      Now_Num: 2,
-      Max_Num: 4,
-      Gender: '남성',
-      Date: '2023-10-10',
-      Tag1: '실내형',
-      Tag2: '흡연',
-      Content: 'This is the content of the post.'
-    },
-  ]);
+  const [posts] = useState<Post[]>(Object.values(Info) as Post[]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
@@ -67,7 +42,7 @@ const RoommateArticle: React.FC = () => {
     const selectedPosts = posts.slice(startIndex, startIndex + postsPerPage);
     return selectedPosts.map((post, index) => (
       <div key={index} className={styles['post-card']} onClick={() => openModal(post)}>
-        <Group Info={post} />
+        <ArticleCard Info={post} />
       </div>
     ));
   };
@@ -97,21 +72,23 @@ const RoommateArticle: React.FC = () => {
       <h1>룸메이트 구해요</h1>
       <div className={styles['posts-grid']}>{renderPosts()}</div>
       {renderPagination()}
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Post Modal"
-        className={styles.modal}
-        overlayClassName={styles.overlay}
-      >
-        {selectedPost && (
-          <div>
-            <h2>{selectedPost.Title}</h2>
-            <p>{selectedPost.Content}</p>
-            <button onClick={closeModal}>Close</button>
-          </div>
-        )}
-      </Modal>
+      {selectedPost && (
+        <Modal
+          isOpen={modalIsOpen}
+          onClose={closeModal}
+          status="진행"  // or '종료', as per your logic
+          title={selectedPost.Title}
+          profile={{
+            age: 25, // Replace with actual data
+            major: '컴퓨터공학', // Replace with actual data
+            mbti: 'INTJ', // Replace with actual data
+            smoker: false, // Replace with actual data
+            snorer: true, // Replace with actual data
+            teethGrinder: false, // Replace with actual data
+          }}
+          content={selectedPost.Content}
+        />
+      )}
     </div>
   );
 };
