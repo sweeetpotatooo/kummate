@@ -3,6 +3,7 @@ import ArticleCard from './ArticleCard';
 import Modal from './ArticleModal';
 import styles from './RoommateArticle.module.css';
 import Info from './Info.json';
+import Profiles from './profile.json'; // profile.json 파일 가져오기
 
 interface Post {
   Title: string;
@@ -13,6 +14,16 @@ interface Post {
   Date: string;
   tags: string[];
   Content: string;
+  Author: string; // 이 필드 추가
+}
+
+interface Profile {
+  age: number;
+  major: string;
+  mbti: string;
+  smoker: boolean;
+  snorer: boolean;
+  teethGrinder: boolean;
 }
 
 const RoommateArticle: React.FC = () => {
@@ -76,16 +87,9 @@ const RoommateArticle: React.FC = () => {
         <Modal
           isOpen={modalIsOpen}
           onClose={closeModal}
-          status="진행"  // or '종료', as per your logic
+          status="진행"  // 또는 '종료', 논리적 판단에 따라
           title={selectedPost.Title}
-          profile={{
-            age: 25, // Replace with actual data
-            major: '컴퓨터공학', // Replace with actual data
-            mbti: 'INTJ', // Replace with actual data
-            smoker: false, // Replace with actual data
-            snorer: true, // Replace with actual data
-            teethGrinder: false, // Replace with actual data
-          }}
+          profile={Profiles[selectedPost.Author]} // 선택된 글의 작성자에 따른 프로필 데이터 사용
           content={selectedPost.Content}
         />
       )}
