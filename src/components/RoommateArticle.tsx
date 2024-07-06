@@ -26,6 +26,11 @@ interface Profile {
   teethGrinder: boolean;
 }
 
+// Profile JSON의 타입 정의
+interface ProfilesType {
+  [key: string]: Profile;
+}
+
 const RoommateArticle: React.FC = () => {
   const [posts] = useState<Post[]>(Object.values(Info) as Post[]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -89,7 +94,7 @@ const RoommateArticle: React.FC = () => {
           onClose={closeModal}
           status="진행"  // 또는 '종료', 논리적 판단에 따라
           title={selectedPost.Title}
-          profile={Profiles[selectedPost.Author]} // 선택된 글의 작성자에 따른 프로필 데이터 사용
+          profile={(Profiles as ProfilesType)[selectedPost.Author]} // 선택된 글의 작성자에 따른 프로필 데이터 사용
           content={selectedPost.Content}
         />
       )}
