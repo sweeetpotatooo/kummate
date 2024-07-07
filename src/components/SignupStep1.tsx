@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import EmailVerification from './EmailVerification';
 import styles from './SignupStep1.module.css';
 
@@ -10,6 +11,8 @@ const SignupStep1: React.FC = () => {
   const [isVerified, setIsVerified] = useState(false);
   const [verificationSent, setVerificationSent] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const navigate = useNavigate(); // Initialize navigate
 
   const handleSendVerification = () => {
     if (email) {
@@ -38,6 +41,7 @@ const SignupStep1: React.FC = () => {
     } else {
       // Proceed to next step
       setErrorMessage('');
+      navigate('/signup/step2'); // Navigate to step 2
     }
   };
 
