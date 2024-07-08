@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './SignupStep2.module.css';
 
 const SignupStep2: React.FC = () => {
@@ -13,8 +14,11 @@ const SignupStep2: React.FC = () => {
   const [teethGrinding, setTeethGrinding] = useState(false);
   const [details, setDetails] = useState('');
 
+  const navigate = useNavigate();
+
   const handleNextStep = () => {
     // Proceed to next step
+    navigate('/signup/step3');
   };
 
   const mbtiOptions = [
