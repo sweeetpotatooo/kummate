@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './SignupStep3.module.css';
 
 const SignupStep3: React.FC = () => {
@@ -6,6 +7,8 @@ const SignupStep3: React.FC = () => {
   const [dislikedRoommates, setDislikedRoommates] = useState<string[]>([]);
 
   const roommateOptions = ['조용한', '깨끗한', '정리정돈을 잘하는', '외향적인', '내향적인', '일찍 일어나는', '늦게 일어나는'];
+
+  const navigate = useNavigate();
 
   const toggleSelection = (list: string[], setList: React.Dispatch<React.SetStateAction<string[]>>, value: string) => {
     if (list.includes(value)) {
@@ -16,7 +19,7 @@ const SignupStep3: React.FC = () => {
   };
 
   const handleNextStep = () => {
-    // Proceed to next step
+    navigate('/login');
   };
 
   return (
