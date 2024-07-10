@@ -14,5 +14,21 @@
     "smoker": false,
     "snorer": false,
     "teethGrinder": true
+  },
+  "author3": {
+    "age": 24,
+    "major": "통계학",
+    "mbti": "ENTJ",
+    "smoker": false,
+    "snorer": false,
+    "teethGrinder": true
+  },
+  "author4": {
+    "age": 27,
+    "major": "전가공학",
+    "mbti": "ISFJ",
+    "smoker": false,
+    "snorer": false,
+    "teethGrinder": true
   }
 }
