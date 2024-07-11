@@ -1,3 +1,4 @@
+// ArticleCard.tsx
 import React from 'react';
 import styles from './ArticleCard.module.css';
 
@@ -11,11 +12,12 @@ interface CardComponentProps {
     Date: string;
     tags: string[];
   };
+  onClick: () => void;
 }
 
-const CardComponent: React.FC<CardComponentProps> = ({ Info }) => {
+const CardComponent: React.FC<CardComponentProps> = ({ Info, onClick }) => {
   return (
-    <div className={styles.card}>
+    <div className={styles.card} onClick={onClick}>
       <div className={styles.header}>
         <span className={styles.badge}>{Info.Dormtype}</span>
         <span className={styles.infoIcon}>{Info.Gender}</span>
