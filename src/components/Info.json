@@ -19,7 +19,7 @@
     "Date": "2024-05-10",
     "tags": ["졸업생", "화끈"],
     "Content": "경영학과 신입생을 찾습니다.",
-    "Author": "author1"
+    "Author": "author2"
   },
   "data3": {
     "Title": "운동 좋아하시는 분",
@@ -30,7 +30,7 @@
     "Date": "2024-05-08",
     "tags": ["운동", "깔끔"],
     "Content": "운동을 좋아하는 사람을 찾습니다.",
-    "Author": "author2"
+    "Author": "author3"
   },
   "data4": {
     "Title": "영화 같이 보러갈 친구",
@@ -41,6 +41,6 @@
     "Date": "2024-05-08",
     "tags": ["영화", "차분"],
     "Content": "영화를 좋아하는 친구를 찾습니다.",
-    "Author": "author2"
+    "Author": "author4"
   }
 }
