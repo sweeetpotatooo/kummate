@@ -1,4 +1,3 @@
-// ArticleCard.tsx
 import React from 'react';
 import styles from './ArticleCard.module.css';
 
@@ -11,6 +10,7 @@ interface CardComponentProps {
     Gender: string;
     Date: string;
     tags: string[];
+    Author: string;
   };
   onClick: () => void;
 }
