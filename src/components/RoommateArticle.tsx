@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import ArticleCard from './ArticleCard';
 import Modal from './ArticleModal';
+import PostForm from './PostForm';
 import styles from './RoommateArticle.module.css';
 import Info from './Info.json';
-import Profiles from './profile.json'; // profile.json 파일 가져오기
+import Profiles from './profile.json';
 
 interface Post {
   Title: string;
@@ -14,7 +15,7 @@ interface Post {
   Date: string;
   tags: string[];
   Content: string;
-  Author: string; // 이 필드 추가
+  Author: string;
 }
 
 interface Profile {
@@ -26,13 +27,12 @@ interface Profile {
   teethGrinder: boolean;
 }
 
-// Profile JSON의 타입 정의
 interface ProfilesType {
   [key: string]: Profile;
 }
 
 const RoommateArticle: React.FC = () => {
-  const [posts] = useState<Post[]>(Object.values(Info) as Post[]);
+  const [posts, setPosts] = useState<Post[]>(Object.values(Info) as Post[]);
   const [currentPage, setCurrentPage] = useState(1);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
@@ -51,6 +51,10 @@ const RoommateArticle: React.FC = () => {
   const closeModal = () => {
     setModalIsOpen(false);
     setSelectedPost(null);
+  };
+
+  const handleNewPost = (newPost: Post) => {
+    setPosts([newPost, ...posts]);
   };
 
   const renderPosts = () => {
@@ -86,15 +90,16 @@ const RoommateArticle: React.FC = () => {
   return (
     <div className={styles['roommate-article']}>
       <h1>룸메이트 구해요</h1>
+      <PostForm onSubmit={handleNewPost} />
       <div className={styles['posts-grid']}>{renderPosts()}</div>
       {renderPagination()}
       {selectedPost && (
         <Modal
           isOpen={modalIsOpen}
           onClose={closeModal}
-          status="진행"  // 또는 '종료', 논리적 판단에 따라
+          status="진행"
           title={selectedPost.Title}
-          profile={(Profiles as ProfilesType)[selectedPost.Author]} // 선택된 글의 작성자에 따른 프로필 데이터 사용
+          profile={(Profiles as ProfilesType)[selectedPost.Author]}
           content={selectedPost.Content}
         />
       )}
