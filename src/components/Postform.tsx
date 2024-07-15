@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
 import styles from './PostForm.module.css';
 
+interface Post {
+  Title: string;
+  Dormtype: string;
+  Now_Num: number;
+  Max_Num: number;
+  Gender: string;
+  Date: string;
+  tags: string[];
+  Content: string;
+  Author: string;
+}
+
 interface PostFormProps {
   onSubmit: (newPost: Post) => void;
 }
@@ -20,7 +32,13 @@ const PostForm: React.FC<PostFormProps> = ({ onSubmit }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setNewPost({ ...newPost, [name]: value });
+    if (name === 'tags') {
+      setNewPost({ ...newPost, [name]: value.split(',').map(tag => tag.trim()) });
+    } else if (name === 'Now_Num' || name === 'Max_Num') {
+      setNewPost({ ...newPost, [name]: Number(value) });
+    } else {
+      setNewPost({ ...newPost, [name]: value });
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
