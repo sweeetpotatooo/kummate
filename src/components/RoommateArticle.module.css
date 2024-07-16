@@ -53,3 +53,23 @@
 .overlay {
   background: rgba(0, 0, 0, 0.75);
 }
+
+.create-post-button {
+  margin: 20px 0;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create-post-button:hover {
+  background-color: #0056b3;
+}
+
+
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+}

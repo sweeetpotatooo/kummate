@@ -5,8 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from "../Redux/store";
 import { logOutUser } from "../Redux/user";
 import { useNavigate } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from '../Redux/store';
 
 const Header: FunctionComponent = () => {
   const isLoggedIn = useSelector((state: RootState) =>
@@ -29,26 +27,28 @@ const Header: FunctionComponent = () => {
     navigator('/article');
   };
 
+  const handleNavigateHome = () => {
+    navigator('/');
+  };
+
   return (
-    <Provider store={store}>
-      <div className={styles.header}>
-        <div className={styles.headerChild}>
-          <div className={styles.div}>
-            <div className={styles.div1}>
-              <div className={styles.div2} onClick={isLoggedIn ? handleLogout : () => navigator('/login')}>
-                {isLoggedIn ? '로그아웃' : '로그인'}
-              </div>
-              {isLoggedIn && <div className={styles.div3}>마이페이지</div>}
-              <div className={styles.div4} onClick={handleNavigateToArticle}>
-                룸메이트 구해요
-              </div>
+    <div className={styles.header}>
+      <div className={styles.headerChild}>
+        <div className={styles.div}>
+          <div className={styles.div1}>
+            <div className={styles.div2} onClick={isLoggedIn ? handleLogout : () => navigator('/login')}>
+              {isLoggedIn ? '로그아웃' : '로그인'}
+            </div>
+            {isLoggedIn && <div className={styles.div3}>마이페이지</div>}
+            <div className={styles.div4} onClick={handleNavigateToArticle}>
+              룸메이트 구해요
             </div>
           </div>
-          <b className={styles.kummate}>KUMMATE</b>
-          <img className={styles.noticeIcon} alt="" src={Notice} />
         </div>
+        <b className={styles.kummate} onClick={handleNavigateHome}>KUMMATE</b>
+        <img className={styles.noticeIcon} alt="" src={Notice} />
       </div>
-    </Provider>
+    </div>
   );
 };
 
