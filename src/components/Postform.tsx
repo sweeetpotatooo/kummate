@@ -68,7 +68,7 @@ const PostForm: React.FC<PostFormProps> = ({ onSubmit }) => {
       <input type="text" name="tags" placeholder="Tags (comma separated)" value={newPost.tags.join(', ')} onChange={handleChange} required />
       <textarea name="Content" placeholder="Content" value={newPost.Content} onChange={handleChange} required />
       <input type="text" name="Author" placeholder="Author" value={newPost.Author} onChange={handleChange} required />
-      <button type="submit">Submit</button>
+      <button type="submit">작성</button>
     </form>
   );
 };

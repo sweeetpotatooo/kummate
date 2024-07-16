@@ -2,7 +2,7 @@ import React from 'react';
 import RoommateArticle from "../components/RoommateArticle";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-const Login: React.FC = () => {
+const RoommateArticlePage: React.FC = () => {
   return (
     <div>
       <Header/>
@@ -12,4 +12,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default RoommateArticlePage;

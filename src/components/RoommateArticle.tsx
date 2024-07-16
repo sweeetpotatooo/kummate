@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import ArticleCard from './ArticleCard';
 import Modal from './ArticleModal';
-import PostForm from './PostForm';
 import styles from './RoommateArticle.module.css';
 import Info from './Info.json';
 import Profiles from './profile.json';
@@ -90,10 +90,15 @@ const RoommateArticle: React.FC = () => {
   return (
     <div className={styles['roommate-article']}>
       <h1>룸메이트 구해요</h1>
-      <PostForm onSubmit={handleNewPost} />
+      <div className={styles['header-actions']}>
+        <Link to="/postform">
+          <button className={styles['create-post-button']}>글쓰기</button>
+        </Link>
+      </div>
       <div className={styles['posts-grid']}>{renderPosts()}</div>
       {renderPagination()}
       {selectedPost && (
+
         <Modal
           isOpen={modalIsOpen}
           onClose={closeModal}

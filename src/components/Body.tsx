@@ -7,7 +7,7 @@ import arrow_left from '../assets/Polygon 1.svg';
 import arrow_right from '../assets/Polygon 2.svg';
 import Info from './Info.json';
 import Info2 from './RecommendCard.json';
-import Profiles from './Profile.json';
+import Profiles from './profile.json';
 
 type InfoData = {
   [key: string]: {
