@@ -6,7 +6,7 @@ const SignupStep3: React.FC = () => {
   const [likedRoommates, setLikedRoommates] = useState<string[]>([]);
   const [dislikedRoommates, setDislikedRoommates] = useState<string[]>([]);
 
-  const roommateOptions = ['조용한', '깨끗한', '정리정돈을 잘하는', '외향적인', '내향적인', '일찍 일어나는', '늦게 일어나는'];
+  const roommateOptions = ['조용한', '깨끗한', '정리정돈을 잘하는', '외향적인', '내향적인', '일찍 일어나는', '늦게 일어나는','조용한'];
 
   const navigate = useNavigate();
 
