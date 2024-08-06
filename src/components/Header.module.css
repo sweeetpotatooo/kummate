@@ -1,3 +1,5 @@
+/* Header.module.css */
+
 .headerChild {
   position: absolute;
   top: 0px;
@@ -11,16 +13,19 @@
   position: absolute;
   top: 0px;
   left: 347px;
+  cursor: pointer;
 }
 .div3 {
   position: absolute;
   top: 0px;
   left: 190px;
+  cursor: pointer;
 }
 .div4 {
   position: absolute;
   top: 0px;
   left: 0px;
+  cursor: pointer;
 }
 .div1 {
   position: absolute;
@@ -62,3 +67,8 @@
   font-family: 'Noto Sans KR';
 }
 
+.div2:hover,
+.div3:hover,
+.div4:hover {
+  text-decoration: underline;
+}
