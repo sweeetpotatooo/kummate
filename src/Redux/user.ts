@@ -1,67 +1,7 @@
-/*
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 
-interface UserState {
-  data: {
-    token: {
-      atk: string;
-    };
-  };
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-}
-
-const initialState: UserState = {
-  data: {
-    token: {
-      atk: '',
-    },
-  },
-  status: 'idle'
-};
-
-export const logOutUser = createAsyncThunk(
-  'user/logOut',
-  async (payload: { userToken: string }) => {
-    const response = await axios.post('/api/logout', {}, {
-      headers: {
-        Authorization: `Bearer ${payload.userToken}`,
-      },
-    });
-    return response.data;
-  }
-);
-
-const userSlice = createSlice({
-  name: 'user',
-  initialState,
-  reducers: {
-    // Add reducers here if needed
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(logOutUser.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(logOutUser.fulfilled, (state) => {
-        state.status = 'succeeded';
-        state.data = {
-          token: {
-            atk: '',
-          },
-        };
-      })
-      .addCase(logOutUser.rejected, (state, action) => {
-        state.status = 'failed';
-      });
-  },
-});
-
-export default userSlice.reducer;
-*/
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { Token, UserState } from "../interface/interface"
+import { UserState } from "../interface/interface"
 import { saveToLocalStorage, loadFromLocalStorage } from "./localStorage"
 import { Dispatch } from "redux"
 import { RootState, AppDispatch } from "./store"
@@ -81,15 +21,12 @@ const initialState: UserState = loadFromLocalStorage() || {
   isLogged: false,
   data: {
     email: "",
-    token: {
-      atk: "",
-      rtk: "",
-    },
+    token: ""
   },
   signUp: false,
   status: "idle",
 }
-
+/*
 export function useAutoLogout() {
   const dispatch = useDispatch()
   const { token } = useSelector((state: RootState) => state.user.data)
@@ -121,7 +58,6 @@ export const refreshTokenIfNeeded = createAsyncThunk<
     throw new Error("No token")
   }
 
-  const splitToken = token.atk.split(".")
 
   try {
     const tokenPayload = JSON.parse(atob(splitToken[1]))
@@ -129,7 +65,7 @@ export const refreshTokenIfNeeded = createAsyncThunk<
     const currentTime = new Date().getTime()
 
     if (currentTime > expirationTime) {
-      await dispatch(refreshToken({ refreshToken: token.rtk }))
+      await dispatch(refreshToken({ refreshToken: token }))
     } else {
       dispatch(logout())
     }
@@ -138,7 +74,7 @@ export const refreshTokenIfNeeded = createAsyncThunk<
     throw error
   }
 })
-
+*/
 export const loginUser = createAsyncThunk<
   UserState,
   { email: string; password: string },
@@ -241,7 +177,7 @@ export const refreshToken = createAsyncThunk<
 export const kakaologinUser = createAsyncThunk<
   {
     email: string
-    token: Token
+    token: string
   },
   { code: string },
   { dispatch: Dispatch; state: RootState }
@@ -269,7 +205,7 @@ export const kakaologinUser = createAsyncThunk<
 
 export const googleloginUser = createAsyncThunk<
   { 
-    token: Token
+    token: string
     email: string
   },
   { accessToken: string },
@@ -324,7 +260,6 @@ const userSlice = createSlice({
     },
     logout: (state) => {
       state.isLogged = false
-      state.data.token = { atk: "", rtk: "" }
       state.email = ""
     },
     signUp: (state) => {
@@ -393,13 +328,6 @@ const userSlice = createSlice({
     })
   },
 })
-
-const storedtoken = localStorage.getItem("token")
-if (storedtoken) {
-  if (refreshTokenIfNeeded()) {
-    userSlice.actions.logout()
-  }
-}
 
 export const { logout, loginSuccess } = userSlice.actions
 export default userSlice.reducer

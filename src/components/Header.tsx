@@ -8,11 +8,11 @@ import { useNavigate } from 'react-router-dom';
 
 const Header: FunctionComponent = () => {
   const isLoggedIn = useSelector((state: RootState) =>
-    Boolean(state.user.data.token.atk)
+    Boolean(state.user.data.token)
   );
   const dispatch: AppDispatch = useDispatch();
   const navigator = useNavigate();
-  const userToken = useSelector((state: RootState) => state.user.data.token.atk);
+  const userToken = useSelector((state: RootState) => state.user.data.token);
 
   const handleLogout = async () => {
     try {

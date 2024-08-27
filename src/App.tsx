@@ -6,6 +6,7 @@ import Signup from "./pages/Signup";
 import RoommateArticle from "./pages/RoommateArticle";
 import PostForm from "./pages/Postform";
 import store from "./Redux/store";
+import MyPage from "./pages/Mypage";
 
 const App = () => {
   return (
@@ -17,10 +18,10 @@ const App = () => {
           <Route path="/signup/*" element={<Signup />} />
           <Route path="/article" element={<RoommateArticle />} />
           <Route path="/postform" element={<PostForm />} />
+          <Route path="/mypage" element={<MyPage />} />
         </Routes>
       </BrowserRouter>
     </Provider>
   );
 };
-
 export default App;

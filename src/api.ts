@@ -23,3 +23,22 @@ export const userArticleApply = "articles/apply"
 export const userApplicant = "applicant"
 export const userChatRoom = "chat"
 export const userChatList = "chat/list"
+
+import axios from 'axios';
+
+const API_URL = 'http://localhost:3001'; // 백엔드 API 서버 주소
+
+export const loginUser = async (email: string, password: string) => {
+  // eslint-disable-next-line no-useless-catch
+  try {
+    console.log(`login:`);
+    const response = await axios.post(`${API_URL}/auth/login`, {
+      email,
+      password,
+    });
+    console.log(`response:${JSON.stringify(response.data)}`)
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

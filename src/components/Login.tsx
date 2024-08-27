@@ -1,5 +1,6 @@
+//src/components/Login.tsx
 import styles from './Login.module.css';
-import { googleUserLogin, kakaoUserLogin } from "../api";
+import { googleUserLogin, kakaoUserLogin, loginUser } from "../api";
 import { FunctionComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Googlebutton from '../assets/Google.png';
@@ -11,6 +12,7 @@ const Login: FunctionComponent = () => {
   const [password, setPassword] = useState("");
   const [emailPlaceholderVisible, setEmailPlaceholderVisible] = useState(true);
   const [passwordPlaceholderVisible, setPasswordPlaceholderVisible] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const handleKakaoLogin = () => {
     window.location.href = kakaoUserLogin;
@@ -44,6 +46,19 @@ const Login: FunctionComponent = () => {
     }
   };
 
+  const handleLogin = async () => {
+    try {
+      console.log(`login_user:`);
+      const userData = await loginUser(email, password);
+  
+      // 로그인 성공 시, 예를 들어 토큰을 저장하고 메인 페이지로 이동
+      localStorage.setItem('token', userData.token);
+      navigate('/'); // 로그인 후 메인 페이지로 이동
+    } catch (error) {
+      setError('로그인에 실패했습니다. 이메일과 비밀번호를 확인하세요.');
+    }
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.rectangleParent}>
@@ -57,6 +72,7 @@ const Login: FunctionComponent = () => {
               <b className={styles.b}>로그인</b>
             </div>
           </div>
+          {error && <div className={styles.error}>{error}</div>}
           <div className={styles.div2}>
             <input 
               type="email" 
@@ -81,6 +97,7 @@ const Login: FunctionComponent = () => {
               onBlur={handlePasswordBlur}
             />
           </div>
+          <button className={styles.loginButton} onClick={handleLogin}>로그인</button>
           <img className={styles.googlelogin} alt="Google 로그인" src={Googlebutton} onClick={handleGoogleLogin}/>
           <img className={styles.kakaologin} alt="Kakao 로그인" src={Kakaobutton} onClick={handleKakaoLogin}/>
         </div>

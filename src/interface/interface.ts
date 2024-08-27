@@ -1,16 +1,11 @@
 import { Store, NamePath } from "antd/lib/form/interface"
 
-export interface Token {
-  readonly atk: string
-  readonly rtk: string
-}
-
 export interface UserState {
   readonly isLogged: boolean
   readonly signUp: boolean
   readonly data: {
     readonly email: string
-    readonly token: Token
+    readonly token: string
   }
   readonly email?: string 
   readonly status: "idle" | "loading" | "fulfilled" | "error"
@@ -77,7 +72,7 @@ export interface GlobalState extends UserState {
   readonly msg: string
   readonly kakao: boolean
   readonly google: boolean
-  readonly token: Token
+  readonly token: string
 }
 
 export interface profileTendencyDropdown {
