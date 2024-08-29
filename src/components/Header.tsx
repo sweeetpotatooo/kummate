@@ -1,3 +1,4 @@
+//src/components/Header.tsx
 import { FunctionComponent } from 'react';
 import styles from './Header.module.css';
 import Notice from '../assets/Notification important.svg';
@@ -15,13 +16,18 @@ const Header: FunctionComponent = () => {
   const userToken = useSelector((state: RootState) => state.user.data.token);
 
   const handleLogout = async () => {
-    try {
-      await dispatch(logOutUser({ userToken }));
-      navigator("/");
-    } catch (error) {
-      console.error(error);
+    if (userToken) {  // userToken이 null이 아닌지 확인
+      try {
+        await dispatch(logOutUser({ userToken }));
+        navigator("/");
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      console.error("User token is null. Cannot log out.");
     }
   };
+  
 
   const handleNavigateToArticle = () => {
     navigator('/article');
