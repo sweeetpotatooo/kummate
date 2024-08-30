@@ -7,6 +7,7 @@ import RoommateArticle from "./pages/RoommateArticle";
 import PostForm from "./pages/Postform";
 import store from "./Redux/store";
 import MyPage from "./pages/Mypage";
+import Postcard from "./pages/postcard";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/article" element={<RoommateArticle />} />
           <Route path="/postform" element={<PostForm />} />
           <Route path="/mypage" element={<MyPage />} />
+          <Route path="/postcard" element={<Postcard />} />
         </Routes>
       </BrowserRouter>
     </Provider>

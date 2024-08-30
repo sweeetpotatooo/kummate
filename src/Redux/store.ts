@@ -1,18 +1,25 @@
-// src/Redux/store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import userReducer from '../Redux/user';
+import { useDispatch } from 'react-redux';
+import userReducer from './userSlice';
 
+// Redux store 설정
 const store = configureStore({
   reducer: {
+    // 리듀서 등록
     user: userReducer,
   },
-  // 추가적으로 미들웨어를 설정할 수 있습니다.
-  middleware: (getDefaultMiddleware) => 
-    getDefaultMiddleware(),
-  // Redux DevTools 설정 (프로덕션에서는 비활성화하는 것이 일반적입니다)
+  // 필요한 미들웨어 추가 (예: thunk)
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
+// RootState 타입 및 AppDispatch 타입 정의
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+// useDispatch를 사용할 때 타입을 지정해 주기 위한 커스텀 훅
+export const useAppDispatch: () => AppDispatch = useDispatch;
 
 export default store;

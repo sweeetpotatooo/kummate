@@ -14,14 +14,6 @@ const Login: FunctionComponent = () => {
   const [passwordPlaceholderVisible, setPasswordPlaceholderVisible] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const handleKakaoLogin = () => {
-    window.location.href = kakaoUserLogin;
-  };
-
-  const handleGoogleLogin = () => {
-    window.location.href = googleUserLogin;
-  };
-
   const handleSignupClick = () => {
     navigate('/signup');
   };
@@ -48,14 +40,18 @@ const Login: FunctionComponent = () => {
 
   const handleLogin = async () => {
     try {
-      console.log(`login_user:`);
       const userData = await loginUser(email, password);
-  
-      // 로그인 성공 시, 예를 들어 토큰을 저장하고 메인 페이지로 이동
       localStorage.setItem('token', userData.token);
-      navigate('/'); // 로그인 후 메인 페이지로 이동
+      navigate('/');
     } catch (error) {
-      setError('로그인에 실패했습니다. 이메일과 비밀번호를 확인하세요.');
+      if (email === "" && password === "") {
+        window.location.href = googleUserLogin;
+      // eslint-disable-next-line no-dupe-else-if
+      } else if (email === "" && password === "") {
+        window.location.href = kakaoUserLogin;
+      } else {
+        setError('로그인에 실패했습니다. 이메일과 비밀번호를 확인하세요.');
+      }
     }
   };
 
@@ -69,7 +65,7 @@ const Login: FunctionComponent = () => {
           <div className={styles.wrapper}>
             <div className={styles.div1}>
               <div className={styles.child} />
-              <b className={styles.b}>로그인</b>
+              <button className={styles.loginButton} onClick={handleLogin}>로그인</button>
             </div>
           </div>
           {error && <div className={styles.error}>{error}</div>}
@@ -97,9 +93,8 @@ const Login: FunctionComponent = () => {
               onBlur={handlePasswordBlur}
             />
           </div>
-          <button className={styles.loginButton} onClick={handleLogin}>로그인</button>
-          <img className={styles.googlelogin} alt="Google 로그인" src={Googlebutton} onClick={handleGoogleLogin}/>
-          <img className={styles.kakaologin} alt="Kakao 로그인" src={Kakaobutton} onClick={handleKakaoLogin}/>
+          <img className={styles.googlelogin} alt="Google 로그인" src={Googlebutton} />
+          <img className={styles.kakaologin} alt="Kakao 로그인" src={Kakaobutton} />
         </div>
       </div>
       <b className={styles.kummate}>KUMMATE</b>

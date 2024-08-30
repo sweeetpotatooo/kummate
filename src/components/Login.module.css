@@ -7,6 +7,7 @@
   width: 612px;
   height: 591px;
 }
+
 .login {
   position: absolute;
   top: 0px;
@@ -14,16 +15,16 @@
   font-size: 24px;
   font-weight: 500;
   color: #81c147;
-
 }
+
 .div {
   position: absolute;
   top: 275px;
   left: calc(50% - 113px);
   color: #8a8a8a;
   white-space: pre-wrap;
-  
 }
+
 .child {
   position: absolute;
   top: 0px;
@@ -32,12 +33,37 @@
   background-color: #38773e;
   width: 370px;
   height: 51px;
+  z-index: 1; /* 초록색 박스에 낮은 z-index 값 설정 */
 }
+
+.loginButton {
+  width: 100%;
+  padding: 8px;
+  background-color: transparent; /* 배경을 투명하게 설정 */
+  color: #fff; /* 글자를 흰색으로 설정 */
+  border: 2px solid #38773e; /* 버튼 테두리 추가 */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  z-index: 2; /* 로그인 버튼에 높은 z-index 값 설정 */
+}
+
+.loginButton:hover {
+  background-color: #38773e; /* 마우스 오버 시 배경색을 녹색으로 설정 */
+}
+
 .b {
   position: absolute;
   top: 16px;
   left: 50%;
+  transform: translateX(-50%);
+  color: #fff; /* 글자를 흰색으로 변경 */
+  font-weight: bold; /* 글자를 굵게 설정 */
 }
+
 .div1 {
   position: absolute;
   top: 0px;
@@ -45,6 +71,7 @@
   width: 352px;
   height: 51px;
 }
+
 .div2 {
   position: absolute;
   top: 70px;
@@ -53,6 +80,7 @@
   height: 61px;
   font-size: 16px;
 }
+
 .div3 {
   position: absolute;
   top: 110px;
@@ -70,6 +98,7 @@
   height: 51px;
   color: #fff;
 }
+
 .item {
   position: absolute;
   top: 0px;
@@ -88,6 +117,7 @@
   border-radius: 4px;
   box-sizing: border-box;
 }
+
 .label {
   top: 0px;
   left: calc(50% - 176px);
@@ -104,6 +134,7 @@
   height: 36px;
   object-fit: cover;
 }
+
 .kakaologin {
   position: absolute;
   top: 378px;
@@ -119,8 +150,8 @@
   left: calc(50% - 175px);
   width: 352px;
   height: 450px;
-  
 }
+
 .rectangleParent {
   position: absolute;
   top: calc(50% - 296px);
@@ -129,6 +160,7 @@
   width: 612px;
   height: 591px;
 }
+
 .kummate {
   position: absolute;
   top: 136px;
@@ -136,6 +168,7 @@
   color: #000;
   left: calc(50% - 70px);
 }
+
 .page {
   width: 100%;
   position: relative;
@@ -163,5 +196,3 @@ input[type="password"]::placeholder {
 input[type="password"]:focus::placeholder {
   color: #000;
 }
-  
-  
