@@ -1,0 +1,121 @@
+.badgePresent,
+.isBadgePresent,
+.save,
+.apply,
+.cardBadgeArea,
+.cardBadgePeriod,
+.cardBadgePrice {
+  color: var(--white);
+  padding: 5px 8px;
+  border-radius: var(--badge-border-radius);
+}
+
+.badgePresent {
+  background-color: var(--purple400);
+}
+
+.save {
+  background-color: var(--black200);
+  margin-left: 15px;
+  cursor: pointer;
+  min-width: 55px;
+  max-height: 29px;
+}
+
+.apply {
+  background-color: var(--black200);
+  float: right;
+  cursor: pointer;
+}
+
+.saveActive,
+.applyActive {
+  background-color: var(--purple600);
+  cursor: pointer;
+}
+
+.title {
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-h5);
+}
+
+.content {
+  font-size: var(--font-size-sub1);
+  line-height: 16px;
+  min-height: 70px;
+  max-height: 500px;
+  color: var(--black300);
+  margin-top: 5px;
+  line-height: normal;
+  overflow-y: auto;
+  white-space: pre;
+}
+
+.titleContainer{
+  display: flex;
+  align-items: center;
+}
+
+.ProfileContainer {
+  position: relative;
+}
+
+.profileImg {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: var(--black100);
+  margin-top: 2px;
+}
+
+.ProfileContent {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 5px;
+  font-size: var(--font-size-sub2);
+  color: var(--black300);
+}
+
+.buttonContainer {
+  float: right;
+}
+
+.line {
+  border-bottom: 1px solid var(--black200);
+  max-width: 470px;
+  margin: 0 auto;
+  padding-top: 10px;
+}
+.cardBadgeContainer {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.cardBadgeArea {
+  background-color: var(--purple200);
+}
+.cardBadgePeriod {
+  background-color: var(--purple300);
+}
+
+.cardBadgePrice {
+  background-color: var(--purple400);
+}
+
+.isBadgePresent {
+  background-color: var(--black200);
+}
+
+.editButton,
+.deleteButton{
+  border: none;
+  box-shadow: none;
+}
+
+@media screen and (max-width: 370px) {
+  .cardBadgeContainer {
+    flex-direction: column;
+  }
+}

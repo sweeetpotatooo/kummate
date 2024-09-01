@@ -1,11 +1,16 @@
 import { Store, NamePath } from "antd/lib/form/interface"
 
+export interface Token {
+  readonly atk: string
+  readonly rtk: string
+}
+
 export interface UserState {
   readonly isLogged: boolean
   readonly signUp: boolean
   readonly data: {
     readonly email: string
-    readonly token: string
+    readonly token: Token
   }
   readonly email?: string 
   readonly status: "idle" | "loading" | "fulfilled" | "error"
@@ -42,7 +47,10 @@ export interface User {
   readonly isSmoker: boolean
   readonly mbti: string
   readonly region: string
-  readonly age: number
+  readonly minAge: number
+  readonly maxAge: number
+  readonly myAge: number
+  readonly activityTime: string
   readonly faviteTag: string
   readonly hateTag: string
   readonly myText: string
@@ -72,7 +80,7 @@ export interface GlobalState extends UserState {
   readonly msg: string
   readonly kakao: boolean
   readonly google: boolean
-  readonly token: string
+  readonly token: Token
 }
 
 export interface profileTendencyDropdown {
@@ -94,7 +102,11 @@ export interface userProfileData extends profileBasicValues {
   readonly gender?: string
   readonly smoke?: boolean
   readonly mbti?: string
-  readonly age?: number
+  readonly region?: string
+  readonly minAge?: number
+  readonly maxAge?: number
+  readonly myAge?: number
+  readonly activityTime?: string
   readonly favoriteTag?: string[]
   readonly hateTag?: string
   readonly myText?: string
