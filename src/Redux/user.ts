@@ -12,10 +12,10 @@ import {
   userLogout,
   userRegister,
 } from "../api"
-import { useDispatch } from "react-redux"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 
+// 초기 상태를 로컬 스토리지에서 불러오거나, 기본 값을 설정
 const initialState: UserState = loadFromLocalStorage() || {
   isLogged: false,
   data: {
@@ -29,6 +29,7 @@ const initialState: UserState = loadFromLocalStorage() || {
   status: "idle",
 }
 
+// 자동 로그아웃을 관리하는 훅
 export function useAutoLogout() {
   const dispatch = useDispatch()
   const { token } = useSelector((state: RootState) => state.user.data)
@@ -48,6 +49,7 @@ export function useAutoLogout() {
   }, [token, dispatch])
 }
 
+// 필요시 토큰을 새로 고침하는 thunk
 export const refreshTokenIfNeeded = createAsyncThunk<
   void,
   void,
@@ -78,6 +80,7 @@ export const refreshTokenIfNeeded = createAsyncThunk<
   }
 })
 
+// 사용자 로그인 thunk
 export const loginUser = createAsyncThunk<
   UserState,
   { email: string; password: string },
@@ -114,6 +117,7 @@ export const loginUser = createAsyncThunk<
   },
 )
 
+// 사용자 로그아웃 thunk
 export const logOutUser = createAsyncThunk<
   UserState,
   { userToken: string },
@@ -145,6 +149,7 @@ export const logOutUser = createAsyncThunk<
   }
 })
 
+// 토큰을 새로 고침하는 thunk
 export const refreshToken = createAsyncThunk<
   UserState,
   { refreshToken: string },
@@ -164,8 +169,8 @@ export const refreshToken = createAsyncThunk<
       if (!response.ok) {
         throw new Error("토큰 새로 고침 실패")
       }
-      // 로컬스토리지에 바뀐 data 저장 하기 추가
       const data: UserState = await response.json()
+      saveToLocalStorage(data) // 로컬 스토리지에 저장된 데이터를 업데이트
       return data
     } catch (error: unknown) {
       console.error("token refresh failed", error)
@@ -177,6 +182,7 @@ export const refreshToken = createAsyncThunk<
   },
 )
 
+// 카카오 로그인 thunk
 export const kakaologinUser = createAsyncThunk<
   {
     email: string
@@ -206,6 +212,7 @@ export const kakaologinUser = createAsyncThunk<
   }
 })
 
+// 구글 로그인 thunk
 export const googleloginUser = createAsyncThunk<
   { 
     token: Token
@@ -232,6 +239,7 @@ export const googleloginUser = createAsyncThunk<
   }
 })
 
+// 사용자 등록 thunk
 export const registerUser = createAsyncThunk(
   "api/users/register",
   async (userInfo: { email: string; password: string; nickname: string }) => {
@@ -251,6 +259,7 @@ export const registerUser = createAsyncThunk(
     },
   )
 
+// 유저 상태 관리를 위한 slice
 const userSlice = createSlice({
   name: "user",
   initialState,

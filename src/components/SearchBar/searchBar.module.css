@@ -57,7 +57,7 @@
 }
 
 .cardBadgeArea {
-  background-color: var(--purple200);
+  background-color: var(--purple300);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -71,14 +71,14 @@
 }
 
 .cardBadgePrice {
-  background-color: var(--purple400);
+  background-color: var(--purple300);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .cardBadgeGender {
-  background-color: var(--purple500);
+  background-color: var(--purple300);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -157,7 +157,7 @@
 
 .searchChoiceArea > p {
   margin-bottom: 10px;
-  color: var(--purple200);
+  color: var(--purple300);
   white-space: nowrap;
 }
 
@@ -169,13 +169,13 @@
 
 .searchChoicePrice > p {
   margin-bottom: 10px;
-  color: var(--purple400);
+  color: var(--purple300);
   white-space: nowrap;
 }
 
 .searchChoiceGender > p {
   margin-bottom: 10px;
-  color: var(--purple500);
+  color: var(--purple300);
   white-space: nowrap;
 }
 

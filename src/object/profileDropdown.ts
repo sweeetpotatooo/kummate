@@ -1,3 +1,4 @@
+//src/object/profileDropdown.ts
 export const gender = [{ name: "여성" }, { name: "남성" }]
 
 export const Searchgender = [
@@ -9,12 +10,25 @@ export const Searchgender = [
 export const age = [{ age: 20 }, { age: 30 }]
 
 export const ageGroup = [
-  { ageGroup: "20-25" },
-  { ageGroup: "25-30" },
-  { ageGroup: "30-35" },
+  { ageGroup: "20 ~ 22" },
+  { ageGroup: "23 ~ 25" },
+  { ageGroup: "26 ~ 30" },
+]
+
+export const SearchageGroup = [
+  { ageGroup: "상관 없음" },
+  { ageGroup: "20-22" },
+  { ageGroup: "23-25" },
+  { ageGroup: "26-30" },
 ]
 
 export const smoke = [{ smoke: "합니다" }, { smoke: "하지 않습니다" }]
+
+export const Searchsmoke =[
+  { smoke: "상관 없음" },
+  { smoke: "합니다" }, 
+  { smoke: "하지 않습니다" }
+]
 
 export const activityTime = [
   { activityTime: "아침" },
@@ -43,60 +57,18 @@ export const mbti = [
 ]
 
 export const region = [
-  { region: "마포구" },
-  { region: "서대문구" },
-  { region: "은평구" },
-  { region: "용산구" },
-  { region: "중구" },
-  { region: "종로구" },
-  { region: "성북구" },
-  { region: "성동구" },
-  { region: "동대문구" },
-  { region: "광진구" },
-  { region: "중랑구" },
-  { region: "강북구" },
-  { region: "도봉구" },
-  { region: "노원구" },
-  { region: "강서구" },
-  { region: "양천구" },
-  { region: "구로구" },
-  { region: "영등포구" },
-  { region: "동작구" },
-  { region: "금천구" },
-  { region: "관악구" },
-  { region: "서초구" },
-  { region: "강남구" },
-  { region: "송파구" },
-  { region: "강동구" },
+  { region: "모시래 4인실" },
+  { region: "모시래 3인실" },
+  { region: "해오름 4인실" },
+  { region: "해오름 3인실" },
 ]
 
 export const Searchregion = [
   { region: "상관 없음" },
-  { region: "마포구" },
-  { region: "서대문구" },
-  { region: "은평구" },
-  { region: "용산구" },
-  { region: "중구" },
-  { region: "종로구" },
-  { region: "성북구" },
-  { region: "성동구" },
-  { region: "동대문구" },
-  { region: "광진구" },
-  { region: "중랑구" },
-  { region: "강북구" },
-  { region: "도봉구" },
-  { region: "노원구" },
-  { region: "강서구" },
-  { region: "양천구" },
-  { region: "구로구" },
-  { region: "영등포구" },
-  { region: "동작구" },
-  { region: "금천구" },
-  { region: "관악구" },
-  { region: "서초구" },
-  { region: "강남구" },
-  { region: "송파구" },
-  { region: "강동구" },
+  { region: "모시래 4인실" },
+  { region: "모시래 3인실" },
+  { region: "해오름 4인실" },
+  { region: "해오름 3인실" },
 ]
 
 export const tendencyChoice = [

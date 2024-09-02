@@ -27,7 +27,7 @@ export const useApply = (postId: number) => {
       if (!response.ok) {
         if (response.status === 400) {
           Modal.error({
-            title: "신청이 불가능합니다 ❌",
+            title: "신청이 불가능합니다",
             content: "이미 마감되었거나, 신청 거절 이력이 있는 게시글입니다.",
           })
         } 

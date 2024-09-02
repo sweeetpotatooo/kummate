@@ -1,85 +1,84 @@
-import { SearchOutlined } from "@ant-design/icons"
-import { Badge, Radio, Button, RadioChangeEvent } from "antd"
+import { SearchOutlined } from "@ant-design/icons";
+import { Badge, Radio, Button, RadioChangeEvent } from "antd";
 import {
   Searchregion,
-  Searchperiod,
-  Searchprice,
   Searchgender,
-} from "../../object/profileDropdown"
-import styles from "../../components/SearchBar/searchBar.module.css"
-import { useState } from "react"
-import { RoomMateSearchProps } from "../../interface/interface"
+  SearchageGroup, // 나이 필터
+  Searchsmoke, // 흡연 여부 필터
+} from "../../object/profileDropdown"; // 검색 필터에 사용될 데이터 import
+import styles from "../../components/SearchBar/searchBar.module.css"; // 스타일링 import
+import { useState } from "react"; // 상태 관리를 위해 useState 사용
+import { RoomMateSearchProps } from "../../interface/interface"; // 컴포넌트 Prop 타입 정의
 
 const SearchBar: React.FC<RoomMateSearchProps> = ({ onSearch }) => {
-  const [searchBoxOpen, setSearchBoxOpen] = useState(false)
-  const [selectedArea, setSelectedArea] = useState("기숙사")
-  const [selectedPeriod, setSelectedPeriod] = useState("기간")
-  const [selectedPrice, setSelectedPrice] = useState("보증금")
-  const [selectedGender, setSelectedGender] = useState("성별")
-  const [selectedDeposit, setSelectedDeposit] = useState<string | undefined>(
-    undefined,
-  )
+  // 검색창의 열림/닫힘 상태를 관리하는 state
+  const [searchBoxOpen, setSearchBoxOpen] = useState(false);
+  // 지역, 나이, 흡연 여부, 성별 필터의 선택된 값을 관리하는 state
+  const [selectedArea, setSelectedArea] = useState("기숙사");
+  const [selectedAgeGroup, setSelectedAgeGroup] = useState("나이");
+  const [selectedSmoke, setSelectedSmoke] = useState("흡연"); // 흡연 여부 필터 state
+  const [selectedGender, setSelectedGender] = useState("성별");
 
+  // 검색 버튼 클릭 시 호출되는 함수
   const handleSearch = () => {
+    // 선택된 필터 값을 기반으로 검색 쿼리 객체 생성
     const query = {
       area: selectedArea,
-      period: selectedPeriod,
-      price: selectedDeposit,
+      ageGroup: selectedAgeGroup,
+      smoke: selectedSmoke, // 흡연 여부 필터 추가
       gender: selectedGender,
-    }
+    };
 
-    onSearch?.(query)
-    setSearchBoxOpen(!searchBoxOpen)
-  }
+    // 부모 컴포넌트에 검색 쿼리 전달
+    onSearch?.(query);
+    // 검색창 닫기
+    setSearchBoxOpen(!searchBoxOpen);
+  };
 
-  // 검색
+  // 검색창 열림/닫힘 상태를 토글하는 함수
   const handleToggleSearchBox = () => {
-    setSearchBoxOpen(!searchBoxOpen)
-  }
-
-  // 검색 모달 금액
-  const handlePriceChange = (e: RadioChangeEvent) => {
-    const deposit = e.target.value
-    setSelectedDeposit(deposit)
-
-    const selectedPriceDisplay = Searchprice.find(
-      (item) => item.deposit === deposit,
-    )?.display
-
-    setSelectedPrice(selectedPriceDisplay || "Deposit")
-  }
+    setSearchBoxOpen(!searchBoxOpen);
+  };
 
   return (
     <div className={styles.searchContainer}>
       <div className={styles.searchBox}>
+        {/* 검색 바 - 클릭 시 검색창이 열림 */}
         <div className={styles.searchBar} onClick={handleToggleSearchBox}>
+          {/* 지역 필터 */}
           <div>
             <p>지역</p>
             <Badge className={styles.cardBadgeArea}>{selectedArea}</Badge>
           </div>
+          {/* 나이 필터 */}
           <div>
-            <p>기간</p>
-            <Badge className={styles.cardBadgePeriod}>{selectedPeriod}</Badge>
+            <p>나이</p>
+            <Badge className={styles.cardBadgePeriod}>{selectedAgeGroup}</Badge>
           </div>
+          {/* 흡연 여부 필터 */}
           <div>
-            <p>보증금</p>
-            <Badge className={styles.cardBadgePrice}>{selectedPrice}</Badge>
+            <p>흡연 여부</p>
+            <Badge className={styles.cardBadgePrice}>{selectedSmoke}</Badge>
           </div>
+          {/* 성별 필터 */}
           <div className={styles.lastDiv}>
             <p>성별</p>
             <Badge className={styles.cardBadgeGender}>{selectedGender}</Badge>
           </div>
+          {/* 검색 아이콘 - 클릭 시 검색 수행 */}
           <SearchOutlined
             className={styles.searchIcon}
             onClick={() => handleSearch()}
             style={{ fontSize: 20, color: "#b9b9b9" }}
           />
         </div>
+        {/* 검색창이 열렸을 때 표시되는 필터 선택 영역 */}
         {searchBoxOpen && (
           <div className={styles.searchChoiceContainer}>
             <div className={styles.searchChoiceBox}>
+              {/* 지역 선택 필터 */}
               <div className={styles.searchChoiceArea}>
-                <p>지역</p>
+                <p>기숙사</p>
                 <div className={styles.areaRadioGroup}>
                   <Radio.Group
                     onChange={(e) => setSelectedArea(e.target.value)}
@@ -96,42 +95,45 @@ const SearchBar: React.FC<RoomMateSearchProps> = ({ onSearch }) => {
                   </Radio.Group>
                 </div>
               </div>
+              {/* 나이 선택 필터 */}
               <div className={styles.searchChoicePeriod}>
-                <p>기간</p>
+                <p>나이</p>
                 <Radio.Group
                   className={styles.periodRadioGroup}
-                  value={selectedPeriod}
-                  onChange={(e) => setSelectedPeriod(e.target.value)}
+                  value={selectedAgeGroup}
+                  onChange={(e) => setSelectedAgeGroup(e.target.value)}
                 >
-                  {Searchperiod.map((item, index) => (
+                  {SearchageGroup.map((item, index) => (
                     <Radio
                       key={index}
-                      value={item.quarter}
+                      value={item.ageGroup}
                       className={styles.periodRadioBtn}
                     >
-                      {item.quarter}
+                      {item.ageGroup}
                     </Radio>
                   ))}
                 </Radio.Group>
               </div>
+              {/* 흡연 여부 선택 필터 */}
               <div className={styles.searchChoicePrice}>
-                <p>보증금</p>
+                <p>흡연</p>
                 <Radio.Group
                   className={styles.priceRadioGroup}
-                  value={selectedDeposit}
-                  onChange={handlePriceChange}
+                  value={selectedSmoke}
+                  onChange={(e) => setSelectedSmoke(e.target.value)}
                 >
-                  {Searchprice.map((item, index) => (
+                  {Searchsmoke.map((item, index) => (
                     <Radio
                       key={index}
-                      value={item.deposit}
+                      value={item.smoke}
                       className={styles.priceRadioBtn}
                     >
-                      {item.display}
+                      {item.smoke}
                     </Radio>
                   ))}
                 </Radio.Group>
               </div>
+              {/* 성별 선택 필터 */}
               <div className={styles.searchChoiceGender}>
                 <p>성별</p>
                 <Radio.Group
@@ -151,6 +153,7 @@ const SearchBar: React.FC<RoomMateSearchProps> = ({ onSearch }) => {
                 </Radio.Group>
               </div>
             </div>
+            {/* 검색 버튼 */}
             <Button
               className={styles.searchChoiceBtn}
               type="primary"
@@ -162,7 +165,7 @@ const SearchBar: React.FC<RoomMateSearchProps> = ({ onSearch }) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SearchBar
+export default SearchBar;

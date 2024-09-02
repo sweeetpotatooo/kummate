@@ -183,7 +183,7 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
       <SearchBar onSearch={handleSearch} />
       <div className={styles.roomMateContainer}>
         <div className={styles.roomMateTitle}>
-          <div className={styles.roomMateTitleText}>룸메이트 구해요 👋</div>
+          <div className={styles.roomMateTitleText}>룸메이트 구해요</div>
           <div className={styles.roomMateBtn}>
             <Button
               className={styles.circleBtn}

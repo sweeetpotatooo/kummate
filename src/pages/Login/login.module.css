@@ -1,3 +1,5 @@
+/* 기존 CSS 코드에서 아래 부분을 추가 및 수정 */
+
 .loginContainer {
   display: flex;
   flex-direction: column;
@@ -11,6 +13,19 @@
   gap: 50px;
   z-index: 1000;
   background-color: var(--bgc);
+}
+
+/* KUMMATE 글자 스타일링 */
+.loginContainer b {
+  font-size: 24px; /* 글자 크기 증가 */
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  transition: none; /* 클릭 시 색 변화 제거 */
+}
+
+.loginContainer b:hover {
+  opacity: 1; /* 클릭 시 색 변화 없도록 설정 */
 }
 
 .logo {
@@ -128,7 +143,7 @@
   .videoBox {
     display: none;
   }
-  
+
   .loginContainer {
     flex-direction: column;
   }

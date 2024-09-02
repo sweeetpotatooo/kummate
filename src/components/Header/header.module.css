@@ -9,6 +9,18 @@
   align-items: center;
 }
 
+.headerContainer b {
+  font-size: 24px; /* 글자 크기 증가 */
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  transition: none; /* 클릭 시 색 변화 제거 */
+}
+
+.headerContainer b:hover {
+  opacity: 1; /* 클릭 시 색 변화 없도록 설정 */
+}
+
 .line {
   border-bottom: 0.5px solid var(--black100);
 }
@@ -126,4 +138,3 @@
     padding: 0px;
   }
 }
-
