@@ -1,64 +1,3 @@
-/*
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-
-interface UserState {
-  data: {
-    token: {
-      atk: string;
-    };
-  };
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-}
-
-const initialState: UserState = {
-  data: {
-    token: {
-      atk: '',
-    },
-  },
-  status: 'idle'
-};
-
-export const logOutUser = createAsyncThunk(
-  'user/logOut',
-  async (payload: { userToken: string }) => {
-    const response = await axios.post('/api/logout', {}, {
-      headers: {
-        Authorization: `Bearer ${payload.userToken}`,
-      },
-    });
-    return response.data;
-  }
-);
-
-const userSlice = createSlice({
-  name: 'user',
-  initialState,
-  reducers: {
-    // Add reducers here if needed
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(logOutUser.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(logOutUser.fulfilled, (state) => {
-        state.status = 'succeeded';
-        state.data = {
-          token: {
-            atk: '',
-          },
-        };
-      })
-      .addCase(logOutUser.rejected, (state, action) => {
-        state.status = 'failed';
-      });
-  },
-});
-
-export default userSlice.reducer;
-*/
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { Token, UserState } from "../interface/interface"
@@ -76,6 +15,7 @@ import {
 import { useDispatch } from "react-redux"
 import { useSelector } from "react-redux"
 import { useEffect } from "react"
+const API_URL = 'http://localhost:3001';
 
 const initialState: UserState = loadFromLocalStorage() || {
   isLogged: false,
@@ -140,9 +80,9 @@ export const refreshTokenIfNeeded = createAsyncThunk<
 })
 
 export const loginUser = createAsyncThunk<
-  UserState,
-  { email: string; password: string },
-  { dispatch: Dispatch; state: RootState }
+  UserState, // 반환 타입
+  { email: string; password: string }, // 입력 타입
+  { dispatch: Dispatch; state: RootState } // ThunkAPI 타입
 >(
   "api/users/login",
   async (
@@ -150,61 +90,77 @@ export const loginUser = createAsyncThunk<
     { rejectWithValue },
   ) => {
     try {
-      const response = await fetch(`/api/${userLogin}`, {
+      const response = await fetch(`${API_URL}/${userLogin}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(credentials),
-      })
+      });
 
       if (!response.ok) {
-        throw new Error("Login failed")
+        throw new Error("Login failed");
       }
 
-      const data: UserState = await response.json()
+      const data = await response.json();
 
-      return { ...data, email: credentials.email }
-    } catch (error: unknown) {
-      console.error("login failed", error)
-      if (error instanceof Error) {
-        return rejectWithValue(error.message)
-      }
-      return rejectWithValue("오류")
+      // 로그인 성공 로그 출력
+      console.log('Login successful:', credentials.email);
+
+      // 올바른 타입으로 반환
+      const userState: UserState = {
+        isLogged: true, // 성공적인 로그인 시 true로 설정
+        signUp: false, // 로그인 후 기본적으로 false로 설정
+        data: {
+          email: credentials.email,
+          token: data.token,
+        },
+        status: "fulfilled", // 성공적으로 데이터를 받아왔을 때
+      };
+
+      return userState;
+    } catch (error) {
+      return rejectWithValue(error);
     }
   },
-)
+);
 
+
+
+// 사용자 로그아웃 thunk
 export const logOutUser = createAsyncThunk<
   UserState,
   { userToken: string },
   { dispatch: AppDispatch; rejectValue: string; state: RootState }
->("api/users/logout", async ({ userToken }, thunkApi) => {
-  try {
-    const response = await fetch(`/api/${userLogout}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: userToken.toString(),
-      },
-    })
+>(
+  "api/users/logout", // 이 부분은 내부적으로 사용되는 액션 타입으로, 실제 API 경로와는 관계가 없습니다.
+  async ({ userToken }, thunkApi) => {
+    try {
+      const response = await fetch(`${API_URL}/${userLogout}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: userToken.toString(),
+        },
+      });
 
-    if (!response.ok) {
-      throw new Error("Logout failed")
+      if (!response.ok) {
+        throw new Error("Logout failed");
+      }
+
+      const data: UserState = await response.json();
+
+      thunkApi.dispatch(logout());
+
+      return data;
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        return thunkApi.rejectWithValue(error.message);
+      }
+      return thunkApi.rejectWithValue("오류");
     }
-
-    const data: UserState = await response.json()
-
-    thunkApi.dispatch(logout())
-
-    return data
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      return thunkApi.rejectWithValue(error.message)
-    }
-    return thunkApi.rejectWithValue("오류")
   }
-})
+);
 
 export const refreshToken = createAsyncThunk<
   UserState,
@@ -312,94 +268,93 @@ export const registerUser = createAsyncThunk(
     },
   )
 
-const userSlice = createSlice({
-  name: "user",
-  initialState,
-  reducers: {
-    loginSuccess: (state, action) => {
-      state.isLogged = true
-      state.data.token = action.payload.data.token
-      state.email = action.payload.email
-      saveToLocalStorage(state)
+  const userSlice = createSlice({
+    name: "user",
+    initialState,
+    reducers: {
+      loginSuccess: (state, action) => {
+        state.isLogged = true;
+        state.data.token = action.payload.data.token ?? { atk: "", rtk: "" }; // 기본값 설정
+        state.data.email = action.payload.email ?? ""; // 기본값 설정
+        saveToLocalStorage(state);
+      },
+      logout: (state) => {
+        state.isLogged = false;
+        state.data.token = { atk: "", rtk: "" }; // 초기화
+        state.data.email = ""; // 초기화
+      },
+      signUp: (state) => {
+        state.signUp = false;
+      },
+      kakaoLogin: (state, action) => {
+        state.isLogged = true;
+        state.data.token = action.payload.data.token;
+        state.data.email = action.payload.email ?? ""; // 기본값을 빈 문자열로 설정
+        saveToLocalStorage(state);
+      },
+      googleLogin: (state, action) => {
+        state.isLogged = true;
+        state.data.token = action.payload.data.token;
+        state.data.email = action.payload.email ?? ""; // 기본값을 빈 문자열로 설정
+        saveToLocalStorage(state);
+      },
     },
-    logout: (state) => {
-      state.isLogged = false
-      state.data.token = { atk: "", rtk: "" }
-      state.email = ""
+    extraReducers: (builder) => {
+      builder.addCase(loginUser.fulfilled, (state, action) => {
+        state.isLogged = true;
+        state.data.token = action.payload.data.token;
+        state.data.email = action.payload.data.email;
+        state.status = action.payload.status;
+        saveToLocalStorage(state);
+      });
+  
+      builder.addCase(loginUser.rejected, (state) => {
+        state.isLogged = false;
+        state.data.token = { atk: "", rtk: "" }; // 초기화
+        state.data.email = ""; // 초기화
+      });
+  
+  
+      builder.addCase(logOutUser.fulfilled, (state) => {
+        state.isLogged = false;
+        state.data.token = { atk: "", rtk: "" };
+        state.data.email = ""; // 기본값을 빈 문자열로 설정
+      });
+  
+      builder.addCase(registerUser.fulfilled, (state) => {
+        state.signUp = true;
+      });
+  
+      builder.addCase(registerUser.rejected, (state) => {
+        state.signUp = false;
+      });
+  
+      builder.addCase(kakaologinUser.fulfilled, (state, action) => {
+        state.isLogged = true;
+        state.data.token = action.payload.token;
+        state.data.email = action.payload.email ?? ""; // 기본값을 빈 문자열로 설정
+        saveToLocalStorage(state);
+      });
+  
+      builder.addCase(kakaologinUser.rejected, (state) => {
+        state.isLogged = false;
+        state.data.email = ""; // 기본값을 빈 문자열로 설정
+      });
+  
+      builder.addCase(googleloginUser.fulfilled, (state, action) => {
+        state.isLogged = true;
+        state.data.token = action.payload.token;
+        state.data.email = action.payload.email ?? ""; // 기본값을 빈 문자열로 설정
+        saveToLocalStorage(state);
+      });
+  
+      builder.addCase(googleloginUser.rejected, (state) => {
+        state.isLogged = false;
+        state.data.email = ""; // 기본값을 빈 문자열로 설정
+      });
     },
-    signUp: (state) => {
-      state.signUp = false
-    },
-    kakaoLogin: (state, action) => {
-      state.isLogged = false
-      state.data.token = action.payload.data.token
-      state.email = action.payload.email
-      saveToLocalStorage(state)
-    },
-    googleLogin: (state, action) => {
-      state.isLogged = false
-      state.data.token = action.payload.data.token
-      state.email = action.payload.email
-      saveToLocalStorage(state)
-    },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(loginUser.fulfilled, (state, action) => {
-      state.isLogged = true
-      state.data.token = action.payload.data.token
-      state.email = action.payload.email
-      saveToLocalStorage(state)
-    })
-
-    builder.addCase(loginUser.rejected, (state) => {
-      state.isLogged = false
-      state.email = ""
-    })
-
-    builder.addCase(logOutUser.fulfilled, (state) => {
-      state.isLogged = false
-    })
-
-    builder.addCase(registerUser.fulfilled, (state) => {
-      state.signUp = true
-    })
-
-    builder.addCase(registerUser.rejected, (state) => {
-      state.signUp = false
-    })
-
-    builder.addCase(kakaologinUser.fulfilled, (state, action) => {
-      state.isLogged = true
-      state.data.token = action.payload.token
-      state.email = action.payload.email
-      saveToLocalStorage(state)
-    })
-
-    builder.addCase(kakaologinUser.rejected, (state) => {
-      state.isLogged = false
-      state.email = ""
-    })
-
-    builder.addCase(googleloginUser.fulfilled, (state, action) => {
-      state.isLogged = true
-      state.data.token = action.payload.token
-      state.email = action.payload.email
-      saveToLocalStorage(state)
-    })
-
-    builder.addCase(googleloginUser.rejected, (state) => {
-      state.isLogged = false
-      state.email = ""
-    })
-  },
-})
-
-const storedtoken = localStorage.getItem("token")
-if (storedtoken) {
-  if (refreshTokenIfNeeded()) {
-    userSlice.actions.logout()
-  }
-}
-
-export const { logout, loginSuccess } = userSlice.actions
-export default userSlice.reducer
+  });
+  
+  export const { logout, loginSuccess } = userSlice.actions;
+  export default userSlice.reducer;
+  

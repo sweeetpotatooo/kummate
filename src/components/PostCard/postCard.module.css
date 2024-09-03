@@ -1,0 +1,76 @@
+.cardContainer {
+  cursor: pointer;
+  width: 250px;
+}
+
+.cardContainer:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease-in-out;
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardTitle {
+  width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: var(--font-size-h6);
+}
+
+.cardContent {
+  width: 200px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  color: var(--black300);
+}
+
+.cardBadgeContainer {
+  display: flex;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.cardBadgeArea,
+.cardBadgePeriod,
+.cardBadgePrice {
+  color: var(--white);
+  padding: 5px;
+  font-size: 10px;
+  border-radius: var(--badge-border-radius);
+}
+
+.cardBadgeArea {
+  background-color: var(--purple200);
+}
+.cardBadgePeriod {
+  background-color: var(--purple300);
+}
+
+.cardBadgePrice {
+  background-color: var(--purple400);
+}
+
+.user {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.user span {
+  color: var(--black300);
+}
+
+.author {
+  display: flex;
+  gap: 3px;
+}
+
+.noPosts {
+  position: absolute;
+  left: 45%;
+}

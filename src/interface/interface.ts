@@ -47,7 +47,10 @@ export interface User {
   readonly isSmoker: boolean
   readonly mbti: string
   readonly region: string
-  readonly age: number
+  readonly minAge: number
+  readonly maxAge: number
+  readonly myAge: number
+  readonly activityTime: string
   readonly faviteTag: string
   readonly hateTag: string
   readonly myText: string
@@ -99,7 +102,11 @@ export interface userProfileData extends profileBasicValues {
   readonly gender?: string
   readonly smoke?: boolean
   readonly mbti?: string
-  readonly age?: number
+  readonly region?: string
+  readonly minAge?: number
+  readonly maxAge?: number
+  readonly myAge?: number
+  readonly activityTime?: string
   readonly favoriteTag?: string[]
   readonly hateTag?: string
   readonly myText?: string

@@ -1,5 +1,6 @@
+//src/components/Login.tsx
 import styles from './Login.module.css';
-import { googleUserLogin, kakaoUserLogin } from "../api";
+import { googleUserLogin, kakaoUserLogin, loginUser } from "../api";
 import { FunctionComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Googlebutton from '../assets/Google.png';
@@ -11,14 +12,7 @@ const Login: FunctionComponent = () => {
   const [password, setPassword] = useState("");
   const [emailPlaceholderVisible, setEmailPlaceholderVisible] = useState(true);
   const [passwordPlaceholderVisible, setPasswordPlaceholderVisible] = useState(true);
-
-  const handleKakaoLogin = () => {
-    window.location.href = kakaoUserLogin;
-  };
-
-  const handleGoogleLogin = () => {
-    window.location.href = googleUserLogin;
-  };
+  const [error, setError] = useState<string | null>(null);
 
   const handleSignupClick = () => {
     navigate('/signup');
@@ -44,6 +38,23 @@ const Login: FunctionComponent = () => {
     }
   };
 
+  const handleLogin = async () => {
+    try {
+      const userData = await loginUser(email, password);
+      localStorage.setItem('token', userData.token);
+      navigate('/');
+    } catch (error) {
+      if (email === "" && password === "") {
+        window.location.href = googleUserLogin;
+      // eslint-disable-next-line no-dupe-else-if
+      } else if (email === "" && password === "") {
+        window.location.href = kakaoUserLogin;
+      } else {
+        setError('로그인에 실패했습니다. 이메일과 비밀번호를 확인하세요.');
+      }
+    }
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.rectangleParent}>
@@ -54,9 +65,10 @@ const Login: FunctionComponent = () => {
           <div className={styles.wrapper}>
             <div className={styles.div1}>
               <div className={styles.child} />
-              <b className={styles.b}>로그인</b>
+              <button className={styles.loginButton} onClick={handleLogin}>로그인</button>
             </div>
           </div>
+          {error && <div className={styles.error}>{error}</div>}
           <div className={styles.div2}>
             <input 
               type="email" 
@@ -81,8 +93,8 @@ const Login: FunctionComponent = () => {
               onBlur={handlePasswordBlur}
             />
           </div>
-          <img className={styles.googlelogin} alt="Google 로그인" src={Googlebutton} onClick={handleGoogleLogin}/>
-          <img className={styles.kakaologin} alt="Kakao 로그인" src={Kakaobutton} onClick={handleKakaoLogin}/>
+          <img className={styles.googlelogin} alt="Google 로그인" src={Googlebutton} />
+          <img className={styles.kakaologin} alt="Kakao 로그인" src={Kakaobutton} />
         </div>
       </div>
       <b className={styles.kummate}>KUMMATE</b>

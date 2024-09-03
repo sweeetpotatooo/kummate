@@ -3,32 +3,39 @@ import styles from './Header.module.css';
 import Notice from '../assets/Notification important.svg';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from "../Redux/store";
-import { logOutUser } from "../Redux/user";
+import { clearToken } from "../Redux/userSlice";
 import { useNavigate } from 'react-router-dom';
 
 const Header: FunctionComponent = () => {
-  const isLoggedIn = useSelector((state: RootState) =>
-    Boolean(state.user.data.token.atk)
-  );
   const dispatch: AppDispatch = useDispatch();
-  const navigator = useNavigate();
-  const userToken = useSelector((state: RootState) => state.user.data.token.atk);
+  const navigate = useNavigate();
+  
+  // 로그인 상태 및 토큰 가져오기
+  const isLoggedIn = useSelector((state: RootState) => Boolean(state.user.token));
+  const userToken = useSelector((state: RootState) => state.user.token);
 
   const handleLogout = async () => {
-    try {
-      await dispatch(logOutUser({ userToken }));
-      navigator("/");
-    } catch (error) {
-      console.error(error);
+    if (userToken) {
+      try { 
+        // 로그아웃 처리
+        dispatch(clearToken()); // 토큰 제거
+        navigate("/"); // 홈으로 이동
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
   const handleNavigateToArticle = () => {
-    navigator('/article');
+    navigate('/article');
   };
 
   const handleNavigateHome = () => {
-    navigator('/');
+    navigate('/');
+  };
+
+  const handleLogin = () => {
+    navigate('/login');
   };
 
   return (
@@ -36,7 +43,10 @@ const Header: FunctionComponent = () => {
       <div className={styles.headerChild}>
         <div className={styles.div}>
           <div className={styles.div1}>
-            <div className={styles.div2} onClick={isLoggedIn ? handleLogout : () => navigator('/login')}>
+            <div
+              className={styles.div2}
+              onClick={isLoggedIn ? handleLogout : handleLogin}
+            >
               {isLoggedIn ? '로그아웃' : '로그인'}
             </div>
             {isLoggedIn && <div className={styles.div3}>마이페이지</div>}

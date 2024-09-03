@@ -1,0 +1,37 @@
+.myPageContainer {
+  max-width: 1077px;
+  max-height: 1000px;
+  position: relative;
+  margin: 0 auto;
+}
+
+.myPageBox {
+  max-width: 470px;
+  margin: 0 auto;
+}
+
+.myPageUl {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 35px;
+  margin-bottom: 35px;
+}
+
+.myPageUl li {
+  font-size: var(--font-size-h6);
+}
+
+.myPageUl li:hover,
+.myPageUl li:active {
+  color: var(--purple600);
+}
+
+@media screen and (max-width: 375px) {
+  .myPageBox {
+    overflow-x: auto;
+  }
+
+  .myPageUl li {
+    font-size: var(--font-size-sub1);
+  }
+}
