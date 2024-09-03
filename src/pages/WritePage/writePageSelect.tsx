@@ -23,9 +23,9 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
   }
 
   const handlePeriodChange = (e: RadioChangeEvent) => {
-    const period = e.target.value
-    setSelectedPeriod(period)
-    form.setFieldsValue({ period })
+    const ageGroup = e.target.value
+    setSelectedPeriod(ageGroup)
+    form.setFieldsValue({ageGroup})
   }
 
   const handlePriceChange = (e: RadioChangeEvent) => {
@@ -50,13 +50,13 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
           <div className={styles.searchBar} onClick={handleToggleSearchBox}>
             <div>
               <p className={styles.title}>
-                <span className={styles.require}>*</span>지역
+                <span className={styles.require}>*</span>기숙사
               </p>
               <Badge className={styles.cardBadgeArea}>{selectedArea}</Badge>
             </div>
             <div>
               <p className={styles.title}>
-                <span className={styles.require}>*</span>기간
+                <span className={styles.require}>*</span>나이
               </p>
               <Badge className={styles.cardBadgePeriod}>{selectedPeriod}</Badge>
             </div>
@@ -102,13 +102,13 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
                 </div>
               </div>
               <div className={styles.searchChoicePeriod}>
-                <p>기간</p>
+                <p>나이</p>
                 <Form.Item
                   name="period"
                   rules={[
                     {
                       required: true,
-                      message: "기간을 선택해 주세요.",
+                      message: "나이를 선택해 주세요.",
                     },
                   ]}
                 >

@@ -1,11 +1,12 @@
 // 사용자 관련 API 엔드포인트 상수 정의
-export const userLogin = "users/login"; // 사용자 로그인 경로
-export const userLogout = "users/logout"; // 사용자 로그아웃 경로
-export const refreshApiUrl = "users/login"; // 토큰 새로 고침 경로
-export const userRegister = "users/register"; // 사용자 등록 경로
+// 사용자 관련 API 엔드포인트 상수 정의
+export const userLogin = "auth/login"; // 사용자 로그인 경로
+export const userLogout = "auth/logout"; // 사용자 로그아웃 경로
+export const refreshApiUrl = "auth/refresh"; // 토큰 새로 고침 경로
+export const userRegister = "auth/register"; // 사용자 등록 경로
 export const kakaoUserLogin = import.meta.env.VITE_KAKAO_LOGIN; // 카카오 로그인 URL (환경 변수 사용)
 export const googleUserLogin = import.meta.env.VITE_GOOGLE_LOGIN; // 구글 로그인 URL (환경 변수 사용)
-export const googleLogin = "users/login/google"; // 구글 로그인 경로
+export const googleLogin = "auth/login/google"; // 구글 로그인 경로
 export const userArticle = "articles"; // 게시물 관련 경로
 export const userFavorite = "articles/favorites"; // 즐겨찾기 관련 경로
 export const userMyFavorite = "my/favorites"; // 사용자의 즐겨찾기 목록 경로
@@ -13,7 +14,7 @@ export const userMyArticles = "my/articles"; // 사용자의 게시물 목록 �
 export const userMyprofile = "my"; // 사용자의 프로필 정보 경로
 export const userMyprofileNickname = "my/nickname"; // 사용자 닉네임 수정 경로
 export const userMyprofileFile = "my/image"; // 사용자 프로필 이미지 수정 경로
-export const kakaoLogin = "users/login/kakao"; // 카카오 로그인 경로
+export const kakaoLogin = "auth/login/kakao"; // 카카오 로그인 경로
 export const userMyToApplicants = "my/to-applicants"; // 내가 받은 신청자 목록 경로
 export const userMyFromApplicants = "my/from-applicants"; // 내가 보낸 신청자 목록 경로
 export const userAprove = "applicant/approve"; // 신청 승인 경로
@@ -24,6 +25,7 @@ export const userArticleApply = "articles/apply"; // 게시물 신청 경로
 export const userApplicant = "applicant"; // 신청자 관련 경로
 export const userChatRoom = "chat"; // 채팅 방 경로
 export const userChatList = "chat/list"; // 채팅 목록 경로
+
 
 import axios from 'axios'; // axios 라이브러리를 가져옴
 

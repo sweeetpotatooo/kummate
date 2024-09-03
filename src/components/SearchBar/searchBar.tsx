@@ -47,7 +47,7 @@ const SearchBar: React.FC<RoomMateSearchProps> = ({ onSearch }) => {
         <div className={styles.searchBar} onClick={handleToggleSearchBox}>
           {/* 지역 필터 */}
           <div>
-            <p>지역</p>
+            <p>기숙사</p>
             <Badge className={styles.cardBadgeArea}>{selectedArea}</Badge>
           </div>
           {/* 나이 필터 */}

@@ -52,10 +52,11 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
     setProfileMethod("GET")
     setProfileHeaders({
       "Content-Type": "application/json",
-      Authorization: userToken.atk.toString(),
+      Authorization: userToken?.atk?.toString() || "",
     })
     setProfileBody()
-  }, [userMyprofile, userToken])
+  }, [setProfileBody, setProfileHeaders, setProfileMethod, setProfileUrl, userToken])
+  
 
   const handleSearchResults = (results: Post[]) => {
     setPosts(results)

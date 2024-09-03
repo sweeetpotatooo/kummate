@@ -1,8 +1,8 @@
-import styles from "./footer.module.css"
-import { SiNotion } from "react-icons/si"
-import { GithubOutlined } from '@ant-design/icons';
-import { Button } from "antd"
 import { FunctionComponent } from 'react';
+import styles from './footer.module.css';
+import { SiNotion } from 'react-icons/si';
+import { GithubOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 
 const Footer: FunctionComponent = () => {
   const handleGithubClick = () => {
@@ -15,38 +15,31 @@ const Footer: FunctionComponent = () => {
     window.open ('https://www.notion.so/KUMMATE-7df8c7200a984e3aaddad9e6663d2ffd?pvs=4');
   };
 
-
   return (
-    <>
-      <div className={styles.footerContainer}>
-        <div className={styles.footerBox}>
-          <div className={styles.footerDesc}>
-            <div className={styles.info}>
-              <p>KUMMATE</p>
-            </div>
-          </div>
-          <div className={styles.footerOwner}>
-            <div className={styles.footerGit}>
-              <Button
-                onClick={handleNotionClick} // Notion 버튼 클릭 시 handleNotionClick 함수 호출
-                shape="circle"
-                icon={
-                  <SiNotion style={{ fontSize: "20px", color: "#006400" }} />
-                }
-              />
-              <Button
-                onClick={handleGithubClick} // GitHub 버튼 클릭 시 handleGithubClick 함수 호출
-                shape="circle"
-                icon={
-                  <GithubOutlined style={{ fontSize: "20px", color: "#006400" }} />
-                }
-              />
-            </div>
-          </div>
-        </div>
+    <div className={styles.footer}>
+      <div className={styles.footerChild} />
+      <div className={styles.kummateParent}>
+        <b className={styles.kummate}>KUMMATE</b>
+        <b className={styles.copyright2024}>{`Copyright ⓒ 2024 by Kummate`}</b>
       </div>
-    </>
-  )
-}
+      <div className={styles.socialButtons}>
+        <Button
+          shape="circle"
+          icon={<GithubOutlined style={{ fontSize: '20px', color: '#38773e' }} />}
+          aria-label="GitHub"
+          className={styles.socialButton}
+          onClick={handleGithubClick} // GitHub 버튼 클릭 시 handleGithubClick 함수 호출
+        />
+        <Button
+          shape="circle"
+          icon={<SiNotion style={{ fontSize: '20px', color: '#38773e' }} />}
+          aria-label="Notion"
+          className={styles.socialButton}
+          onClick={handleNotionClick} // Notion 버튼 클릭 시 handleNotionClick 함수 호출
+        />
+      </div>
+    </div>
+  );
+};
 
-export default Footer
+export default Footer;

@@ -1,44 +1,47 @@
-import { Link, useNavigate } from "react-router-dom"
-import { useState, useEffect } from "react"
-import styles from "./header.module.css"
-import { useSelector, useDispatch } from "react-redux"
-import { AppDispatch, RootState } from "../../Redux/store"
-import { logOutUser } from "../../Redux/user"
-import { RiMessage3Fill } from "react-icons/ri"
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import styles from "./header.module.css";
+import { useSelector, useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../../Redux/store";
+import { logOutUser } from "../../Redux/user";
+import { RiMessage3Fill } from "react-icons/ri";
 
 const Header: React.FC = () => {
   const isLoggedIn = useSelector((state: RootState) =>
-    Boolean(state.user.data.token.atk),
-  )
-  const dispatch: AppDispatch = useDispatch()
-  const navigator = useNavigate()
-  const userToken = useSelector((state: RootState) => state.user.data.token.atk)
+    Boolean(state.user.isLogged),
+  );
+  const dispatch: AppDispatch = useDispatch();
+  const navigator = useNavigate();
+  const userToken = useSelector((state: RootState) => state.user.data.token.atk);
+
+  // isLoggedIn 값을 콘솔에 출력
+  console.log("isLogged:", isLoggedIn);
 
   const handleLogout = async () => {
     try {
-      await dispatch(logOutUser({ userToken }))
-      navigator("/")
+      await dispatch(logOutUser({ userToken }));
+      navigator("/");
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   const chatOnClick = () => {
-    navigator("/Chat")
-  }
+    navigator("/Chat");
+  };
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleResize = () => {
-      setWindowWidth(window.innerWidth)
-    }
-    window.addEventListener("resize", handleResize)
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
     
     return () => {
-      window.removeEventListener("resize", handleResize)
-    }
-  }, [])
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <>
@@ -78,7 +81,7 @@ const Header: React.FC = () => {
       </div>
       <div className={styles.line}></div>
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
