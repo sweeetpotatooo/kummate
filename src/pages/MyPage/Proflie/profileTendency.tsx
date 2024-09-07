@@ -151,7 +151,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
                 ))}
               </div>
             )}
-            <p className={styles.dropdownP}> 입니다 ☺️</p>
+            <p className={styles.dropdownP}> 입니다 </p>
           </div>
         </Radio.Group>
         <Radio.Group
@@ -189,7 +189,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
                 max={150}
               />
             </div>
-            <p className={styles.dropdownP}> 입니다 ☺️</p>
+            <p className={styles.dropdownP}> 입니다 </p>
           </div>
         </Radio.Group>
         <Radio.Group
@@ -246,7 +246,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
                 ))}
               </div>
             )}
-            <p className={styles.dropdownP}> 입니다 ☺️</p>
+            <p className={styles.dropdownP}> 입니다 </p>
           </div>
         </Radio.Group>
         <Radio.Group
@@ -275,7 +275,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
                 ))}
               </div>
             )}
-            <p className={styles.dropdownP}> 입니다 ☺️</p>
+            <p className={styles.dropdownP}> 입니다</p>
           </div>
         </Radio.Group>
         <Radio.Group
@@ -304,7 +304,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
                 ))}
               </div>
             )}
-            <p className={styles.dropdownP}> 입니다 ☺️</p>
+            <p className={styles.dropdownP}> 입니다 </p>
           </div>
         </Radio.Group>
         <Radio.Group
@@ -333,14 +333,14 @@ const ProfileTendency = (props: profileTendencyProps) => {
                 ))}
               </div>
             )}
-            <p className={styles.dropdownP}> 에 활동합니다 ☺️</p>
+            <p className={styles.dropdownP}> 에 활동합니다 </p>
           </div>
         </Radio.Group>
       </div>
       <div className={styles.tagContainer}>
         <div>
           <div className={styles.tendencyDesc}>
-            <span>성향을 선택해주세요 ☺️</span>
+            <span>성향을 선택해주세요 </span>
             <Button
               className={styles.tendencyBtn}
               type="primary"
@@ -354,7 +354,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
         <div>
           <div className={styles.tendencyDesc}>
             <Modal
-              title="이런 룸메이트가 좋아요 🥰 (1개 ~ 최대 5개 선택)"
+              title="이런 룸메이트가 좋아요 (1개 ~ 최대 5개 선택)"
               centered
               open={tendencyModal}
               onOk={() => {

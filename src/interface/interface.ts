@@ -148,8 +148,8 @@ export interface profileTendencyProps {
 
 export interface SearchQuery {
   readonly area: string
-  readonly period: string
-  readonly price: string | undefined
+  readonly ageGroup: string
+  readonly smoke: string
   readonly gender: string
 }
 

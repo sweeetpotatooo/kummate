@@ -13,7 +13,7 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
   const [searchBoxOpen, setSearchBoxOpen] = useState(false)
   const [selectedArea, setSelectedArea] = useState<string>("지역")
   const [selectedPeriod, setSelectedPeriod] = useState<string>("기간")
-  const [selectedPrice, setSelectedPrice] = useState<String>("보증금")
+  const [selectedPrice, setSelectedPrice] = useState<string>("보증금")
 
 
   const handleRegionChange = (e: RadioChangeEvent) => {

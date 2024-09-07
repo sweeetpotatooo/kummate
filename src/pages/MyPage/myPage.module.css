@@ -23,7 +23,7 @@
 
 .myPageUl li:hover,
 .myPageUl li:active {
-  color: var(--purple600);
+  color: var(--green600);
 }
 
 @media screen and (max-width: 375px) {

@@ -31,8 +31,8 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
   const [queryString, setQueryString] = useState("")
   const [query, setQuery] = useState<SearchQuery>({
     area: "",
-    period: "",
-    price: undefined,
+    ageGroup: "",
+    smoke: "",
     gender: "",
   })
 
@@ -99,8 +99,8 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
       size: size.toString(),
       isRecruiting: showRecruiting?.toString() || "false",
       region: query.area,
-      period: query.period,
-      price: query.price?.toString() ?? "",
+      period: query.ageGroup,
+      price: query.smoke,
       gender: query.gender.toString(),
     }
 

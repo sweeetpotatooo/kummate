@@ -105,7 +105,7 @@
   font-weight: var(--font-weight-h4);
   font-size: var(--font-size-sub2);
   color: var(--white);
-  background-color: var(--purple500);
+  background-color: var(--green500);
 }
 
 .messageInput {
@@ -129,7 +129,7 @@
 }
 
 .messageInput button {
-  background: var(--purple500);
+  background: var(--green500);
   color: var(--white);
   height: 52px;
   border: none;
@@ -211,7 +211,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--purple500);
+    background-color: var(--green500);
     padding: 10px;
     text-align: center;
     font-size: var(--font-size-sub2);
@@ -235,7 +235,7 @@
 
   .chatDiv > h2 {
     border-radius: 0;
-    background-color: var(--purple500);
+    background-color: var(--green500);
     color: var(--white);
   }
 

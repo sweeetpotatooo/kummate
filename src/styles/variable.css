@@ -24,13 +24,13 @@
   --font-weight-body1: 400;
   --font-weight-body2: 400;
   --font-weight-button: 700;
-  --purple100: #e7f0db;
-  --purple200: #c9fc86;
-  --purple300: #4b7a47;
-  --purple400: #394d3f;
-  --purple500: #006400;
-  --purple600: #526b27;
-  --purple700: #a0b321;
+  --green100: #e7f0db;
+  --green200: #c9fc86;
+  --green300: #4b7a47;
+  --green400: #394d3f;
+  --green500: #006400;
+  --green600: #526b27;
+  --green700: #a0b321;
   --black100: #e5e5e5;
   --black200: #b9b9b9;
   --black300: #8a8a8a;
@@ -43,4 +43,8 @@
   --shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
   --top-modal-border-radius: 0px 0px 20px 20px;
   --badge-border-radius: 20px;
+  a {
+    text-decoration: none;
+    color: black;
+  }
 }

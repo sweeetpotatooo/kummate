@@ -7,6 +7,7 @@ export const saveToLocalStorage = (state: UserState) => {
 
     // 토큰이 존재할 때만 로컬 스토리지에 저장
     if (token) {
+      console.log("Saving to Local Storage:", state); // 저장 직전에 상태 확인
       const stateString = JSON.stringify(state)
       localStorage.setItem("state", stateString)  // 상태를 문자열로 변환하여 로컬 스토리지에 저장
     }

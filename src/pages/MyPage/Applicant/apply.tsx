@@ -52,7 +52,7 @@ const Apply: React.FC = () => {
       <MyPage />
       <div className={styles.applyContainer}>
         <div className={styles.applyTitle}>
-          {showApply ? <h2>신청한 현황입니다 👋🏻</h2> : <h2>신청 받은 현황입니다 👋🏻</h2>}
+          {showApply ? <h3>신청한 현황</h3> : <h3>신청 받은 현황</h3>}
           <div className={styles.applyBtn}>
             <Button className={styles.circleBtn} shape="circle" onClick={refresh}>
               <RedoOutlined />
@@ -65,7 +65,7 @@ const Apply: React.FC = () => {
         <div className={styles.applicantContainer}>
           {
             applyPosts.length === 0 ? (
-              <p className={styles.applyPostsP}>신청현황이 없습니다 😐</p>
+              <p className={styles.applyPostsP}>신청현황이 없습니다</p>
             ) : (
               applyPosts.map((post) => (
                 <div key={post.applyId}>

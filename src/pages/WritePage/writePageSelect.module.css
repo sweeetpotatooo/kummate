@@ -11,7 +11,7 @@
 
 .searchIcon {
   margin-right: 7px;
-  color: var(--purple600);
+  color: var(--green600);
 }
 
 .searchBox {
@@ -55,22 +55,22 @@
 }
 
 .cardBadgeArea {
-  background-color: var(--purple300);
+  background-color: var(--green300);
   white-space: nowrap;
 }
 
 .cardBadgePeriod {
-  background-color: var(--purple300);
+  background-color: var(--green300);
   white-space: nowrap;
 }
 
 .cardBadgePrice {
-  background-color: var(--purple300);
+  background-color: var(--green300);
   white-space: nowrap;
 }
 
 .cardBadgeGender {
-  background-color: var(--purple300);
+  background-color: var(--green300);
 }
 
 @media (max-width: 470px) {
@@ -136,25 +136,25 @@
 
 .searchChoiceArea > p {
   margin-bottom: 10px;
-  color: var(--purple300);
+  color: var(--green300);
   white-space: nowrap;
 }
 
 .searchChoicePeriod > p {
   margin-bottom: 10px;
-  color: var(--purple300);
+  color: var(--green300);
   white-space: nowrap;
 }
 
 .searchChoicePrice > p {
   margin-bottom: 10px;
-  color: var(--purple300);
+  color: var(--green300);
   white-space: nowrap;
 }
 
 .searchChoiceGender > p {
   margin-bottom: 10px;
-  color: var(--purple300);
+  color: var(--green300);
   white-space: nowrap;
 }
 

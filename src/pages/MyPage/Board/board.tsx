@@ -65,7 +65,7 @@ const Board: React.FC = () => {
         {boardDataLoading ? (
           <Spin style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}/>
         ) : posts.length === 0 ? (
-          <div className={styles.emptyBoard}>작성한 게시글이 없습니다 😐</div>
+          <div className={styles.emptyBoard}>작성한 게시글이 없습니다</div>
         ) : (
           <div className={styles.cardGrid}>
             <PostCard posts={posts} />

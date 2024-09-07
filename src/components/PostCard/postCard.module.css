@@ -45,14 +45,14 @@
 }
 
 .cardBadgeArea {
-  background-color: var(--purple200);
+  background-color: var(--green200);
 }
 .cardBadgePeriod {
-  background-color: var(--purple300);
+  background-color: var(--green300);
 }
 
 .cardBadgePrice {
-  background-color: var(--purple400);
+  background-color: var(--green400);
 }
 
 .user {
