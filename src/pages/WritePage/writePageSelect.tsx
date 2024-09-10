@@ -3,7 +3,7 @@ import styles from "./writePageSelect.module.css"
 import { Radio } from "antd"
 import { useState } from "react"
 import { FormInstance } from "antd"
-import { region, period, price } from "../../object/profileDropdown"
+import { region, ageGroup, smoke } from "../../object/profileDropdown"
 
 interface WritePageSelectProps {
   form: FormInstance
@@ -12,8 +12,8 @@ interface WritePageSelectProps {
 const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
   const [searchBoxOpen, setSearchBoxOpen] = useState(false)
   const [selectedArea, setSelectedArea] = useState<string>("지역")
-  const [selectedPeriod, setSelectedPeriod] = useState<string>("기간")
-  const [selectedPrice, setSelectedPrice] = useState<string>("보증금")
+  const [selectedPeriod, setSelectedPeriod] = useState<string>("나이")
+  const [selectedPrice, setSelectedPrice] = useState<string>("흡연")
 
 
   const handleRegionChange = (e: RadioChangeEvent) => {
@@ -28,16 +28,12 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
     form.setFieldsValue({ageGroup})
   }
 
-  const handlePriceChange = (e: RadioChangeEvent) => {
-    const deposit = e.target.value
-    const selectedPriceDisplay = price.find(
-      (item) => item.deposit === deposit,
-    )?.display
-    setSelectedPrice(selectedPriceDisplay || "보증금")
-    form.setFieldsValue({ price: deposit })
+
+  const handleSmokeChange = (e: RadioChangeEvent) => {
+    const smoke = e.target.value
+    setSelectedPrice(smoke)
+    form.setFieldsValue({ageGroup})
   }
-
-
 
   const handleToggleSearchBox = () => {
     setSearchBoxOpen(!searchBoxOpen)
@@ -62,7 +58,7 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
             </div>
             <div className={styles.lastDiv}>
               <p className={styles.title}>
-                <span className={styles.require}>*</span>보증금
+                <span className={styles.require}>*</span>흡연 여부
               </p>
               <Badge className={styles.cardBadgePrice}>{selectedPrice}</Badge>
             </div>
@@ -117,41 +113,41 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
                     value={selectedPeriod}
                     onChange={handlePeriodChange}
                   >
-                    {period.map((item, index) => (
+                    {ageGroup.map((item, index) => (
                       <Radio
                         key={index}
-                        value={item.quarter}
+                        value={item.ageGroup}
                         className={styles.periodRadioBtn}
                       >
-                        {item.quarter}
+                        {item.ageGroup}
                       </Radio>
                     ))}
                   </Radio.Group>
                 </Form.Item>
               </div>
               <div className={styles.searchChoicePrice}>
-                <p>보증금</p>
+                <p>흡연 여부</p>
                 <Form.Item
                   name="price"
                   rules={[
                     {
                       required: true,
-                      message: "소유한 보증금을 선택해 주세요.",
+                      message: "희망 연령대을 선택해 주세요.",
                     },
                   ]}
                 >
                   <Radio.Group
                     className={styles.priceRadioGroup}
                     value={selectedPeriod}
-                    onChange={handlePriceChange}
+                    onChange={handleSmokeChange}
                   >
-                    {price.map((item, index) => (
+                    {smoke.map((item, index) => (
                       <Radio
                         key={index}
-                        value={item.deposit}
+                        value={item.smoke}
                         className={styles.priceRadioBtn}
                       >
-                        {item.display}
+                        {item.smoke}
                       </Radio>
                     ))}
                   </Radio.Group>

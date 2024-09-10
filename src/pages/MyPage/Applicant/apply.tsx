@@ -58,7 +58,7 @@ const Apply: React.FC = () => {
               <RedoOutlined />
             </Button>
             <Button style={{ width: 90, display: 'flex', justifyContent: 'center' }} onClick={toggleShowApply}>
-              {showApply ? "신청 받았어요" : "신청 했어요"}
+              {showApply ? "내가 받은 신청" : "내가한 신청"}
             </Button>
           </div>
         </div>

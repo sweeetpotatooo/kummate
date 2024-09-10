@@ -194,7 +194,7 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
               <RedoOutlined />
             </Button>
             <Button onClick={toggleRecruitOnly}>
-              {showRecruiting ? "전체보기" : "모집글만"}
+              {showRecruiting ? "전체보기" : "진행중"}
             </Button>
             <Button onClick={goToWritePage}>글쓰기</Button>
           </div>
