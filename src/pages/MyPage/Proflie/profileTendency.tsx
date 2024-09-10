@@ -256,7 +256,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
           }}
         >
           <div className={styles.dropdownBox}>
-            <p className={styles.dropdownP}> 제가 희망하는 지역은 </p>
+            <p className={styles.dropdownP}> 제가 희망하는 기숙사는 </p>
             <div onClick={() => handleToggleBox("regionBoxOpen")}>
               <Badge className={styles.dropdownBadge}>
                 {props.selectedregion}
