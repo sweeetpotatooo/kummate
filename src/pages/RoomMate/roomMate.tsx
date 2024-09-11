@@ -31,8 +31,8 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
   const [queryString, setQueryString] = useState("")
   const [query, setQuery] = useState<SearchQuery>({
     area: "",
-    period: "",
-    price: undefined,
+    ageGroup: "",
+    smoke: "",
     gender: "",
   })
 
@@ -99,8 +99,8 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
       size: size.toString(),
       isRecruiting: showRecruiting?.toString() || "false",
       region: query.area,
-      period: query.period,
-      price: query.price?.toString() ?? "",
+      period: query.ageGroup,
+      price: query.smoke,
       gender: query.gender.toString(),
     }
 
@@ -194,7 +194,7 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
               <RedoOutlined />
             </Button>
             <Button onClick={toggleRecruitOnly}>
-              {showRecruiting ? "전체보기" : "모집글만"}
+              {showRecruiting ? "전체보기" : "진행중"}
             </Button>
             <Button onClick={goToWritePage}>글쓰기</Button>
           </div>

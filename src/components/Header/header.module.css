@@ -60,7 +60,7 @@
 }
 
 .nav li:hover {
-  color: var(--purple600);
+  color: var(--green600);
   transform: scale(1.03);
 }
 

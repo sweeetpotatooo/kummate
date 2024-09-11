@@ -79,18 +79,18 @@
 }
 
 .RightArrow {
-  fill: var(--purple600);
+  fill: var(--green600);
 }
 
 .LeftArrow {
-  fill: var(--purple600);
+  fill: var(--green600);
 }
 
 .title {
   font-weight: 700;
   font-size: 34px;
   line-height: 49px;
-  color: var(--purple600);
+  color: var(--green600);
   white-space: nowrap;
 }
 

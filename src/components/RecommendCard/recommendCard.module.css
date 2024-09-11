@@ -29,7 +29,7 @@
 
 .cardBadgePrice {
   display: flex;
-  background-color: var(--purple600);
+  background-color: var(--green600);
   justify-content: center;
   align-items: center;
   margin: 0 auto;

@@ -35,7 +35,7 @@
   align-items: center;
   justify-content: center;
   font-size: var(--font-size-body1);
-  color: var(--purple500);
+  color: var(--green500);
   margin-bottom: 20px;
   font-weight: bold;
 }
@@ -56,7 +56,7 @@
 
 .title {
   font-size: var(--font-size-body2);
-  color: var(--purple500);
+  color: var(--green500);
   margin-bottom: 10px;
 }
 

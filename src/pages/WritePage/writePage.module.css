@@ -46,7 +46,7 @@
 
 .textArea:focus {
   outline: none;
-  border-color: var(--purple200);
+  border-color: var(--green200);
 }
 
 .buttonContainer {
@@ -58,7 +58,7 @@
   margin: 0 auto;
   max-width: 100px;
   color: var(--white);
-  background-color: var(--purple600);
+  background-color: var(--green600);
   border-radius: var(--badge-border-radius);
 }
 
@@ -75,7 +75,7 @@
 
 .searchIcon {
   margin-right: 7px;
-  color: var(--purple600);
+  color: var(--green600);
 }
 
 .searchBox {
@@ -120,18 +120,18 @@
 }
 
 .cardBadgeArea {
-  background-color: var(--purple200);
+  background-color: var(--green200);
 }
 .cardBadgePeriod {
-  background-color: var(--purple300);
+  background-color: var(--green300);
 }
 
 .cardBadgePrice {
-  background-color: var(--purple400);
+  background-color: var(--green400);
 }
 
 .cardBadgeGender {
-  background-color: var(--purple500);
+  background-color: var(--green500);
 }
 
 .searchChoiceContainer {
@@ -165,19 +165,19 @@
 }
 
 .searchChoiceArea > p {
-  color: var(--purple200);
+  color: var(--green200);
 }
 
 .searchChoicePeriod > p {
-  color: var(--purple300);
+  color: var(--green300);
 }
 
 .searchChoicePrice > p {
-  color: var(--purple400);
+  color: var(--green400);
 }
 
 .searchChoiceGender > p {
-  color: var(--purple500);
+  color: var(--green500);
 }
 
 .areaRadioGroup::-webkit-scrollbar-thumb {

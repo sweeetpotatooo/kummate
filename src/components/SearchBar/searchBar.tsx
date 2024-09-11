@@ -1,5 +1,5 @@
 import { SearchOutlined } from "@ant-design/icons";
-import { Badge, Radio, Button, RadioChangeEvent } from "antd";
+import { Badge, Radio, Button } from "antd";
 import {
   Searchregion,
   Searchgender,

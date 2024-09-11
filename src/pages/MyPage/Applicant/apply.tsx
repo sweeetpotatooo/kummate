@@ -52,20 +52,20 @@ const Apply: React.FC = () => {
       <MyPage />
       <div className={styles.applyContainer}>
         <div className={styles.applyTitle}>
-          {showApply ? <h2>신청한 현황입니다 👋🏻</h2> : <h2>신청 받은 현황입니다 👋🏻</h2>}
+          {showApply ? <h3>신청한 현황</h3> : <h3>신청 받은 현황</h3>}
           <div className={styles.applyBtn}>
             <Button className={styles.circleBtn} shape="circle" onClick={refresh}>
               <RedoOutlined />
             </Button>
             <Button style={{ width: 90, display: 'flex', justifyContent: 'center' }} onClick={toggleShowApply}>
-              {showApply ? "신청 받았어요" : "신청 했어요"}
+              {showApply ? "내가 받은 신청" : "내가한 신청"}
             </Button>
           </div>
         </div>
         <div className={styles.applicantContainer}>
           {
             applyPosts.length === 0 ? (
-              <p className={styles.applyPostsP}>신청현황이 없습니다 😐</p>
+              <p className={styles.applyPostsP}>신청현황이 없습니다</p>
             ) : (
               applyPosts.map((post) => (
                 <div key={post.applyId}>

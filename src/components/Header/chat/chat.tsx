@@ -161,10 +161,10 @@ const Chat: React.FC = () => {
 
   return (
     <div className={styles.chatContainer}>
-      <h6 className={styles.hiddenH6}>방갑고 채팅방</h6>
+      <h6 className={styles.hiddenH6}>채팅</h6>
       <div className={styles.userDiv}>
         <div className={userInforClass}>
-          <h2>방갑고 채팅방</h2>
+          <h2>채팅</h2>
           {chatList.length > 0 ? (
             chatList.map((user) => (
               <div
@@ -183,7 +183,7 @@ const Chat: React.FC = () => {
             ))
           ) : (
             <div className={styles.noList}>
-              대화 상대가 없습니다 😐 <br /> 신청현황에서 대화방을 만들어보세요!
+              대화 상대가 없습니다 <br />
             </div>
           )}
         </div>
@@ -191,7 +191,7 @@ const Chat: React.FC = () => {
         {selectedUser && (
           <div className={styles.chatDiv}>
             <h2>
-              '{otherUserName}' 님과 원활한 대화를 나눠보세요 ☺️
+              '{otherUserName}' 님과 대화를 나눠보세요
               <CloseCircleOutlined
                 className={styles.clIcon}
                 onClick={disconnectHandler}
