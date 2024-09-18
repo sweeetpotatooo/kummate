@@ -1,5 +1,4 @@
 // 사용자 관련 API 엔드포인트 상수 정의
-// 사용자 관련 API 엔드포인트 상수 정의
 export const userLogin = "auth/signin"; // 사용자 로그인 경로
 export const userLogout = "auth/logout"; // 사용자 로그아웃 경로
 export const refreshApiUrl = "auth/refresh"; // 토큰 새로 고침 경로
