@@ -25,6 +25,8 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../../Redux/store"
 import { userMyprofile } from "../../../api"
 
+const API_URL = 'http://localhost:3001';
+
 const ProfileTendency = (props: profileTendencyProps) => {
   const [tendencyModal, setTendencyModal] = useState(false)
   const [choiceModal, setChoiceModal] = useState(false)
@@ -63,7 +65,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
   // 프로필 성향 수정
   const updateProfileTendency = async (profileData: userProfileData) => {
     try {
-      const response = await fetch(`/api/${userMyprofile}`, {
+      const response = await fetch(`${API_URL}/api/${userMyprofile}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -160,7 +162,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
           }}
         >
           <div className={styles.dropdownBox}>
-            <p className={styles.dropdownP}> 저의 연령대는</p>
+            <p className={styles.dropdownP}> 저의 나이는</p>
             <div></div>
             <div className={styles.input}>
               <Input
