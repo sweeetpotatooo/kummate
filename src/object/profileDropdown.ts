@@ -1,10 +1,10 @@
 //src/object/profileDropdown.ts
-export const gender = [{ name: "여성" }, { name: "남성" }]
+export const gender = [{ name: "여자" }, { name: "남자" }]
 
 export const Searchgender = [
   { name: "상관 없음" },
-  { name: "여성" },
-  { name: "남성" },
+  { name: "여자" },
+  { name: "남자" },
 ]
 
 export const age = [{ age: 20 }, { age: 30 }]

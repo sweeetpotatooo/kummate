@@ -35,8 +35,8 @@ const OtherUserProfile: React.FC<RecommendModalProps> = ({
   ]
 
   const genderOptions = [
-    { label: "여성", value: "여성" },
-    { label: "남성", value: "남성" },
+    { label: "여자", value: "여자" },
+    { label: "남자", value: "남자" },
   ]
 
   return (
