@@ -12,7 +12,7 @@ export const age = [{ age: 20 }, { age: 30 }]
 export const ageGroup = [
   { ageGroup: "20 ~ 22" },
   { ageGroup: "23 ~ 25" },
-  { ageGroup: "26 ~ 30" },
+  { ageGroup: "26 ~" },
 ]
 
 export const SearchageGroup = [

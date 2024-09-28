@@ -5,20 +5,20 @@ import ProfileBasic from './profileBasic';
 import ProfileTendency from './profileTendency';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../Redux/store';
-import { userMyprofile } from '../../../api';
-import useFetch from '../../../hooks/useFetch';
 import { UserProfile } from '../../../interface/interface';
 import { Spin, message } from 'antd';
 
 const defaultProfileImage = "/profile.svg";
 
 const Profile: React.FC = () => {
+  console.log('Profile 컴포넌트 렌더링됨');
   const userToken = useSelector((state: RootState) => state.user.data.token);
+  console.log('userToken:', userToken);
+  console.log('userToken.atk:', userToken.atk);
 
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [profileImage, setProfileImage] = useState(defaultProfileImage);
-
   const [selectedGender, setSelectedGender] = useState('');
   const [selectedAge, setSelectedAge] = useState(0);
   const [selectedSmoke, setSelectedSmoke] = useState('');
@@ -35,65 +35,79 @@ const Profile: React.FC = () => {
     setProfileUpdated(prevState => !prevState);
     // 프로필이 성공적으로 업데이트되었을 때 추가 작업을 수행할 수 있습니다.
   };
+
   const API_URL = 'http://localhost:3001';
-  const {
-    datas: profileData,
-    isLoading: fetchProfileLoading,
-    error: fetchProfileError,
-    setUrl: setProfileUrl,
-    setHeaders: setProfileHeaders,
-    setMethod: setProfileMethod,
-    setBody: setProfileBody,
-  } = useFetch<UserProfile | null>("", "", {}, null);
 
-  const handleProfile = () => {
-    setProfileUrl(`${API_URL}/api/my`); // API 엔드포인트 설정
-    setProfileMethod("GET");
-    setProfileHeaders({
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userToken.atk}`, // Bearer 토큰 형식으로 설정
-    });
-    setProfileBody(); // GET 요청이므로 바디 필요 없음
-  };
+  const [fetchProfileLoading, setFetchProfileLoading] = useState<boolean>(false);
+  const [fetchProfileError, setFetchProfileError] = useState<any>(null);
 
   useEffect(() => {
-    if (profileData) {
-      setSelectedGender(profileData.gender === null ? '성별' : profileData.gender);
-      setNickname(profileData.nickname);
-      setSelectedAge(profileData.myAge === null ? 0 : profileData.myAge);
-      setEmail(profileData.email);
-      setProfileImage(profileData.image === null ? defaultProfileImage : profileData.image);
-      setSelectedSmoke(profileData.isSmoker === true ? '합니다' : '하지 않습니다');
-      setSelectedMBTI(profileData.mbti === null ? 'MBTI' : profileData.mbti);
-      setSelectedRegion(profileData.region === null ? '지역' : profileData.region);
-      setSelectedActivityTime(profileData.activityTime === null ? '활동 시간' : profileData.activityTime);
-      setMyText(profileData.detail ?? '추가로 하고 싶은 말을 적어주세요! :)');
-      setFavoriteTag(profileData.tags || []);
-    }
-  }, [profileData]);
+    const fetchProfile = async () => {
+      if (!userToken || !userToken.atk) {
+        console.error('토큰이 없습니다. 로그인이 필요한 페이지입니다.');
+        return;
+      }
 
-  // 에러 발생 시 처리
-  useEffect(() => {
-    if (fetchProfileError) {
-      console.error('프로필 정보를 불러오는 중 에러 발생:', fetchProfileError);
-      message.error('프로필 정보를 불러오는 데 실패했습니다. 다시 시도해주세요.');
-    }
-  }, [fetchProfileError]);
+      setFetchProfileLoading(true);
+      setFetchProfileError(null);
 
-  useEffect(() => {
-    handleProfile();
-  }, []);
+      try {
+        const response = await fetch(`${API_URL}/api/my`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${userToken.atk}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data: UserProfile = await response.json();
+        console.log('받아온 프로필 데이터:', data);
+
+        setSelectedGender(data.gender ?? '성별');
+        setNickname(data.nickname ?? '');
+        setSelectedAge(data.age ?? 0);
+        setEmail(data.email ?? '');
+        setProfileImage(data.image ?? defaultProfileImage);
+        setSelectedSmoke(data.isSmoker === true ? '합니다' : '하지 않습니다');
+        setSelectedMBTI(data.mbti ?? 'MBTI');
+        setSelectedRegion(data.region ?? '지역');
+        setSelectedAgeGroup(data.ageGroup?? ' ~ ')
+        setSelectedActivityTime(data.activityTime ?? '활동 시간');
+        setMyText(data.detail ?? '추가로 하고 싶은 말을 적어주세요! :)');
+        setFavoriteTag(data.tags ?? []);
+      } catch (error) {
+        console.error('프로필 정보를 불러오는 중 에러 발생:', error);
+        setFetchProfileError(error);
+        message.error('프로필 정보를 불러오는 데 실패했습니다. 다시 시도해주세요.');
+      } finally {
+        setFetchProfileLoading(false);
+      }
+    };
+
+    fetchProfile();
+  }, [userToken]);
 
   return (
     <>
       <MyPage />
       <div className={styles.profileContainer}>
         {fetchProfileLoading ? (
-          <Spin style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
+          <Spin
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          />
         ) : (
           <>
-            <ProfileBasic 
-              nickname={nickname} 
+            <ProfileBasic
+              nickname={nickname}
               setNickname={setNickname}
               email={email}
               setEmail={setEmail}
@@ -101,7 +115,7 @@ const Profile: React.FC = () => {
               setProfileImage={setProfileImage}
             />
             <ProfileTendency
-              selectedGender={selectedGender} 
+              selectedGender={selectedGender}
               setSelectedGender={setSelectedGender}
               selectedAge={selectedAge}
               setSelectedAge={setSelectedAge}
@@ -109,14 +123,14 @@ const Profile: React.FC = () => {
               setSelectedSmoke={setSelectedSmoke}
               selectedMBTI={selectedMBTI}
               setSelectedMBTI={setSelectedMBTI}
-              selectedregion={selectedRegion}
-              setSelectedregion={setSelectedRegion}
+              selectedRegion={selectedRegion}           
+              setSelectedRegion={setSelectedRegion}    
               selectedAgeGroup={selectedAgeGroup}
               setSelectedAgeGroup={setSelectedAgeGroup}
               selectedActivityTime={selectedActivityTime}
               setSelectedActivityTime={setSelectedActivityTime}
-              mytext={myText}
-              setMytext={setMyText}
+              myText={myText}                           
+              setMyText={setMyText}                     
               favoriteTag={favoriteTag}
               setFavoriteTag={setFavoriteTag}
               handleUpdateProfileSuccess={handleUpdateProfileSuccess}

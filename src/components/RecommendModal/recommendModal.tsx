@@ -143,7 +143,7 @@ const RecommendModal: React.FC<RecommendModalProps> = ({
             className={`${styles.profileSection} ${styles.profileSection4Col}`}
           >
             <span>연령</span>
-            <Input value={userProfile?.myAge} style={{ width: 50 }} readOnly />
+            <Input value={userProfile?.age} style={{ width: 50 }} readOnly />
           </div>
           <div
             className={`${styles.profileSection} ${styles.profileSection4Col}`}

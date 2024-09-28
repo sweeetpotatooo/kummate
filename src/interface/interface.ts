@@ -47,9 +47,7 @@ export interface User {
   readonly isSmoker: boolean
   readonly mbti: string
   readonly region: string
-  readonly minAge: number
-  readonly maxAge: number
-  readonly myAge: number
+  readonly age: number
   readonly activityTime: string
   readonly faviteTag: string
   readonly hateTag: string
@@ -103,9 +101,8 @@ export interface userProfileData extends profileBasicValues {
   readonly smoke?: boolean
   readonly mbti?: string
   readonly region?: string
-  readonly minAge?: number
-  readonly maxAge?: number
-  readonly myAge?: number
+  readonly ageGroup:string
+  readonly age?: number
   readonly activityTime?: string
   readonly favoriteTag?: string[]
   readonly hateTag?: string
@@ -133,14 +130,14 @@ export interface profileTendencyProps {
   readonly setSelectedSmoke: React.Dispatch<React.SetStateAction<string>>
   readonly selectedMBTI: string
   readonly setSelectedMBTI: React.Dispatch<React.SetStateAction<string>>
-  readonly selectedregion: string
-  readonly setSelectedregion: React.Dispatch<React.SetStateAction<string>>
+  readonly selectedRegion: string
+  readonly setSelectedRegion: React.Dispatch<React.SetStateAction<string>>
   readonly selectedAgeGroup: string
   readonly setSelectedAgeGroup: React.Dispatch<React.SetStateAction<string>>
   readonly selectedActivityTime: string
   readonly setSelectedActivityTime: React.Dispatch<React.SetStateAction<string>>
-  readonly mytext: string
-  readonly setMytext: React.Dispatch<React.SetStateAction<string>>
+  readonly myText: string
+  readonly setMyText: React.Dispatch<React.SetStateAction<string>>
   readonly favoriteTag: string[]
   readonly setFavoriteTag: React.Dispatch<React.SetStateAction<string[]>>
   readonly handleUpdateProfileSuccess: () => void
@@ -209,12 +206,11 @@ export interface UserProfile {
   readonly isSmoker: boolean
   readonly activityTime: string
   readonly gender: string
+  readonly ageGroup: string
   readonly region: string
   readonly mbti: string
   readonly tags: [string]
-  readonly minAge: number
-  readonly maxAge: number
-  readonly myAge: number
+  readonly age: number
   readonly detail: string
 }
 

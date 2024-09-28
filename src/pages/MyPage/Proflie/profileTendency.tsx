@@ -97,7 +97,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
       props.selectedAge === 0 ||
       props.selectedSmoke === "할까요?" ||
       props.selectedMBTI === "mbti" ||
-      props.selectedregion === "여기" ||
+      props.selectedRegion === "여기" ||
       props.selectedAgeGroup === "0 ~ 0" ||
       props.selectedActivityTime === "오전오후" ||
       props.favoriteTag.length === 0
@@ -109,14 +109,13 @@ const ProfileTendency = (props: profileTendencyProps) => {
     try {
       const profileData: userProfileData = {
         gender: props.selectedGender,
-        myAge: props.selectedAge,
+        age: props.selectedAge,
         smoke: props.selectedSmoke === "합니다" ? true : false,
         mbti: props.selectedMBTI,
-        region: props.selectedregion,
-        minAge: Number(props.selectedAgeGroup.split("-")[0]),
-        maxAge: Number(props.selectedAgeGroup.split("-")[1]),
+        region: props.selectedRegion,
+        ageGroup: props.selectedAgeGroup,
         activityTime: props.selectedActivityTime,
-        myText: props.mytext,
+        myText: props.myText,
         favoriteTag: props.favoriteTag,
       }
 
@@ -253,7 +252,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
         </Radio.Group>
         <Radio.Group
           onChange={(e) => {
-            props.setSelectedregion(e.target.value)
+            props.setSelectedRegion(e.target.value)
             handleToggleBox("regionBoxOpen")
           }}
         >
@@ -261,7 +260,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
             <p className={styles.dropdownP}> 제가 희망하는 기숙사는 </p>
             <div onClick={() => handleToggleBox("regionBoxOpen")}>
               <Badge className={styles.dropdownBadge}>
-                {props.selectedregion}
+                {props.selectedRegion}
               </Badge>
             </div>
             {boxStates.regionBoxOpen && (
@@ -402,8 +401,8 @@ const ProfileTendency = (props: profileTendencyProps) => {
               resize: "none",
               background: "#E5E5E5",
             }}
-            onChange={(e) => props.setMytext(e.target.value)}
-            value={props.mytext}
+            onChange={(e) => props.setMyText(e.target.value)}
+            value={props.myText}
           />
           <Button
             className={styles.textareaBtn}
