@@ -3,7 +3,7 @@ import styles from "./editPageSelect.module.css"
 import { Radio } from "antd"
 import { useState, useEffect } from "react"
 import { FormInstance } from "antd"
-import { region, period, price } from "../../object/profileDropdown"
+import { region, smoke, ageGroup } from "../../object/profileDropdown"
 import { useLocation } from "react-router-dom"
 
 interface EditPageSelectProps {
@@ -13,8 +13,8 @@ interface EditPageSelectProps {
 const editPageSelect: React.FC<EditPageSelectProps> = ({ form }) => {
   const [searchBoxOpen, setSearchBoxOpen] = useState(false)
   const [selectedArea, setSelectedArea] = useState<string>("지역")
-  const [selectedPeriod, setSelectedPeriod] = useState<string>("기간")
-  const [selectedPrice, setSelectedPrice] = useState<String>("보증금")
+  const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>("연령대")
+  const [selectedSmoke, setSelectedSmoke] = useState<String>("흡연")
 
   const editPost = useLocation().state.post
 
@@ -24,19 +24,16 @@ const editPageSelect: React.FC<EditPageSelectProps> = ({ form }) => {
     form.setFieldsValue({ region })
   }
 
-  const handlePeriodChange = (e: RadioChangeEvent) => {
-    const period = e.target.value
-    setSelectedPeriod(period)
-    form.setFieldsValue({ period })
+  const handleAgeGroupChange = (e: RadioChangeEvent) => {
+    const ageGroup = e.target.value
+    setSelectedAgeGroup(ageGroup)
+    form.setFieldsValue({ ageGroup })
   }
 
-  const handlePriceChange = (e: RadioChangeEvent) => {
-    const deposit = e.target.value
-    const selectedPriceDisplay = price.find(
-      (item) => item.deposit === deposit,
-    )?.display
-    setSelectedPrice(selectedPriceDisplay || "보증금")
-    form.setFieldsValue({ price: deposit })
+  const handleSmokeChange = (e: RadioChangeEvent) => {
+    const smoke = e.target.value
+    setSelectedAgeGroup(smoke)
+    form.setFieldsValue({ smoke })
   }
 
 
@@ -48,8 +45,8 @@ const editPageSelect: React.FC<EditPageSelectProps> = ({ form }) => {
     useEffect(() => {
       if (editPost) {
         setSelectedArea(editPost.region)
-        setSelectedPeriod(editPost.period)
-        setSelectedPrice(editPost.price)
+        setSelectedAgeGroup(editPost.ageGroup)
+        setSelectedSmoke(editPost.smoke)
 
       }
     }, [editPost])
@@ -69,13 +66,13 @@ const editPageSelect: React.FC<EditPageSelectProps> = ({ form }) => {
               <p className={styles.title}>
                 <span className={styles.require}>*</span>기간
               </p>
-              <Badge className={styles.cardBadgePeriod}>{selectedPeriod}</Badge>
+              <Badge className={styles.cardBadgeAgeGroup}>{selectedAgeGroup}</Badge>
             </div>
             <div>
               <p className={styles.title}>
                 <span className={styles.require}>*</span>보증금
               </p>
-              <Badge className={styles.cardBadgePrice}>{selectedPrice}</Badge>
+              <Badge className={styles.cardBadgeSmoke}>{selectedSmoke}</Badge>
             </div>
           </div>
           <div
@@ -112,57 +109,57 @@ const editPageSelect: React.FC<EditPageSelectProps> = ({ form }) => {
                   </Form.Item>
                 </div>
               </div>
-              <div className={styles.searchChoicePeriod}>
+              <div className={styles.searchChoiceAgeGroup}>
                 <p>기간</p>
                 <Form.Item
-                  name="period"
+                  name="ageGroup"
                   rules={[
                     {
                       required: true,
-                      message: "기간을 선택해 주세요.",
+                      message: "연령대를 선택해 주세요.",
                     },
                   ]}
                 >
                   <Radio.Group
-                    className={styles.periodRadioGroup}
-                    value={selectedPeriod}
-                    onChange={handlePeriodChange}
+                    className={styles.ageGroupRadioGroup}
+                    value={selectedAgeGroup}
+                    onChange={handleAgeGroupChange}
                   >
-                    {period.map((item, index) => (
+                    {ageGroup.map((item, index) => (
                       <Radio
                         key={index}
-                        value={item.quarter}
-                        className={styles.periodRadioBtn}
+                        value={item.ageGroup}
+                        className={styles.ageGroupRadioBtn}
                       >
-                        {item.quarter}
+                        {item.ageGroup}
                       </Radio>
                     ))}
                   </Radio.Group>
                 </Form.Item>
               </div>
-              <div className={styles.searchChoicePrice}>
-                <p>보증금</p>
+              <div className={styles.searchChoiceSmoke}>
+                <p>흡연 여부</p>
                 <Form.Item
-                  name="price"
+                  name="smoke"
                   rules={[
                     {
                       required: true,
-                      message: "소유한 보증금을 선택해 주세요.",
+                      message: "흡연 여부를 알려주세요.",
                     },
                   ]}
                 >
                   <Radio.Group
-                    className={styles.priceRadioGroup}
-                    value={selectedPeriod}
-                    onChange={handlePriceChange}
+                    className={styles.smokeRadioGroup}
+                    value={selectedSmoke}
+                    onChange={handleSmokeChange}
                   >
-                    {price.map((item, index) => (
+                    {smoke.map((item, index) => (
                       <Radio
                         key={index}
-                        value={item.deposit}
-                        className={styles.priceRadioBtn}
+                        value={item.smoke}
+                        className={styles.smokeRadioBtn}
                       >
-                        {item.display}
+                        {item.smoke}
                       </Radio>
                     ))}
                   </Radio.Group>

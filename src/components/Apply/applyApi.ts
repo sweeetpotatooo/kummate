@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { userApplicant, userAprove, userArticleApply, userRefuse } from "../../api"
+import { API_URL, userApplicant, userAprove, userArticleApply, userRefuse } from "../../api"
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit"
 import { RootState } from "../../Redux/store"
 import { useSelector } from "react-redux"
@@ -16,11 +16,11 @@ export const useApply = (postId: number) => {
   const toggleApply = async () => {
     try {
       const newIsSaved = !isSaved
-      const response = await fetch(`/api/${userArticleApply}/${postId}`, {
+      const response = await fetch(`${API_URL}/api/${userArticleApply}/${postId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: userToken.atk.toString(),
+          Authorization: `Bearer ${userToken.atk}`,
         },
       })
 
@@ -50,7 +50,7 @@ export const useApply = (postId: number) => {
 // 승인
 export const updateApprove = async (userToken: string, userId: number, articleId: number) => {
   try {
-    const response = await fetch(`/api/${userAprove}`, {
+    const response = await fetch(`${API_URL}/api/${userAprove}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export const updateApprove = async (userToken: string, userId: number, articleId
 // 거절
 export const updateRefuse = async (userToken: string, applyId:number, articleId: number) => {
   try {
-    const response = await fetch(`/api/${userRefuse}/${applyId}`, {
+    const response = await fetch(`${API_URL}/api/${userRefuse}/${applyId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ export const updateRefuse = async (userToken: string, applyId:number, articleId:
 // 삭제
 export const updateDelete = async (userToken: string, applyId:number) => {
   try {
-    const response = await fetch(`/api/${userApplicant}/${applyId}`, {
+    const response = await fetch(`${API_URL}/api/${userApplicant}/${applyId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

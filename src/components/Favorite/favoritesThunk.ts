@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { RootState } from "../../Redux/store"
-import { userMyFavorite } from '../../api'
+import { API_URL, userMyFavorite } from '../../api'
 
 export const fetchFavorites = createAsyncThunk('favorites/fetch', async (_, thunkAPI) => {
   const state = thunkAPI.getState() as RootState
@@ -8,11 +8,11 @@ export const fetchFavorites = createAsyncThunk('favorites/fetch', async (_, thun
 
   // 찜한 목록
   try {
-    const response = await fetch(`/api/${userMyFavorite}`, {
+    const response = await fetch(`${API_URL}/api/${userMyFavorite}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: userToken.atk.toString()
+        Authorization: `Bearer ${userToken.atk}`,
       },
     })
 

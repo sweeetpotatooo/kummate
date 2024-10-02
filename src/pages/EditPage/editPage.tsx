@@ -4,7 +4,7 @@ import EditPageSelect from "./editPageSelect"
 import { Button, Input, Form, Modal } from "antd"
 import { useNavigate, useLocation } from "react-router-dom"
 import { Store } from "antd/lib/form/interface"
-import { userArticle } from "../../api"
+import { API_URL, userArticle } from "../../api"
 import { useSelector } from "react-redux"
 import { RootState } from "../../Redux/store"
 import useFetch from "../../hooks/useFetch"
@@ -22,8 +22,8 @@ const editPage: React.FC = () => {
         title: editPost.title,
         content: editPost.content,
         region: editPost.region,
-        period: editPost.period,
-        price: editPost.price,
+        ageGroup: editPost.ageGroup,
+        smoke: editPost.smoke,
         gender: editPost.gender,
       })
       setUserContent(editPost.content)
@@ -43,11 +43,11 @@ const editPage: React.FC = () => {
   } = useFetch<unknown>("", "", {}, null)
 
   const onFinish = async (values: Store) => {
-    setUrl(`/api/${userArticle}/${editPost.id}`)
+    setUrl(`${API_URL}/api/${userArticle}/${editPost.id}`)
     setMethod("PUT")
     setHeaders({
       "Content-Type": "application/json",
-      Authorization: userToken.atk.toString(),
+      Authorization: `Bearer ${userToken.atk}`,
     })
     setBody(values)
   }

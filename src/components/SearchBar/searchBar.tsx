@@ -53,12 +53,12 @@ const SearchBar: React.FC<RoomMateSearchProps> = ({ onSearch }) => {
           {/* 나이 필터 */}
           <div>
             <p>나이</p>
-            <Badge className={styles.cardBadgePeriod}>{selectedAgeGroup}</Badge>
+            <Badge className={styles.cardBadgeAgeGroup}>{selectedAgeGroup}</Badge>
           </div>
           {/* 흡연 여부 필터 */}
           <div>
             <p>흡연 여부</p>
-            <Badge className={styles.cardBadgePrice}>{selectedSmoke}</Badge>
+            <Badge className={styles.cardBadgeSmoke}>{selectedSmoke}</Badge>
           </div>
           {/* 성별 필터 */}
           <div className={styles.lastDiv}>
@@ -96,10 +96,10 @@ const SearchBar: React.FC<RoomMateSearchProps> = ({ onSearch }) => {
                 </div>
               </div>
               {/* 나이 선택 필터 */}
-              <div className={styles.searchChoicePeriod}>
+              <div className={styles.searchChoiceAgeGroup}>
                 <p>나이</p>
                 <Radio.Group
-                  className={styles.periodRadioGroup}
+                  className={styles.ageGroupRadioGroup}
                   value={selectedAgeGroup}
                   onChange={(e) => setSelectedAgeGroup(e.target.value)}
                 >
@@ -107,7 +107,7 @@ const SearchBar: React.FC<RoomMateSearchProps> = ({ onSearch }) => {
                     <Radio
                       key={index}
                       value={item.ageGroup}
-                      className={styles.periodRadioBtn}
+                      className={styles.ageGroupRadioBtn}
                     >
                       {item.ageGroup}
                     </Radio>
@@ -115,10 +115,10 @@ const SearchBar: React.FC<RoomMateSearchProps> = ({ onSearch }) => {
                 </Radio.Group>
               </div>
               {/* 흡연 여부 선택 필터 */}
-              <div className={styles.searchChoicePrice}>
+              <div className={styles.searchChoiceSmoke}>
                 <p>흡연</p>
                 <Radio.Group
-                  className={styles.priceRadioGroup}
+                  className={styles.smokeRadioGroup}
                   value={selectedSmoke}
                   onChange={(e) => setSelectedSmoke(e.target.value)}
                 >
@@ -126,7 +126,7 @@ const SearchBar: React.FC<RoomMateSearchProps> = ({ onSearch }) => {
                     <Radio
                       key={index}
                       value={item.smoke}
-                      className={styles.priceRadioBtn}
+                      className={styles.smokeRadioBtn}
                     >
                       {item.smoke}
                     </Radio>

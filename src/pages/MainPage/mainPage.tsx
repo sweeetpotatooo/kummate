@@ -9,7 +9,7 @@ import "react-multi-carousel/lib/styles.css"
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai"
 import PostModal from "../../components/PostModal/postModal"
 import RecommendModal from "../../components/RecommendModal/recommendModal"
-import { userArticle, usersRecommend, usersProfile } from "../../api"
+import { userArticle, usersRecommend, usersProfile, API_URL } from "../../api"
 import { message, Spin, Modal } from "antd"
 import { Post, User, FetchData, PostData } from "../../interface/interface"
 import { useSelector } from "react-redux"
@@ -77,10 +77,10 @@ const MainPage: React.FC = () => {
 
   useEffect(() => {
     if (isLogged) {
-      setRecommendUrl(`/api/${usersRecommend}?size=12`)
+      setRecommendUrl(`${API_URL}/api/${usersRecommend}?size=12`)
       setRecommendMethod("GET")
       setRecommendHeaders({
-        Authorization: userToken.atk.toString(),
+        Authorization: `Bearer ${userToken.atk}`,
       })
       setRecommendBody()
     }
@@ -139,10 +139,10 @@ const MainPage: React.FC = () => {
     const fetchUserProfile = async () => {
       try {
         if (selectedUser) {
-          setProfileDatasUrl(`/api/${usersProfile}/${selectedUser.id}`)
+          setProfileDatasUrl(`${API_URL}/api/${usersProfile}/${selectedUser.id}`)
           setProfileMethod("GET")
           setProfileHeaders({
-            Authorization: userToken.atk.toString(),
+            Authorization: `Bearer ${userToken.atk}`,
           })
           setProfileBody()
           setSelectedUserProfile(profileDatas)

@@ -4,7 +4,7 @@ import * as Stomp from "@stomp/stompjs"
 import { ChatList, ChatMessage } from "../../../interface/interface"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../Redux/store"
-import { userChatList } from "../../../api"
+import { API_URL, userChatList } from "../../../api"
 import { MessageType } from "../../../interface/interface"
 import { CloseCircleOutlined } from "@ant-design/icons"
 import moment from "moment"
@@ -27,11 +27,11 @@ const Chat: React.FC = () => {
   useEffect(() => {
     const fetchChatList = async () => {
       try {
-        const response = await fetch(`/api/${userChatList}`, {
+        const response = await fetch(`${API_URL}/api/${userChatList}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: userToken.atk.toString(),
+            Authorization: `Bearer ${userToken.atk}`,
           },
         })
         if (!response.ok) {
@@ -63,7 +63,7 @@ const Chat: React.FC = () => {
       const handleSendText = () => {
         stompClient.publish({
           destination: `/pub/chat.history.${roomId}`,
-          headers: { Authorization: userToken.atk.toString() },
+          headers: {  Authorization: `Bearer ${userToken.atk}`, },
         })
       }
 
@@ -132,7 +132,7 @@ const Chat: React.FC = () => {
       stClient?.publish({
         // json 형식으로 변환 -> 서버 전송
         destination: `/pub/chat.${roomId}`,
-        headers: { Authorization: userToken.atk.toString() },
+        headers: { Authorization: `Bearer ${userToken.atk}`, },
         body: JSON.stringify(newMessage),
       })
 

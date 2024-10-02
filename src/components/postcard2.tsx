@@ -49,7 +49,7 @@ const MainPostCard: React.FC<RoomMateSearchProps> = ({ post, onClick }) => {
           {/* 배지들을 담는 컨테이너 */}
           <div className={styles.cardBadgeContainer}>
             <Badge className={styles.cardBadgeArea}>{post?.region}</Badge>
-            <Badge className={styles.cardBadgePeriod}>{post?.period}</Badge>
+            <Badge className={styles.cardBadgeAgeGroup}>{post?.ageGroup}</Badge>
           </div>
         </Card>
       </Badge.Ribbon>

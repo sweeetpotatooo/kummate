@@ -1,8 +1,10 @@
+//src/pages/MyPage/Proflie/profileFile.tsx
+
 import styles from './profile.module.css'
 import { Modal, Upload } from "antd"
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../Redux/store'
-import { userMyprofileFile } from '../../../api'
+import { API_URL, userMyprofileFile } from '../../../api'
 import { ProfileFileProps } from '../../../interface/interface'
 
 const ProfileFile = (props: ProfileFileProps) => {
@@ -38,10 +40,10 @@ const ProfileFile = (props: ProfileFileProps) => {
     formData.append("image", file)
 
     try {
-      const response = await fetch(`/api/${userMyprofileFile}`, {
+      const response = await fetch(`${API_URL}/api/${userMyprofileFile}`, {
         method: "POST",
         headers: {
-          Authorization: userToken.atk.toString(),
+          Authorization: `Bearer ${userToken.atk}`,
         },
         body: formData,
       })

@@ -1,3 +1,4 @@
+//src/pages/MyPage/Proflie/profileBasic.tsx
 import { Input, Button, Form, Modal } from "antd" // Ant Design UI 라이브러리에서 필요한 컴포넌트 임포트
 import { UserOutlined, MailOutlined } from "@ant-design/icons" // Ant Design의 아이콘 임포트
 import styles from './profile.module.css' // 스타일 모듈 임포트
@@ -22,16 +23,16 @@ const ProfileBasic = (props: ProfileBasicProps) => {
       console.error('프로필 업데이트 실패', error) // 에러 발생 시 콘솔에 에러 출력
     }
   }
-
+  const API_URL = 'http://localhost:3001';
   // 닉네임 수정 API 호출 함수
   const updateProfile = async (profileData: { nickname: string }) => {
     try {
       // fetch API를 사용하여 서버에 PATCH 요청을 보냄
-      const response = await fetch(`/api/${userMyprofileNickname}`, {
+      const response = await fetch(`${API_URL}/api/${userMyprofileNickname}`, {
         method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json', // 요청이 JSON 형식임을 명시
-          Authorization: userToken.atk.toString(), // Authorization 헤더에 사용자 토큰 추가
+          'Content-Type': 'application/json', // 요청이 JSON 형식임을 명시,
+          Authorization: `Bearer ${userToken.atk}`, // Authorization 헤더에 사용자 토큰 추가
         },
         body: JSON.stringify(profileData), // 수정된 닉네임을 JSON 형식으로 서버에 전송
       })

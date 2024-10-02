@@ -1,3 +1,5 @@
+//src/pages/MyPage/Proflie/profile.tsx
+
 import { useEffect, useState } from 'react';
 import MyPage from '../myPage';
 import styles from './profile.module.css';
@@ -39,6 +41,7 @@ const Profile: React.FC = () => {
   const API_URL = 'http://localhost:3001';
 
   const [fetchProfileLoading, setFetchProfileLoading] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
   const [fetchProfileError, setFetchProfileError] = useState<any>(null);
 
   useEffect(() => {

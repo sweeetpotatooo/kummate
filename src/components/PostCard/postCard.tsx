@@ -27,10 +27,6 @@ const PostCard: React.FC<Props> = ({ posts }) => {
     return new Date(dateString).toLocaleDateString(undefined, options)
   }
 
-  const formatPrice = (price: number): string => {
-    return "~" + price.toLocaleString("ko-KR") + "원"
-  }
-
   const handlePostClick = (post: Post) => {
     if (isLogged === true) {
       setSelectedPost(post)
@@ -78,11 +74,11 @@ const PostCard: React.FC<Props> = ({ posts }) => {
                 </div>
                 <div className={styles.cardBadgeContainer}>
                   <Badge className={styles.cardBadgeArea}>{post.region}</Badge>
-                  <Badge className={styles.cardBadgePeriod}>
-                    {post.period}
+                  <Badge className={styles.cardBadgeAgeGroup}>
+                    {post.ageGroup}
                   </Badge>
-                  <Badge className={styles.cardBadgePrice}>
-                    {formatPrice(post.price)}
+                  <Badge className={styles.cardBadgeSmoke}>
+                  {post.smoke}
                   </Badge>
                 </div>
               </Card>
@@ -113,11 +109,11 @@ const PostCard: React.FC<Props> = ({ posts }) => {
                 </div>
                 <div className={styles.cardBadgeContainer}>
                   <Badge className={styles.cardBadgeArea}>{post.region}</Badge>
-                  <Badge className={styles.cardBadgePeriod}>
-                    {post.period}
+                  <Badge className={styles.cardBadgeAgeGroup}>
+                    {post.ageGroup}
                   </Badge>
-                  <Badge className={styles.cardBadgePrice}>
-                    {formatPrice(post.price)}
+                  <Badge className={styles.cardBadgeSmoke}>
+                  {post.smoke}
                   </Badge>
                 </div>
               </Card>

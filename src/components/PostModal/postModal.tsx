@@ -4,7 +4,7 @@ import styles from "./postModal.module.css"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { RootState } from "../../Redux/store"
-import { userArticleApply, userFavorite } from "../../api"
+import { API_URL, userArticleApply, userFavorite } from "../../api"
 import { userArticle } from "../../api"
 import { PostModalProps } from "../../interface/interface"
 import useFavorite from "../Favorite/useFavorite"
@@ -40,10 +40,6 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
       day: "2-digit",
     } as const
     return new Date(dateString).toLocaleDateString(undefined, options)
-  }
-
-  const formatPrice = (price: number): string => {
-    return "~" + price.toLocaleString("ko-KR") + "원"
   }
 
  // 찜하기 상태 
@@ -89,7 +85,7 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: userToken.atk.toString(),
+            Authorization: `Bearer ${userToken.atk}`,
           },
         })
 
@@ -103,8 +99,8 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
         console.error(error)
       }
     }
-    fetchData(`/api/${userFavorite}/${post.id}`, setLocalIsSaved, "찜 상태를 가져오는데 실패했습니다.")
-    fetchData(`/api/${userArticleApply}/${post.id}`, setApplyIsSaved, "신청현황을 가져오는데 실패했습니다.", true)
+    fetchData(`${API_URL}/api/${userFavorite}/${post.id}`, setLocalIsSaved, "찜 상태를 가져오는데 실패했습니다.")
+    fetchData(`${API_URL}/api/${userArticleApply}/${post.id}`, setApplyIsSaved, "신청현황을 가져오는데 실패했습니다.", true)
   }, [post.id])
 
   // 삭제하기
@@ -125,11 +121,11 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
       okType: "danger",
       cancelText: "아니오",
       onOk: async () => {
-        setDeleteUrl(`/api/${userArticle}/${post.id}`)
+        setDeleteUrl(`${API_URL}/api/${userArticle}/${post.id}`)
         setDeleteMethod("DELETE")
         setDeleteHeaders({
           "Content-Type": "application/json",
-          Authorization: userToken.atk.toString(),
+          Authorization: `Bearer ${userToken.atk}`,
         })
         setDeleteBody()
       },
@@ -211,9 +207,9 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
           <div className={styles.line}></div>
           <div className={styles.cardBadgeContainer}>
             <Badge className={styles.cardBadgeArea}>{post.region}</Badge>
-            <Badge className={styles.cardBadgePeriod}>{post.period}</Badge>
-            <Badge className={styles.cardBadgePrice}>
-              {formatPrice(post.price)}
+            <Badge className={styles.cardBadgeAgeGroup}>{post.ageGroup}</Badge>
+            <Badge className={styles.cardBadgeSmoke}>
+              {post.smoke}
             </Badge>
           </div>
         </div>
@@ -256,9 +252,9 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
           <div className={styles.line}></div>
           <div className={styles.cardBadgeContainer}>
             <Badge className={styles.cardBadgeArea}>{post.region}</Badge>
-            <Badge className={styles.cardBadgePeriod}>{post.period}</Badge>
-            <Badge className={styles.cardBadgePrice}>
-              {formatPrice(post.price)}
+            <Badge className={styles.cardBadgeAgeGroup}>{post.ageGroup}</Badge>
+            <Badge className={styles.cardBadgeSmoke}>
+              {post.smoke}
             </Badge>
           </div>
         </div>

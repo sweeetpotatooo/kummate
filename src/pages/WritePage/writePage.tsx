@@ -5,7 +5,7 @@ import WritePageSelect from "./writePageSelect"
 import { Button, Input, Form, Modal } from "antd"
 import { useNavigate } from "react-router-dom"
 import { Store } from "antd/lib/form/interface"
-import { userArticle } from "../../api"
+import { API_URL, userArticle } from "../../api"
 import { useSelector } from "react-redux"
 import { RootState } from "../../Redux/store"
 import useFetch from "../../hooks/useFetch"
@@ -26,11 +26,11 @@ const WritePage: React.FC = () => {
   } = useFetch<unknown>("", "", {}, null)
 
   const onFinish = async (values: Store) => {
-    setUrl(`/api/${userArticle}`)
+    setUrl(`${API_URL}/api/${userArticle}`)
     setMethod("POST")
     setHeaders({
       "Content-Type": "application/json",
-      Authorization: userToken.atk.toString(),
+      Authorization: `Bearer ${userToken.atk}`,
     })
     setBody(values)
   }

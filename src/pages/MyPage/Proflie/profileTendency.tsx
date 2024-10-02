@@ -1,3 +1,4 @@
+//src/pages/MyPage/Proflie/profileTendency.tsx
 import styles from "./profile.module.css"
 import { Input, Modal, message } from "antd"
 import { Button } from "antd"
@@ -69,7 +70,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: userToken.atk.toString(),
+          Authorization: `Bearer ${userToken.atk}`,
         },
         body: JSON.stringify(profileData),
       })
@@ -118,7 +119,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
         myText: props.myText,
         favoriteTag: props.favoriteTag,
       }
-
+      console.log('기숙사 값 (region):', props.selectedRegion);
       updateProfileTendency(profileData)
     } catch (error) {
       console.error("프로필 업데이트 오류", error)

@@ -15,8 +15,8 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
   // 지역, 나이, 흡연 여부 선택값을 관리하는 상태 변수
   const [searchBoxOpen, setSearchBoxOpen] = useState(false) // 검색 상자가 열려있는지 여부를 제어하는 상태 변수
   const [selectedArea, setSelectedArea] = useState<string>("지역") // 선택된 지역 저장
-  const [selectedPeriod, setSelectedPeriod] = useState<string>("나이") // 선택된 나이 저장
-  const [selectedPrice, setSelectedPrice] = useState<string>("흡연") // 선택된 흡연 여부 저장
+  const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>("나이") // 선택된 나이 저장
+  const [selectedSmoke, setSelectedSmoke] = useState<string>("흡연") // 선택된 흡연 여부 저장
 
   // 지역 선택 시 호출되는 핸들러
   const handleRegionChange = (e: RadioChangeEvent) => {
@@ -26,16 +26,16 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
   }
 
   // 나이 선택 시 호출되는 핸들러
-  const handlePeriodChange = (e: RadioChangeEvent) => {
+  const handleAgeGroupChange = (e: RadioChangeEvent) => {
     const ageGroup = e.target.value // 선택된 나이 값을 가져옴
-    setSelectedPeriod(ageGroup) // 선택된 나이 상태 업데이트
+    setSelectedAgeGroup(ageGroup) // 선택된 나이 상태 업데이트
     form.setFieldsValue({ ageGroup }) // 폼 필드에 나이 값을 설정
   }
 
   // 흡연 여부 선택 시 호출되는 핸들러
   const handleSmokeChange = (e: RadioChangeEvent) => {
     const smoke = e.target.value // 선택된 흡연 여부 값을 가져옴
-    setSelectedPrice(smoke) // 선택된 흡연 여부 상태 업데이트
+    setSelectedSmoke(smoke) // 선택된 흡연 여부 상태 업데이트
     form.setFieldsValue({ smoke }) // 폼 필드에 흡연 여부 값을 설정
   }
 
@@ -64,7 +64,7 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
                 <span className={styles.require}>*</span>나이
               </p>
               {/* 선택된 나이 값 배지로 표시 */}
-              <Badge className={styles.cardBadgePeriod}>{selectedPeriod}</Badge>
+              <Badge className={styles.cardBadgeAgeGroup}>{selectedAgeGroup}</Badge>
             </div>
             <div className={styles.lastDiv}>
               {/* 흡연 여부 선택 섹션 */}
@@ -72,7 +72,7 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
                 <span className={styles.require}>*</span>흡연 여부
               </p>
               {/* 선택된 흡연 여부 값 배지로 표시 */}
-              <Badge className={styles.cardBadgePrice}>{selectedPrice}</Badge>
+              <Badge className={styles.cardBadgeSmoke}>{selectedSmoke}</Badge>
             </div>
           </div>
 
@@ -115,10 +115,10 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
               </div>
 
               {/* 나이 선택 라디오 그룹 */}
-              <div className={styles.searchChoicePeriod}>
+              <div className={styles.searchChoiceAgeGroup}>
                 <p>나이</p>
                 <Form.Item
-                  name="period" // 폼 필드 이름
+                  name="AgeGroup" // 폼 필드 이름
                   rules={[
                     {
                       required: true, // 필수 항목
@@ -127,16 +127,16 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
                   ]}
                 >
                   <Radio.Group
-                    className={styles.periodRadioGroup}
-                    value={selectedPeriod} // 선택된 나이 값
-                    onChange={handlePeriodChange} // 나이 선택 변경 핸들러
+                    className={styles.AgeGroupRadioGroup}
+                    value={selectedAgeGroup} // 선택된 나이 값
+                    onChange={handleAgeGroupChange} // 나이 선택 변경 핸들러
                   >
                     {/* 나이 목록을 반복하여 라디오 버튼으로 렌더링 */}
                     {ageGroup.map((item, index) => (
                       <Radio
                         key={index} // 고유 키 값
                         value={item.ageGroup} // 나이 값 설정
-                        className={styles.periodRadioBtn}
+                        className={styles.ageGroupRadioBtn}
                       >
                         {item.ageGroup} {/* 나이 그룹 이름 표시 */}
                       </Radio>
@@ -146,10 +146,10 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
               </div>
 
               {/* 흡연 여부 선택 라디오 그룹 */}
-              <div className={styles.searchChoicePrice}>
+              <div className={styles.searchChoiceSmoke}>
                 <p>흡연 여부</p>
                 <Form.Item
-                  name="price" // 폼 필드 이름
+                  name="Smoke" // 폼 필드 이름
                   rules={[
                     {
                       required: true, // 필수 항목
@@ -158,8 +158,8 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
                   ]}
                 >
                   <Radio.Group
-                    className={styles.priceRadioGroup}
-                    value={selectedPeriod} // 선택된 흡연 여부 값
+                    className={styles.SmokeRadioGroup}
+                    value={selectedAgeGroup} // 선택된 흡연 여부 값
                     onChange={handleSmokeChange} // 흡연 여부 선택 변경 핸들러
                   >
                     {/* 흡연 여부 목록을 반복하여 라디오 버튼으로 렌더링 */}
@@ -167,7 +167,7 @@ const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
                       <Radio
                         key={index} // 고유 키 값
                         value={item.smoke} // 흡연 여부 값 설정
-                        className={styles.priceRadioBtn}
+                        className={styles.smokeRadioBtn}
                       >
                         {item.smoke} {/* 흡연 여부 표시 */}
                       </Radio>

@@ -9,7 +9,7 @@ import {
 } from "../../../interface/interface"
 import { useSelector } from "react-redux"
 import { AppDispatch, RootState } from "../../../Redux/store"
-import { usersProfile } from "../../../api"
+import { API_URL, usersProfile } from "../../../api"
 import { useEffect, useState } from "react"
 import useFetch from "../../../hooks/useFetch"
 import PostModal from "../../../components/PostModal/postModal"
@@ -162,11 +162,11 @@ const Applicant: React.FC<ApplicantProps> = ({
   } = useFetch<Post>("", "", {}, null)
 
   const handleChatClick = (applyId: number) => {
-    setChatUrl(`/api/${userChatRoom}/${applyId}`)
+    setChatUrl(`${API_URL}/api/${userChatRoom}/${applyId}`)
     setChatMethod("POST")
     setChatHeaders({
       "Content-Type": "application/json",
-      Authorization: userToken.atk.toString(),
+      Authorization: `Bearer ${userToken.atk}`,
     })
     setChatBody()
   }

@@ -29,8 +29,8 @@
 }
 
 .cardBadgeArea,
-.cardBadgePeriod,
-.cardBadgePrice {
+.cardBadgeAgeGroup,
+.cardBadgeSmoke {
   color: var(--white);
   padding: 5px;
   font-size: 10px;
@@ -40,11 +40,11 @@
 .cardBadgeArea {
   background-color: var(--green200);
 }
-.cardBadgePeriod {
+.cardBadgeAgeGroup {
   background-color: var(--green300);
 }
 
-.cardBadgePrice {
+.cardBadgeSmoke {
   background-color: var(--green400);
 }
 

@@ -32,8 +32,8 @@ export interface Post {
   readonly gender: string
   readonly createdDate: string
   readonly region: string
-  readonly period: string
-  readonly price: number
+  readonly ageGroup: string
+  readonly smoke: boolean
   readonly recruiting: boolean
   readonly image?: string
 }

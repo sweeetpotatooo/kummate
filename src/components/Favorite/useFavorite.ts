@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux"
 import { RootState } from "../../Redux/store"
-import { userFavorite } from '../../api'
+import { API_URL, userFavorite } from '../../api'
 import { setSaved } from "../../Redux/savedReducer"
 import { fetchFavorites } from './favoritesThunk'
 import { AnyAction, ThunkDispatch } from "@reduxjs/toolkit"
@@ -15,11 +15,11 @@ const useFavorite = (postId: number) => {
   const toggleFavorite = async () => {
     try {
       const newIsSaved = !isSaved
-      const response = await fetch(`/api/${userFavorite}/${postId}`, {
+      const response = await fetch(`${API_URL}/api/${userFavorite}/${postId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: userToken.atk.toString(),
+          Authorization: `Bearer ${userToken.atk}`,
         },
       })
 

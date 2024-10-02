@@ -7,12 +7,16 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
 import { useState } from "react";
+import axios from "axios";
+import { API_URL } from "../../api";
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [messageApi, contextHolder] = message.useMessage();
   const [isVerificationSent, setIsVerificationSent] = useState(false);
+  const [isVerificationConfirmed, setIsVerificationConfirmed] = useState(false);
+  const [form] = Form.useForm();
 
   const mainpageLink = () => {
     navigate("/MainPage");
@@ -26,21 +30,62 @@ const SignUp: React.FC = () => {
     email: string;
     password: string;
     nickname: string;
-    verificationCode?: string; // 인증 코드 필드 추가
   }) => {
+    if (!isVerificationConfirmed) {
+      messageApi.error('이메일 인증을 완료해주세요.');
+      return;
+    }
+  
     const result = await dispatch(registerUser(values));
-
+  
     if (result.payload === true && registerUserStatus === true) {
-      navigate("/");
+      navigate('/');
     } else {
-      messageApi.error("이메일 또는 닉네임이 중복되었습니다.");
+      messageApi.error('이메일 또는 닉네임이 중복되었습니다.');
+    }
+  };
+  const sendVerificationCode = async () => {
+    try {
+      const values = await form.validateFields(["email"]); // 이메일 필드만 검증
+      const email = values.email;
+      console.log("Email being sent:", email);
+
+      await axios.post(
+        `${API_URL}/user/send-verification`,
+        { email },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      messageApi.success("인증번호가 전송되었습니다.");
+      setIsVerificationSent(true);
+    } catch (error) {
+      messageApi.error("인증번호 전송에 실패했습니다.");
     }
   };
 
-  const sendVerificationCode = () => {
-    // 인증번호 전송 로직 구현 (API 호출 등)
-    messageApi.success("인증번호가 전송되었습니다.");
-    setIsVerificationSent(true);
+  const confirmVerificationCode = async () => {
+    try {
+      const values = await form.validateFields(['email', 'verificationCode']);
+      const email = values.email;
+      const code = values.verificationCode;
+  
+      console.log('Email:', email);
+      console.log('Code:', code);
+  
+      await axios.post(`${API_URL}/user/verify-code`, { email, code }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      messageApi.success('인증번호가 확인되었습니다.');
+      setIsVerificationConfirmed(true);
+    } catch (error) {
+      messageApi.error('인증번호 확인에 실패했습니다.');
+    }
   };
 
   return (
@@ -51,26 +96,29 @@ const SignUp: React.FC = () => {
           <div className={styles.inputBox}>
             <span className={styles.SignUptitle}>회원가입</span>
             <Form
+              form={form}
               name="signUp"
               initialValues={{ remember: true }}
               onFinish={onFinish}
             >
-              <Form.Item
-                name="email"
-                rules={[
-                  { required: true, message: "이메일을 입력하세요." },
-                  { type: "email", message: "이메일 형식으로 작성해주세요." },
-                ]}
-              >
-                <Row gutter={8}>
-                  <Col span={16}>
+              <Row gutter={8}>
+                <Col span={16}>
+                  <Form.Item
+                    name="email"
+                    rules={[
+                      { required: true, message: "이메일을 입력하세요." },
+                      { type: "email", message: "올바른 이메일 형식을 입력하세요." },
+                    ]}
+                  >
                     <Input
                       prefix={<UserOutlined />}
                       placeholder="Email"
                       style={{ width: "100%", height: 40 }}
                     />
-                  </Col>
-                  <Col span={8}>
+                  </Form.Item>
+                </Col>
+                <Col span={8}>
+                  <Form.Item>
                     <Button
                       type="primary"
                       onClick={sendVerificationCode}
@@ -78,25 +126,44 @@ const SignUp: React.FC = () => {
                     >
                       인증번호 전송
                     </Button>
-                  </Col>
-                </Row>
-              </Form.Item>
+                  </Form.Item>
+                </Col>
+              </Row>
 
               {isVerificationSent && (
-                <Form.Item
-                  name="verificationCode"
-                  rules={[
-                    { required: true, message: "인증번호를 입력하세요." },
-                  ]}
-                >
-                  <Input
-                    prefix={<LockOutlined />}
-                    placeholder="인증번호를 입력하세요."
-                    style={{ width: 300, height: 40 }}
-                  />
-                </Form.Item>
+                <>
+                  <Row gutter={8}>
+                    <Col span={16}>
+                      <Form.Item
+                        name="verificationCode"
+                        rules={[
+                          { required: true, message: "인증번호를 입력하세요." },
+                        ]}
+                      >
+                        <Input
+                          prefix={<LockOutlined />}
+                          placeholder="인증번호를 입력하세요."
+                          style={{ width: "100%", height: 40 }}
+                        />
+                      </Form.Item>
+                    </Col>
+                    <Col span={8}>
+                      <Form.Item>
+                        <Button
+                          type="primary"
+                          onClick={confirmVerificationCode}
+                          style={{ width: "100%", height: 40 }}
+                          disabled={isVerificationConfirmed}
+                        >
+                          인증번호 확인
+                        </Button>
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </>
               )}
 
+              {/* 나머지 폼 항목들도 동일한 방식으로 수정 */}
               <Form.Item
                 name="password"
                 rules={[{ required: true, message: "비밀번호를 입력하세요." }]}
@@ -110,6 +177,7 @@ const SignUp: React.FC = () => {
               </Form.Item>
               <Form.Item
                 name="passwordCheck"
+                dependencies={["password"]}
                 rules={[
                   { required: true, message: "비밀번호를 한번 더 입력하세요." },
                   ({ getFieldValue }) => ({
@@ -146,6 +214,7 @@ const SignUp: React.FC = () => {
                   type="primary"
                   htmlType="submit"
                   style={{ width: 300, height: 40 }}
+                  disabled={!isVerificationConfirmed}
                 >
                   회원가입
                 </Button>

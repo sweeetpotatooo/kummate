@@ -3,7 +3,7 @@ import styles from './board.module.css'
 import { Post } from '../../../interface/interface'
 import PostModal from '../../../components/PostModal/postModal'
 import MyPage from '../myPage'
-import { userMyArticles } from '../../../api'
+import { API_URL, userMyArticles } from '../../../api'
 import PostCard from '../../../components/PostCard/postCard'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../Redux/store'
@@ -27,12 +27,12 @@ const Board: React.FC = () => {
   } = useFetch<Post[] | null>("", "", {}, null)
 
   const handleBoard = () => {
-    setBoardUrl(`/api/${userMyArticles}`)
+    setBoardUrl(`${API_URL}/api/${userMyArticles}`)
     setBoardMethod("GET")
     setBoardHeaders(
       new Headers({
         "Content-Type": "application/json",
-        Authorization: userToken.atk.toString(),
+        Authorization: `Bearer ${userToken.atk}`,
       }),
     )
     setBoardBody()
