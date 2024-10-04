@@ -118,7 +118,7 @@ const MainPage: React.FC = () => {
   useEffect(() => {
     if (postSuccess) {
       try {
-        setPosts(postDatas?.articleList || [])
+        setPosts(postDatas?.data || [])
       } catch (error) {
         console.error(error)
       }

@@ -1,3 +1,4 @@
+// src/components/PostModal/postModal.tsx
 import React, { useCallback, useEffect, useState } from "react"
 import { Modal, Badge, Button } from "antd"
 import styles from "./postModal.module.css"
@@ -26,23 +27,19 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
   }
 
   const recruit = (recruiting: boolean) => {
-    if (recruiting) {
-      return "모집"
-    } else {
-      return "마감"
-    }
+    return recruiting ? "모집" : "마감"
   }
 
   const formatDate = (dateString: string): string => {
-    const options = {
+    const options: Intl.DateTimeFormatOptions = {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
-    } as const
+    }
     return new Date(dateString).toLocaleDateString(undefined, options)
   }
 
- // 찜하기 상태 
+  // 찜하기 상태 
   const userToken = useSelector((state: RootState) => state.user.data.token)
   const [, toggleFavorite] = useFavorite(post.id)
   const [localIsSaved, setLocalIsSaved] = useState(false)
@@ -58,7 +55,7 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
     } catch (error) {
       console.error(error)
     }
-  }, [])
+  }, [toggleFavorite])
 
   // 신청 상태
   const [, toggleApply] = useApply(post.id)
@@ -75,7 +72,7 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
     } catch (error) {
       console.error(error)
     }
-  }, [])
+  }, [toggleApply])
 
   // 찜하기, 신청현황 가져오기
   useEffect(() => {
@@ -101,7 +98,7 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
     }
     fetchData(`${API_URL}/api/${userFavorite}/${post.id}`, setLocalIsSaved, "찜 상태를 가져오는데 실패했습니다.")
     fetchData(`${API_URL}/api/${userArticleApply}/${post.id}`, setApplyIsSaved, "신청현황을 가져오는데 실패했습니다.", true)
-  }, [post.id])
+  }, [post.id, userToken.atk])
 
   // 삭제하기
   const {
@@ -127,7 +124,7 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${userToken.atk}`,
         })
-        setDeleteBody()
+        setDeleteBody(null) // DELETE 요청에는 body가 필요 없을 수 있습니다
       },
     })
   }
@@ -164,10 +161,10 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
       cancelButtonProps={{ style: { display: "none" } }}
       okButtonProps={{ style: { display: "none" } }}
     >
-      {post.recruiting === true ? (
+      {post.isRecruiting ? (
         <div>
           <Badge className={styles.badgePresent}>
-            {recruit(post.recruiting)}
+            {recruit(post.isRecruiting)}
           </Badge>
           <div className={styles.titleContainer}>
             <span className={styles.title}>{post.title}</span>
@@ -180,7 +177,7 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
           <div className={styles.content}>{decodeHTML(post.content)}</div>
           <div className={styles.ProfileContainer}>
             <span className={styles.ProfileContent}>
-              {post.nickname} {formatDate(post.createdDate)}
+              {post.nickname} {formatDate(post.createDate)}
             </span>
             {userEmail === post.email ? (
               <div className={styles.buttonContainer}>
@@ -209,14 +206,14 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
             <Badge className={styles.cardBadgeArea}>{post.region}</Badge>
             <Badge className={styles.cardBadgeAgeGroup}>{post.ageGroup}</Badge>
             <Badge className={styles.cardBadgeSmoke}>
-              {post.smoke}
+              {post.smoke ? "흡연" : "비흡연"} {/* 수정 */}
             </Badge>
           </div>
         </div>
       ) : (
         <div>
           <Badge className={styles.isBadgePresent}>
-            {recruit(post.recruiting)}
+            {recruit(post.isRecruiting)}
           </Badge>
           <div className={styles.titleContainer}>
             <span className={styles.title}>{post.title}</span>
@@ -226,16 +223,17 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
               </button>
             )}
           </div>
-          <div className={styles.content}>{post.content}</div>
+          <div className={styles.content}>{decodeHTML(post.content)}</div>
           <div className={styles.ProfileContainer}>
             <span className={styles.ProfileContent}>
-              {post.nickname} {formatDate(post.createdDate)}
+              {post.nickname} {formatDate(post.createDate)}
             </span>
             {userEmail === post.email ? (
               <div className={styles.buttonContainer}>
                 <Button
                   className={styles.deleteButton}
-                  onClick={handleDeleteClick}> 
+                  onClick={handleDeleteClick}
+                > 
                   삭제
                 </Button>
               </div>
@@ -254,7 +252,7 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
             <Badge className={styles.cardBadgeArea}>{post.region}</Badge>
             <Badge className={styles.cardBadgeAgeGroup}>{post.ageGroup}</Badge>
             <Badge className={styles.cardBadgeSmoke}>
-              {post.smoke}
+              {post.smoke ? "흡연" : "비흡연"} {/* 수정 */}
             </Badge>
           </div>
         </div>

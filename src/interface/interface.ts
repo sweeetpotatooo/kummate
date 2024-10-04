@@ -30,11 +30,11 @@ export interface Post {
   readonly nickname: string
   readonly content: string
   readonly gender: string
-  readonly createdDate: string
+  readonly createDate: string
   readonly region: string
   readonly ageGroup: string
   readonly smoke: boolean
-  readonly recruiting: boolean
+  readonly isRecruiting: boolean
   readonly image?: string
 }
 
@@ -229,10 +229,22 @@ export interface FetchData {
   }[]
 }
 
-export interface PostData {
-  readonly articleList: Post[]
-  readonly totalCnt: number
+export interface PostDataAll {
+  code: number
+  data: Post[]
 }
+
+// 필터링된 게시글을 반환하는 응답
+export interface PostDataFiltered {
+  code: number
+  data: {
+    articles: Post[]
+    totalCnt: number
+  }
+}
+
+// PostData는 두 가지 형태 중 하나
+export type PostData = PostDataAll | PostDataFiltered
 
 export interface ChatMessage {
   readonly msg: string

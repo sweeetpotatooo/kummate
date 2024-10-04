@@ -28,7 +28,7 @@ const MainPostCard: React.FC<RoomMateSearchProps> = ({ post, onClick }) => {
             )}
           </div>
           <div className={styles.date}>
-            {post?.createdDate ? formatDate(post.createdDate) : "N/A"}
+            {post?.createDate ? formatDate(post.createDate) : "N/A"}
           </div>
           <div className={styles.cardBadgeContainer}>
             <Badge className={styles.cardBadgeArea}>{post?.region}</Badge>

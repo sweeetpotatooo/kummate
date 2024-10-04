@@ -1,3 +1,4 @@
+// src/pages/RoomMate/roomMate.tsx
 import styles from "./roomMate.module.css" // CSS 모듈을 임포트하여 스타일 적용
 import PostCard from "../../components/PostCard/postCard" // PostCard 컴포넌트를 임포트
 import { Button, Pagination, message, Spin } from "antd" // Ant Design의 버튼, 페이지네이션, 메시지, 스핀 컴포넌트를 임포트
@@ -5,16 +6,15 @@ import { useEffect, useState } from "react" // React 훅을 임포트 (useEffect
 import { useNavigate } from "react-router-dom" // 페이지 이동을 위한 useNavigate 훅을 임포트
 import { useSelector } from "react-redux" // Redux에서 상태를 가져오기 위한 useSelector 훅을 임포트
 import { RootState } from "../../Redux/store" // Redux 스토어의 RootState 타입을 임포트
-import { API_URL, userArticle } from "../../api" // API URL과 관련 API 경로를 임포트
-import { Post, SearchQuery } from "../../interface/interface" // Post와 SearchQuery 타입을 임포트
-import { RoomMateSearchProps, PostData } from "../../interface/interface" // RoomMateSearchProps와 PostData 타입을 임포트
+import { API_URL } from "../../api" // API URL과 관련 API 경로를 임포트
+import { Post, SearchQuery, PostData } from "../../interface/interface" // Post와 SearchQuery, PostData 타입을 임포트
 import { RedoOutlined } from "@ant-design/icons" // Ant Design 아이콘 중 RedoOutlined 아이콘을 임포트
 import SearchBar from "../../components/SearchBar/searchBar" // 검색 바(SearchBar) 컴포넌트를 임포트
 import useFetch from "../../hooks/useFetch" // 데이터 fetch를 위한 커스텀 훅 useFetch를 임포트
 import { UserProfile } from "../../interface/interface" // 사용자 프로필 관련 인터페이스를 임포트
 import { userMyprofile } from "../../api" // 사용자 프로필 API 경로를 임포트
 
-const RoomMate: React.FC<RoomMateSearchProps> = () => {
+const RoomMate: React.FC = () => {
   // 상태 선언
   const [currentPage, setCurrentPage] = useState(1) // 현재 페이지 번호 상태
   const [showRecruiting, setShowRecruiting] = useState(false) // 모집 중인 게시글만 볼 것인지에 대한 상태
@@ -25,7 +25,6 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
   ) // Redux 상태에서 사용자 로그인 여부를 확인
   const pageSize = 9 // 페이지당 게시글 수
   const navigate = useNavigate() // 페이지 이동을 위한 훅
-  const [searchResults] = useState([]) // 검색 결과 상태 (현재 빈 배열로 초기화)
   const [messageApi, contextHolder] = message.useMessage() // Ant Design의 메시지 API 사용
   const [isSearched, setIsSearched] = useState(false) // 검색 여부 상태
   const [searchBoxOpen, setSearchBoxOpen] = useState(false) // 검색창 열림 여부 상태
@@ -46,7 +45,7 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
     setHeaders: setProfileHeaders, // API 요청 헤더를 설정하는 함수
     setMethod: setProfileMethod, // API 요청 메서드를 설정하는 함수
     setBody: setProfileBody, // API 요청 본문을 설정하는 함수
-  } = useFetch<UserProfile | null>("", "", {}, null) // 커스텀 훅 useFetch를 이용해 프로필 데이터를 가져옴
+  } = useFetch<UserProfile | null>("", "GET", {}, null) // 커스텀 훅 useFetch를 이용해 프로필 데이터를 가져옴
 
   useEffect(() => {
     // 컴포넌트가 처음 렌더링될 때 사용자 프로필 API를 호출
@@ -56,7 +55,7 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
       "Content-Type": "application/json", // 요청 헤더에 JSON 형식 지정
       Authorization: `Bearer ${userToken.atk}` || "", // Bearer 토큰을 Authorization 헤더에 추가
     })
-    setProfileBody() // 본문은 비어있음
+    setProfileBody(null) // 본문은 비어있음
   }, [setProfileBody, setProfileHeaders, setProfileMethod, setProfileUrl, userToken]) // userToken이 변경될 때마다 실행
 
   // 검색 결과를 처리하는 함수
@@ -73,7 +72,7 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
   // 글쓰기 페이지로 이동하는 함수
   const goToWritePage = () => {
     if (isLogged === true) { // 로그인 여부 확인
-      if (profileData?.gender !== "null") { // 사용자 프로필에 성별 정보가 있는지 확인
+      if (profileData?.gender !== "null" && profileData?.gender) { // 사용자 프로필에 성별 정보가 있는지 확인
         navigate("/WritePage") // 글쓰기 페이지로 이동
       } else {
         messageApi.info("내 정보를 입력 후 사용해주세요.") // 성별 정보가 없으면 메시지 표시
@@ -90,29 +89,34 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
 
   // 검색 필터링 함수
   const handleSearch = async (
-    query: SearchQuery,
+    searchQuery: SearchQuery,
     page = 1,
     size = 9,
-    showRecruiting? : boolean,
+    showRecruitingFlag?: boolean,
   ) => {
-    setQuery(query) // 검색 쿼리 상태 업데이트
-    const searchParams = {
+    setQuery(searchQuery) // 검색 쿼리 상태 업데이트
+    setIsSearched(true) // 검색 상태 업데이트
+
+    const searchParams = new URLSearchParams({
       page: page.toString(), // 페이지 번호를 문자열로 변환
       size: size.toString(), // 페이지 크기를 문자열로 변환
-      isRecruiting: showRecruiting?.toString() || "false", // 모집 중 여부를 문자열로 변환
-      region: query.area, // 지역 필터
-      ageGroup: query.ageGroup, // 연령대 필터
-      smoke: query.smoke, // 흡연 여부 필터
-      gender: query.gender.toString(), // 성별 필터
-    }
+      isRecruiting: showRecruitingFlag?.toString() || "false", // 모집 중 여부를 문자열로 변환
+      region: searchQuery.area, // 지역 필터
+      ageGroup: searchQuery.ageGroup, // 연령대 필터
+      smoke: searchQuery.smoke, // 흡연 여부 필터
+      gender: searchQuery.gender.toString(), // 성별 필터
+    })
 
-    const newQueryString = new URLSearchParams(searchParams).toString() // 검색 파라미터를 쿼리 문자열로 변환
+    const newQueryString = searchParams.toString() // 검색 파라미터를 쿼리 문자열로 변환
     setQueryString(newQueryString) // 쿼리 문자열 상태 업데이트
 
     try {
-      const response = await fetch(`/api/articles/filter?${newQueryString}`, {
+      const response = await fetch(`${API_URL}/api/articles/filter?${newQueryString}`, {
         method: "GET",
-        headers: new Headers(),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken.atk}` || "",
+        },
       }) // 필터링된 검색 결과를 API로 요청
 
       if (!response.ok) {
@@ -120,15 +124,15 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
       }
 
       const data = await response.json() // 응답 데이터를 JSON으로 변환
-      if (data.code === "RESPONSE_SUCCESS" && data.status === "OK") {
-        handleSearchResults(data.data.articleList) // 검색 결과를 처리
-        setSearchBoxOpen(!searchBoxOpen) // 검색창 열림 상태 토글
-        setCount(data.data.totalCnt) // 전체 게시글 수 업데이트
+      if (data.code === 200) {
+        handleSearchResults(data.data.articles)
+        setSearchBoxOpen(!searchBoxOpen)
+        setCount(data.data.totalCnt)
       } else {
-        throw new Error("API Error: " + data.msg) // API 오류 발생 시 메시지 출력
+        throw new Error("API Error: " + data.message)
       }
     } catch (error: unknown) {
-      console.error("에러", searchParams) // 오류 발생 시 콘솔에 출력
+      console.error("에러", error) // 오류 발생 시 콘솔에 출력
       setSearchBoxOpen(!searchBoxOpen) // 검색창 상태 토글
       messageApi.error("검색된 결과가 없습니다.") // 검색 결과가 없으면 메시지 표시
     }
@@ -143,32 +147,52 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
     setHeaders, // API 요청 헤더 설정 함수
     setMethod, // API 요청 메서드 설정 함수
     setBody, // API 요청 본문 설정 함수
-  } = useFetch<PostData | null>("", "", {}, null) // useFetch 훅 사용
+  } = useFetch<PostData | null>("", "GET", {}, null) // useFetch 훅 사용
 
   useEffect(() => {
     if (isSearched === false) {
-      setUrl(
-        `/api/${userArticle}?page=${currentPage}&size=9&isRecruiting=${showRecruiting}`,
-      ) // 검색되지 않았으면 기본 게시글 목록 API 호출
+      setUrl(`${API_URL}/api/articles?page=${currentPage}&size=${pageSize}&isRecruiting=${showRecruiting}`)
     } else {
-      setUrl(`/api/articles/filter?${queryString}`) // 검색되었으면 필터링된 API 호출
+      setUrl(`${API_URL}/api/articles/filter?${queryString}`)
     }
 
-    setMethod("GET") // GET 메서드로 설정
-    setHeaders() // 헤더 설정
-    setBody() // 본문 설정 (비어 있음)
-  }, [currentPage, showRecruiting, messageApi, isSearched, setMethod, setHeaders, setBody, setUrl, queryString]) // 의존성 배열에 따라 effect 실행
+    setMethod("GET")
+    setHeaders({
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken.atk}` || "",
+    })
+    setBody(null)
+  }, [
+    currentPage,
+    showRecruiting,
+    isSearched,
+    setMethod,
+    setHeaders,
+    setBody,
+    setUrl,
+    queryString,
+    pageSize,
+    userToken,
+  ])
 
   useEffect(() => {
-    if (fetchDataSuccess) {
+    if (fetchDataSuccess && fetchedData !== null) {
       try {
-        setPosts(fetchedData?.articleList || []) // 가져온 게시글 목록 상태 업데이트
-        setCount(fetchedData?.totalCnt || 0) // 게시글 총 개수 상태 업데이트
+        console.log("Fetched data:", fetchedData)
+        if (Array.isArray(fetchedData.data)) {
+          // /api/articles 엔드포인트의 응답 처리
+          setPosts(fetchedData.data)
+          setCount(fetchedData.data.length)
+        } else {
+          // /api/articles/filter 엔드포인트의 응답 처리
+          setPosts(fetchedData.data.articles || [])
+          setCount(fetchedData.data.totalCnt || 0)
+        }
       } catch (error) {
-        console.error(error) // 오류 발생 시 콘솔에 출력
+        console.error(error)
       }
     }
-  }, [fetchDataSuccess, fetchedData]) // 데이터가 성공적으로 가져와졌을 때만 effect 실행
+  }, [fetchDataSuccess, fetchedData])
 
   // 모집글과 전체글 토글 버튼
   const toggleRecruitOnly = () => {
@@ -214,12 +238,7 @@ const RoomMate: React.FC<RoomMateSearchProps> = () => {
               }}
             /> // 데이터를 로딩 중일 때 로딩 스피너 표시
           ) : (
-            <PostCard
-              posts={posts}
-              Resultsposts={searchResults}
-              currentPage={currentPage}
-              showRecruiting={showRecruiting}
-            /> // 데이터를 불러온 후 게시글 카드 렌더링
+            <PostCard posts={posts} /> // 데이터를 불러온 후 게시글 카드 렌더링
           )}
         </div>
         <Pagination
