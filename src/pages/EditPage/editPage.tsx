@@ -1,3 +1,5 @@
+// src/pages/editPage/editPage.tsx
+
 import React, { useState, useEffect } from "react"
 import styles from "./editPage.module.css"
 import EditPageSelect from "./editPageSelect"
@@ -9,7 +11,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../Redux/store"
 import useFetch from "../../hooks/useFetch"
 
-const editPage: React.FC = () => {
+const EditPage: React.FC = () => {
   const [userContent, setUserContent] = useState("")
   const [form] = Form.useForm()
   const navigate = useNavigate()
@@ -28,7 +30,7 @@ const editPage: React.FC = () => {
       })
       setUserContent(editPost.content)
     }
-  }, [editPost])
+  }, [editPost, form]) // 의존성 배열에 form 추가
 
   const userToken = useSelector((state: RootState) => state.user.data.token)
 
@@ -43,14 +45,25 @@ const editPage: React.FC = () => {
   } = useFetch<unknown>("", "", {}, null)
 
   const onFinish = async (values: Store) => {
-    setUrl(`${API_URL}/api/${userArticle}/${editPost.id}`)
-    setMethod("PUT")
+    // smoke 값을 불리언으로 변환
+    const smokeValue = values.smoke === "흡연" ? true : false;
+  
+    // 서버로 전송할 요청 바디 생성
+    const requestBody = {
+      ...values,
+      smoke: smokeValue,
+    };
+  
+    console.log("Submitting values:", requestBody); // 요청 바디 출력
+  
+    setUrl(`${API_URL}/api/${userArticle}/${editPost.id}`);
+    setMethod("PUT");
     setHeaders({
       "Content-Type": "application/json",
       Authorization: `Bearer ${userToken.atk}`,
-    })
-    setBody(values)
-  }
+    });
+    setBody(requestBody);
+  };
 
   useEffect(() => {
     if (!isLoading && isSuccess) {
@@ -107,7 +120,7 @@ const editPage: React.FC = () => {
             onChange={(e) => setUserContent(e.target.value)}
             value={userContent}
           />
-        </Form.Item>{" "}
+        </Form.Item>
         <div className={styles.buttonContainer}>
           <Button
             className={styles.submitButton}
@@ -122,4 +135,4 @@ const editPage: React.FC = () => {
   )
 }
 
-export default editPage
+export default EditPage

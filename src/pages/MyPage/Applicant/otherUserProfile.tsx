@@ -1,3 +1,4 @@
+//src/pages/MyPage/Applicant/otherUserProfile.tsx
 import { Button, Input, Modal, Radio } from "antd"
 import React from "react"
 import styles from "../../../components/RecommendModal/recommendModal.module.css"
@@ -101,7 +102,7 @@ const OtherUserProfile: React.FC<RecommendModalProps> = ({
           <div
             className={`${styles.profileSection} ${styles.profileSection4Col}`}
           >
-            <span>지역</span>
+            <span>기숙사</span>
             <Input value={userProfile?.region} style={{ width: 60 }} readOnly />
           </div>
           <div

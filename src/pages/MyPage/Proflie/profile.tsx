@@ -1,4 +1,4 @@
-//src/pages/MyPage/Proflie/profile.tsx
+// src/pages/MyPage/Profile/profile.tsx
 
 import { useEffect, useState } from 'react';
 import MyPage from '../myPage';
@@ -30,13 +30,16 @@ const Profile: React.FC = () => {
   const [selectedActivityTime, setSelectedActivityTime] = useState('');
   const [myText, setMyText] = useState('');
   const [favoriteTag, setFavoriteTag] = useState<string[]>([]);
+  const [selectedStudent_id, setSelectedStudent_id] = useState(0);
+  const [selectedDepartment, setSelectedDepartment] = useState('');
 
   const [, setProfileUpdated] = useState(false);
 
+  // 프로필 정보 업데이트 후 상태를 다시 불러오기
   const handleUpdateProfileSuccess = () => {
-    setProfileUpdated(prevState => !prevState);
-    // 프로필이 성공적으로 업데이트되었을 때 추가 작업을 수행할 수 있습니다.
-  };
+    setProfileUpdated(prevState => !prevState)
+    // 추가로 프로필 정보를 다시 불러올 수 있습니다.
+  }
 
   const API_URL = 'http://localhost:3001';
 
@@ -73,15 +76,19 @@ const Profile: React.FC = () => {
         setSelectedGender(data.gender ?? '성별');
         setNickname(data.nickname ?? '');
         setSelectedAge(data.age ?? 0);
+        setSelectedStudent_id(data.student_id ?? 0);
+        setSelectedDepartment(data.department ?? '학과');
         setEmail(data.email ?? '');
         setProfileImage(data.image ?? defaultProfileImage);
         setSelectedSmoke(data.isSmoker === true ? '합니다' : '하지 않습니다');
         setSelectedMBTI(data.mbti ?? 'MBTI');
         setSelectedRegion(data.region ?? '지역');
-        setSelectedAgeGroup(data.ageGroup?? ' ~ ')
+        setSelectedAgeGroup(data.ageGroup ?? ' ~ ');
         setSelectedActivityTime(data.activityTime ?? '활동 시간');
         setMyText(data.detail ?? '추가로 하고 싶은 말을 적어주세요! :)');
         setFavoriteTag(data.tags ?? []);
+        setSelectedStudent_id(data.student_id);
+        setSelectedDepartment(data.department);
       } catch (error) {
         console.error('프로필 정보를 불러오는 중 에러 발생:', error);
         setFetchProfileError(error);
@@ -122,18 +129,22 @@ const Profile: React.FC = () => {
               setSelectedGender={setSelectedGender}
               selectedAge={selectedAge}
               setSelectedAge={setSelectedAge}
+              selectedStudent_id={selectedStudent_id}
+              setSelectedStudent_id={setSelectedStudent_id}
+              selectedDepartment={selectedDepartment}
+              setSelectedDepartment={setSelectedDepartment}
               selectedSmoke={selectedSmoke}
               setSelectedSmoke={setSelectedSmoke}
               selectedMBTI={selectedMBTI}
               setSelectedMBTI={setSelectedMBTI}
-              selectedRegion={selectedRegion}           
-              setSelectedRegion={setSelectedRegion}    
+              selectedRegion={selectedRegion}
+              setSelectedRegion={setSelectedRegion}
               selectedAgeGroup={selectedAgeGroup}
               setSelectedAgeGroup={setSelectedAgeGroup}
               selectedActivityTime={selectedActivityTime}
               setSelectedActivityTime={setSelectedActivityTime}
-              myText={myText}                           
-              setMyText={setMyText}                     
+              myText={myText}
+              setMyText={setMyText}
               favoriteTag={favoriteTag}
               setFavoriteTag={setFavoriteTag}
               handleUpdateProfileSuccess={handleUpdateProfileSuccess}

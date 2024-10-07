@@ -38,10 +38,10 @@
 }
 
 .cardBadgeArea {
-  background-color: var(--green200);
+  background-color: var(--green400);
 }
 .cardBadgeAgeGroup {
-  background-color: var(--green300);
+  background-color: var(--green400);
 }
 
 .cardBadgeSmoke {

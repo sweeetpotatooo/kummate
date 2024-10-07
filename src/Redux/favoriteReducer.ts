@@ -1,18 +1,56 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { fetchFavorites } from '../components/Favorite/favoritesThunk'
+//src/Redux/favoriteReducer.ts
 
-// favorites 슬라이스 정의
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Post } from '../interface/interface';
+import { fetchFavorites, addFavorite, removeFavorite } from '../components/Favorite/favoritesThunk';
+
+interface FavoritesState {
+  items: Post[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
+}
+
+const initialState: FavoritesState = {
+  items: [],
+  status: 'idle',
+  error: null,
+};
+
 const favoritesSlice = createSlice({
-  name: 'favorites',      // 슬라이스 이름
-  initialState: [],       // 초기 상태: 빈 배열
-  reducers: {},           // 동기 액션은 없음
-  extraReducers: builder => {
-    // fetchFavorites 비동기 작업이 성공적으로 완료된 경우
-    builder.addCase(fetchFavorites.fulfilled, (_state, action) => {
-      return action.payload  // 응답된 데이터를 상태로 설정
-    })
-  }
-})
+  name: 'favorites',
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      // fetchFavorites
+      .addCase(fetchFavorites.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(fetchFavorites.fulfilled, (state, action: PayloadAction<Post[]>) => {
+        console.log('Fetched favorites:', action.payload);
+        state.status = 'succeeded';
+        state.items = action.payload;
+      })
+      .addCase(fetchFavorites.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+      })
+      // addFavorite
+      .addCase(addFavorite.fulfilled, (state, action: PayloadAction<Post>) => {
+        state.items.push(action.payload);
+      })
+      .addCase(addFavorite.rejected, (state, action) => {
+        state.error = action.payload as string;
+      })
+      // removeFavorite
+      .addCase(removeFavorite.fulfilled, (state, action: PayloadAction<number>) => {
+        state.items = state.items.filter((post) => post.id !== action.payload);
+      })
+      .addCase(removeFavorite.rejected, (state, action) => {
+        state.error = action.payload as string;
+      });
+  },
+});
 
-// 슬라이스 리듀서 내보내기
-export default favoritesSlice.reducer
+export default favoritesSlice.reducer;

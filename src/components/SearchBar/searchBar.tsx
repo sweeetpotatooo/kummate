@@ -1,3 +1,4 @@
+//src/components/SearchBar/searchBar.tsx
 import { SearchOutlined } from "@ant-design/icons";
 import { Badge, Radio, Button } from "antd";
 import {
@@ -16,7 +17,7 @@ const SearchBar: React.FC<RoomMateSearchProps> = ({ onSearch }) => {
   // 지역, 나이, 흡연 여부, 성별 필터의 선택된 값을 관리하는 state
   const [selectedArea, setSelectedArea] = useState("기숙사");
   const [selectedAgeGroup, setSelectedAgeGroup] = useState("나이");
-  const [selectedSmoke, setSelectedSmoke] = useState("흡연"); // 흡연 여부 필터 state
+  const [selectedSmoke, setSelectedSmoke] = useState("흡연 여부"); // 흡연 여부 필터 state
   const [selectedGender, setSelectedGender] = useState("성별");
 
   // 검색 버튼 클릭 시 호출되는 함수
@@ -25,10 +26,10 @@ const SearchBar: React.FC<RoomMateSearchProps> = ({ onSearch }) => {
     const query = {
       area: selectedArea,
       ageGroup: selectedAgeGroup,
-      smoke: selectedSmoke, // 흡연 여부 필터 추가
+      smoke: selectedSmoke,
       gender: selectedGender,
     };
-
+  
     // 부모 컴포넌트에 검색 쿼리 전달
     onSearch?.(query);
     // 검색창 닫기
@@ -125,10 +126,10 @@ const SearchBar: React.FC<RoomMateSearchProps> = ({ onSearch }) => {
                   {Searchsmoke.map((item, index) => (
                     <Radio
                       key={index}
-                      value={item.smoke}
+                      value={item.label} // selectedSmoke는 label 값을 가집니다.
                       className={styles.smokeRadioBtn}
                     >
-                      {item.smoke}
+                      {item.label}
                     </Radio>
                   ))}
                 </Radio.Group>

@@ -12,22 +12,47 @@ export const age = [{ age: 20 }, { age: 30 }]
 export const ageGroup = [
   { ageGroup: "20 ~ 22" },
   { ageGroup: "23 ~ 25" },
-  { ageGroup: "26 ~" },
+  { ageGroup: "26 ~ " },
 ]
 
 export const SearchageGroup = [
   { ageGroup: "상관 없음" },
-  { ageGroup: "20-22" },
-  { ageGroup: "23-25" },
-  { ageGroup: "26-30" },
+  { ageGroup: "20 ~ 22" },
+  { ageGroup: "23 ~ 25" },
+  { ageGroup: "26 ~ " },
 ]
 
-export const smoke = [{ smoke: "합니다" }, { smoke: "하지 않습니다" }]
+export const department = [
+  { department: '경영학과' },
+  { department: '경제통상학과' },
+  { department: '경찰학과'},
+  { department: '소방방제학과'},
+  { department: '문헌정보학과'},
+  { department: '유아교육과'},
+  { department: '사회복지학과'},
+  { department: '신문방송학과'},
+  { department: '동화한국어문화학과'},
+  { department: '영어문화학과'},
+  { department: '메카트로닉스공학과'},
+  { department: '컴퓨터공학과'},
+  { department: '바이오메디컬공학과'},
+  { department: '녹색기술융합학과'},
+  { department: '에너지신소재공학과'},
+  { department: '간호학과'},
+  { department: '바이오의약학과'},
+  { department: '생명공학과'},
+  { department: '식품영양학과'},
+  { department: '뷰티화장품학과'},
+  { department: '스포츠건강학과'},
+  { department: '골프산업학과'},
+  { department: '의예과'},
+];
+export const smoke = [{ smoke: "흡연" }, { smoke: "비흡연" }]
 
 export const Searchsmoke =[
-  { smoke: "상관 없음" },
-  { smoke: "합니다" }, 
-  { smoke: "하지 않습니다" }
+  { label: "상관 없음", value: "" },
+  { label: "흡연" , value: "true" }, 
+  { label: "비흡연", value: "false" },
 ]
 
 export const activityTime = [

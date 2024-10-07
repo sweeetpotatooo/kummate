@@ -1,3 +1,6 @@
+/* postModal.module.css */
+
+/* 공통 배지 스타일 */
 .badgePresent,
 .isBadgePresent,
 .save,
@@ -46,12 +49,11 @@
   max-height: 500px;
   color: var(--black300);
   margin-top: 5px;
-  line-height: normal;
   overflow-y: auto;
   white-space: pre;
 }
 
-.titleContainer{
+.titleContainer {
   display: flex;
   align-items: center;
 }
@@ -78,7 +80,10 @@
 }
 
 .buttonContainer {
-  float: right;
+  display: flex;
+  gap: 10px; /* 버튼 간 간격 조절 */
+  justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+  margin-top: 15px; /* 버튼 상단 여백 */
 }
 
 .line {
@@ -87,19 +92,15 @@
   margin: 0 auto;
   padding-top: 10px;
 }
+
 .cardBadgeContainer {
-    display: flex;
-    gap: 5px;
-    margin-top: 10px;
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
 }
 
-.cardBadgeArea {
-  background-color: var(--green200);
-}
-.cardBadgeAgeGroup {
-  background-color: var(--green300);
-}
-
+.cardBadgeArea,
+.cardBadgeAgeGroup,
 .cardBadgeSmoke {
   background-color: var(--green400);
 }
@@ -108,12 +109,32 @@
   background-color: var(--black200);
 }
 
+/* 수정 및 삭제 버튼 스타일링 */
 .editButton,
-.deleteButton{
+.deleteButton {
   border: none;
   box-shadow: none;
+  color: var(--white); /* 텍스트 색상 설정 */
+  padding: 5px 10px; /* 버튼 내부 여백 */
+  border-radius: 5px; /* 버튼 모서리 둥글게 */
+  cursor: pointer;
+  font-size: 14px; /* 텍스트 크기 조절 */
 }
 
+.editButton {
+  background-color: var(--green400); /* 수정 버튼 배경색 */
+}
+
+.deleteButton {
+  background-color: var(--green600); /* 삭제 버튼 배경색 */
+}
+
+.editButton:hover,
+.deleteButton:hover {
+  opacity: 0.8; /* 호버 시 약간 투명해지게 */
+}
+
+/* 반응형 디자인 */
 @media screen and (max-width: 370px) {
   .cardBadgeContainer {
     flex-direction: column;

@@ -3,7 +3,7 @@ import styles from "./writePageSelect.module.css";
 import { Radio } from "antd";
 import { useState } from "react";
 import { FormInstance } from "antd";
-import { region, ageGroup } from "../../object/profileDropdown";
+import { region, ageGroup, smoke } from "../../object/profileDropdown";
 
 interface WritePageSelectProps {
   form: FormInstance;
@@ -66,8 +66,8 @@ const WritePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
                 {selectedSmoke === null
                   ? "흡연"
                   : selectedSmoke === true
-                  ? "합니다"
-                  : "하지 않습니다"}
+                  ? "흡연"
+                  : "비흡연"}
               </Badge>
             </div>
           </div>

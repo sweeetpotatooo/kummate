@@ -243,9 +243,9 @@ const MainPage: React.FC = () => {
               customLeftArrow={<CustomLeftArrow />}
             >
               {posts.slice(0, 12).map((post) => (
-                <div key={post.id} className={styles.carouselItem}>
+                <div key={post.article_id} className={styles.carouselItem}>
                   <MainPostCard
-                    key={post.id}
+                    key={post.article_id}
                     post={post}
                     onClick={() => handlePostClick(post)}
                   />

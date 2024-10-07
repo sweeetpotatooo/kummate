@@ -55,12 +55,12 @@
 }
 
 .cardBadgeArea {
-  background-color: var(--green200);
+  background-color: var(--green400);
   white-space: nowrap;
 }
 
 .cardBadgeAgeGroup {
-  background-color: var(--green300);
+  background-color: var(--green400);
   white-space: nowrap;
 }
 
@@ -136,13 +136,13 @@
 
 .searchChoiceArea > p {
   margin-bottom: 10px;
-  color: var(--green200);
+  color: var(--green400);
   white-space: nowrap;
 }
 
 .searchChoiceAgeGroup > p {
   margin-bottom: 10px;
-  color: var(--green300);
+  color: var(--green400);
   white-space: nowrap;
 }
 

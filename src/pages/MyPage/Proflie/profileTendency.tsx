@@ -11,6 +11,7 @@ import { CheckboxValueType } from "antd/es/checkbox/Group"
 import {
   activityTime,
   ageGroup,
+  department,
   gender,
   mbti,
   region,
@@ -34,6 +35,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
   const [boxStates, setBoxStates] = useState({
     genderBoxOpen: false,
     smokeBoxOpen: false,
+    departmentBoxOpen: false,
     MBTIBoxOpen: false,
     regionBoxOpen: false,
     ageGroupBoxOpen: false,
@@ -96,11 +98,13 @@ const ProfileTendency = (props: profileTendencyProps) => {
     if (
       props.selectedGender === "남여" ||
       props.selectedAge === 0 ||
+      props.selectedStudent_id === 0 ||
+      props.selectedDepartment === "학과" ||
       props.selectedSmoke === "할까요?" ||
       props.selectedMBTI === "mbti" ||
       props.selectedRegion === "여기" ||
       props.selectedAgeGroup === "0 ~ 0" ||
-      props.selectedActivityTime === "오전오후" ||
+      props.selectedActivityTime === "오전 오후" ||
       props.favoriteTag.length === 0
     ) {
       setChoiceModal(true)
@@ -111,7 +115,9 @@ const ProfileTendency = (props: profileTendencyProps) => {
       const profileData: userProfileData = {
         gender: props.selectedGender,
         age: props.selectedAge,
-        smoke: props.selectedSmoke === "합니다" ? true : false,
+        student_id: props.selectedStudent_id,
+        department: props.selectedDepartment,
+        isSmoke: props.selectedSmoke === "합니다" ? true : false,
         mbti: props.selectedMBTI,
         region: props.selectedRegion,
         ageGroup: props.selectedAgeGroup,
@@ -119,7 +125,6 @@ const ProfileTendency = (props: profileTendencyProps) => {
         myText: props.myText,
         favoriteTag: props.favoriteTag,
       }
-      console.log('기숙사 값 (region):', props.selectedRegion);
       updateProfileTendency(profileData)
     } catch (error) {
       console.error("프로필 업데이트 오류", error)
@@ -196,12 +201,79 @@ const ProfileTendency = (props: profileTendencyProps) => {
         </Radio.Group>
         <Radio.Group
           onChange={(e) => {
+            props.setSelectedAge(e.target.value)
+          }}
+        >
+          <div className={styles.dropdownBox}>
+            <p className={styles.dropdownP}> 저의 학번은</p>
+            <div></div>
+            <div className={styles.input}>
+              <Input
+                type="text"
+                style={{
+                  width: 85,
+                  height: 22,
+                  marginTop: 1,
+                  borderRadius: 10,
+                  paddingBottom: 6,
+                }}
+                value={props.selectedStudent_id}
+                onChange={(e) => {
+                  if (e.target.value === "") {
+                    props.setSelectedStudent_id(0)
+                  } else {
+                    const val = parseInt(e.target.value)
+                    if (isNaN(val)) {
+                      message.warning("숫자를 입력해주세요!")
+                    } else {
+                      props.setSelectedStudent_id(val)
+                    }
+                  }
+                }}
+                min={0}
+                max={300000000}
+              />
+            </div>
+            <p className={styles.dropdownP}> 입니다 </p>
+          </div>
+        </Radio.Group>
+        <Radio.Group
+          onChange={(e) => {
+            props.setSelectedDepartment(e.target.value)
+            handleToggleBox("departmentBoxOpen")
+          }}
+        >
+          <div className={styles.dropdownBox}>
+            <p className={styles.dropdownP}> 저의 학과는</p>
+            <div onClick={() => handleToggleBox("departmentBoxOpen")}>
+              <Badge className={styles.dropdownBadge}>
+                {props.selectedDepartment}
+              </Badge>
+            </div>
+            {boxStates.departmentBoxOpen && (
+              <div className={styles.departmentRadioBtn}>
+                {department.map((item, index) => (
+                  <Radio
+                    key={index}
+                    value={item.department}
+                    className={styles.departmentRadio}
+                  >
+                    {item.department}
+                  </Radio>
+                ))}
+              </div>
+            )}
+            <p className={styles.dropdownP}> 입니다 </p>
+          </div>
+        </Radio.Group>
+        <Radio.Group
+          onChange={(e) => {
             props.setSelectedSmoke(e.target.value)
             handleToggleBox("smokeBoxOpen")
           }}
         >
           <div className={styles.dropdownBox}>
-            <p className={styles.dropdownP}> 저는 흡연을</p>
+            <p className={styles.dropdownP}> 저는 </p>
             <div onClick={() => handleToggleBox("smokeBoxOpen")}>
               <Badge className={styles.dropdownBadge}>
                 {props.selectedSmoke}
@@ -220,6 +292,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
                 ))}
               </div>
             )}
+            <p className={styles.dropdownP}> 입니다 </p>
           </div>
         </Radio.Group>
         <Radio.Group
@@ -361,7 +434,6 @@ const ProfileTendency = (props: profileTendencyProps) => {
               open={tendencyModal}
               onOk={() => {
                 setTendencyModal(false)
-                props.setFavoriteTag(props.favoriteTag)
               }}
               onCancel={() => setTendencyModal(false)}
             >
@@ -369,6 +441,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
                 <Checkbox.Group
                   options={tendencyChoice}
                   onChange={handleTendencyChange}
+                  value={props.favoriteTag} // 현재 선택된 태그를 반영
                 />
               </div>
             </Modal>
