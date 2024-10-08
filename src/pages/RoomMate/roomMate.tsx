@@ -14,7 +14,7 @@ import SearchBar from "../../components/SearchBar/searchBar";
 import useFetch from "../../hooks/useFetch";
 import { UserProfile } from "../../interface/interface";
 import { userMyprofile } from "../../api";
-import { Searchsmoke } from "../../object/profileDropdown";
+import { Searchsmoke, Searchregion } from "../../object/profileDropdown";
 
 const RoomMate: React.FC = () => {
   // 상태 선언
@@ -97,6 +97,52 @@ const RoomMate: React.FC = () => {
     return smokeOption ? smokeOption.value : "";
   };
 
+  // **매핑 함수 수정 시작**
+
+  // 성별 매핑 함수 (백엔드 Enum 값과 일치하도록 수정)
+  const getGenderValue = (label: string): string => {
+    switch (label) {
+      case "남자":
+        return "남자"; // 백엔드 Gender enum 값
+      case "여자":
+        return "여자"; // 백엔드 Gender enum 값
+      default:
+        return "";
+    }
+  };
+
+  // 연령대 매핑 함수 (백엔드 Enum 값과 일치하도록 수정)
+  const getAgeGroupValue = (label: string): string => {
+    switch (label) {
+      case "20 ~ 22":
+        return "20 ~ 22"; // 백엔드 ageGroup enum 값
+      case "23 ~ 25":
+        return "23 ~ 25"; // 백엔드 ageGroup enum 값
+      case "26 ~ ":
+        return "26 ~ "; // 백엔드 ageGroup enum 값
+      default:
+        return "";
+    }
+  };
+
+  // 지역 매핑 함수 (백엔드 Enum 값과 일치하도록 수정)
+  const getRegionValue = (label: string): string => {
+    switch (label) {
+      case "모시래 4인실":
+        return "모시래 4인실"; // 백엔드 Dorm enum 값
+      case "모시래 3인실":
+        return "모시래 3인실"; // 백엔드 Dorm enum 값
+      case "해오름 4인실":
+        return "해오름 4인실"; // 백엔드 Dorm enum 값
+      case "해오름 3인실":
+        return "해오름 3인실"; // 백엔드 Dorm enum 값
+      default:
+        return "";
+    }
+  };
+
+  // **매핑 함수 수정 끝**
+
   // 검색 필터링 함수
   const handleSearch = async (
     searchQuery: SearchQuery,
@@ -110,15 +156,25 @@ const RoomMate: React.FC = () => {
     const searchParamsObj: Record<string, string> = {
       page: page.toString(),
       size: size.toString(),
-      isRecruiting: showRecruitingFlag?.toString() || "false",
+      // isRecruiting는 사용자가 명시적으로 선택한 경우에만 추가
     };
 
+    if (typeof showRecruitingFlag === 'boolean') {
+      searchParamsObj.isRecruiting = showRecruitingFlag.toString();
+    }
+
     if (searchQuery.area !== "기숙사" && searchQuery.area !== "상관 없음") {
-      searchParamsObj.region = searchQuery.area;
+      const mappedRegion = getRegionValue(searchQuery.area);
+      if (mappedRegion) {
+        searchParamsObj.region = mappedRegion;
+      }
     }
 
     if (searchQuery.ageGroup !== "나이" && searchQuery.ageGroup !== "상관 없음") {
-      searchParamsObj.ageGroup = searchQuery.ageGroup;
+      const mappedAgeGroup = getAgeGroupValue(searchQuery.ageGroup);
+      if (mappedAgeGroup) {
+        searchParamsObj.ageGroup = mappedAgeGroup;
+      }
     }
 
     const smokeValue = getSmokeValue(searchQuery.smoke);
@@ -127,12 +183,18 @@ const RoomMate: React.FC = () => {
     }
 
     if (searchQuery.gender !== "성별" && searchQuery.gender !== "상관 없음") {
-      searchParamsObj.gender = searchQuery.gender;
+      const mappedGender = getGenderValue(searchQuery.gender);
+      if (mappedGender) {
+        searchParamsObj.gender = mappedGender;
+      }
     }
 
     const searchParams = new URLSearchParams(searchParamsObj);
     const newQueryString = searchParams.toString();
     setQueryString(newQueryString); // 쿼리 문자열 상태 업데이트
+
+    // **캐시 방지를 위한 콘솔 출력 (디버깅 용도)**
+    console.log("Search Parameters:", searchParamsObj);
 
     try {
       const response = await fetch(
@@ -143,8 +205,13 @@ const RoomMate: React.FC = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${userToken.atk}` || "",
           },
+          cache: "no-cache", // 캐싱 방지
         }
       ); // 필터링된 검색 결과를 API로 요청
+
+      if (response.status === 304) {
+        throw new Error("데이터가 변경되지 않았습니다."); // 304 응답 처리
+      }
 
       if (!response.ok) {
         throw new Error("서버 연결 실패"); // 응답이 실패하면 오류 발생
@@ -238,11 +305,10 @@ const RoomMate: React.FC = () => {
 
   return (
     <>
-      <SearchBar onSearch={handleSearch} /> {/* 검색바 컴포넌트 렌더링 */}
+      <SearchBar onSearch={(searchQuery) => handleSearch(searchQuery, 1, pageSize, showRecruiting)} /> {/* 검색바 컴포넌트 렌더링 */}
       <div className={styles.roomMateContainer}>
         <div className={styles.roomMateTitle}>
-          <div className={styles.roomMateTitleText}>룸메이트 구해요</div>{" "}
-          {/* 타이틀 */}
+          <div className={styles.roomMateTitleText}>룸메이트 구해요</div> {/* 타이틀 */}
           <div className={styles.roomMateBtn}>
             <Button className={styles.circleBtn} shape="circle" onClick={refresh}>
               <RedoOutlined /> {/* 새로고침 버튼 */}

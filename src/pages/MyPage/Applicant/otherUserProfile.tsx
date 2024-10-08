@@ -108,7 +108,7 @@ const OtherUserProfile: React.FC<RecommendModalProps> = ({
           <div
             className={`${styles.profileSection} ${styles.profileSection4Col}`}
           >
-            <span>연령</span>
+            <span>나이</span>
             <Input value={userProfile?.age} style={{ width: 50 }} readOnly />
           </div>
           <div

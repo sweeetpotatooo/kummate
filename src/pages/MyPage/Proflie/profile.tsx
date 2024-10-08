@@ -40,7 +40,6 @@ const Profile: React.FC = () => {
     setProfileUpdated(prevState => !prevState)
     // 추가로 프로필 정보를 다시 불러올 수 있습니다.
   }
-
   const API_URL = 'http://localhost:3001';
 
   const [fetchProfileLoading, setFetchProfileLoading] = useState<boolean>(false);
@@ -80,7 +79,7 @@ const Profile: React.FC = () => {
         setSelectedDepartment(data.department ?? '학과');
         setEmail(data.email ?? '');
         setProfileImage(data.image ?? defaultProfileImage);
-        setSelectedSmoke(data.isSmoker === true ? '합니다' : '하지 않습니다');
+        setSelectedSmoke(data.isSmoker === true ? '흡연' : '비흡연');
         setSelectedMBTI(data.mbti ?? 'MBTI');
         setSelectedRegion(data.region ?? '지역');
         setSelectedAgeGroup(data.ageGroup ?? ' ~ ');

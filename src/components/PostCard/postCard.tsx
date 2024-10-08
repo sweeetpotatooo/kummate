@@ -49,7 +49,7 @@ const PostCard: React.FC<PostCardProps> = ({ posts, onPostClick }) => {
         <div className={styles.postCardGrid}>
           {posts.map((post) => (
             <div
-              key={post.article_id}
+              key={post.id}
               className={styles.postCardContainer}
               onClick={() => handlePostClick(post)}
             >

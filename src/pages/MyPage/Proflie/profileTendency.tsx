@@ -7,7 +7,6 @@ import { Badge } from "antd"
 import TextArea from "antd/es/input/TextArea"
 import { useState } from "react"
 import { Radio } from "antd"
-import { CheckboxValueType } from "antd/es/checkbox/Group"
 import {
   activityTime,
   ageGroup,
@@ -57,7 +56,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
   }
 
   // 체크박스
-  const handleTendencyChange = (checkedValues: CheckboxValueType[]) => {
+  const handleTendencyChange = (checkedValues: string[]) => {
     if (checkedValues.length <= 5) {
       props.setFavoriteTag(checkedValues as string[])
     } else {
@@ -451,7 +450,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
               props.favoriteTag.length === 0 ? styles.tendencyNot : ""
             }`}
           >
-            {props.favoriteTag.length === 0 ? (
+          {props.favoriteTag.length === 0 ? (
               <span className={styles.tendencyNotChoice}>
                 성향을 선택해주세요
               </span>
