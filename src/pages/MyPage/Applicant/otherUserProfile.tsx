@@ -1,3 +1,4 @@
+//src/pages/MyPage/Applicant/otherUserProfile.tsx
 import { Button, Input, Modal, Radio } from "antd"
 import React from "react"
 import styles from "../../../components/RecommendModal/recommendModal.module.css"
@@ -35,8 +36,8 @@ const OtherUserProfile: React.FC<RecommendModalProps> = ({
   ]
 
   const genderOptions = [
-    { label: "여성", value: "여성" },
-    { label: "남성", value: "남성" },
+    { label: "여자", value: "여자" },
+    { label: "남자", value: "남자" },
   ]
 
   return (
@@ -101,14 +102,14 @@ const OtherUserProfile: React.FC<RecommendModalProps> = ({
           <div
             className={`${styles.profileSection} ${styles.profileSection4Col}`}
           >
-            <span>지역</span>
+            <span>기숙사</span>
             <Input value={userProfile?.region} style={{ width: 60 }} readOnly />
           </div>
           <div
             className={`${styles.profileSection} ${styles.profileSection4Col}`}
           >
-            <span>연령</span>
-            <Input value={userProfile?.myAge} style={{ width: 50 }} readOnly />
+            <span>나이</span>
+            <Input value={userProfile?.age} style={{ width: 50 }} readOnly />
           </div>
           <div
             className={`${styles.profileSection} ${styles.profileSection4Col}`}

@@ -20,14 +20,14 @@
 }
 
 .cardBadgeArea,
-.cardBadgePeriod,
-.cardBadgePrice {
+.cardBadgeAgeGroup,
+.cardBadgeSmoke {
   color: var(--white);
   padding: 5px 8px;
   border-radius: var(--badge-border-radius);
 }
 
-.cardBadgePrice {
+.cardBadgeSmoke {
   display: flex;
   background-color: var(--green600);
   justify-content: center;

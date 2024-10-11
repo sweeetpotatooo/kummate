@@ -1,3 +1,4 @@
+//src/pages/MyPage/Proflie/profileTendency.tsx
 import styles from "./profile.module.css"
 import { Input, Modal, message } from "antd"
 import { Button } from "antd"
@@ -6,10 +7,10 @@ import { Badge } from "antd"
 import TextArea from "antd/es/input/TextArea"
 import { useState } from "react"
 import { Radio } from "antd"
-import { CheckboxValueType } from "antd/es/checkbox/Group"
 import {
   activityTime,
   ageGroup,
+  department,
   gender,
   mbti,
   region,
@@ -25,12 +26,15 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../../Redux/store"
 import { userMyprofile } from "../../../api"
 
+const API_URL = 'http://localhost:3001';
+
 const ProfileTendency = (props: profileTendencyProps) => {
   const [tendencyModal, setTendencyModal] = useState(false)
   const [choiceModal, setChoiceModal] = useState(false)
   const [boxStates, setBoxStates] = useState({
     genderBoxOpen: false,
     smokeBoxOpen: false,
+    departmentBoxOpen: false,
     MBTIBoxOpen: false,
     regionBoxOpen: false,
     ageGroupBoxOpen: false,
@@ -52,7 +56,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
   }
 
   // 체크박스
-  const handleTendencyChange = (checkedValues: CheckboxValueType[]) => {
+  const handleTendencyChange = (checkedValues: string[]) => {
     if (checkedValues.length <= 5) {
       props.setFavoriteTag(checkedValues as string[])
     } else {
@@ -63,11 +67,11 @@ const ProfileTendency = (props: profileTendencyProps) => {
   // 프로필 성향 수정
   const updateProfileTendency = async (profileData: userProfileData) => {
     try {
-      const response = await fetch(`/api/${userMyprofile}`, {
+      const response = await fetch(`${API_URL}/api/${userMyprofile}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: userToken.atk.toString(),
+          Authorization: `Bearer ${userToken.atk}`,
         },
         body: JSON.stringify(profileData),
       })
@@ -93,11 +97,13 @@ const ProfileTendency = (props: profileTendencyProps) => {
     if (
       props.selectedGender === "남여" ||
       props.selectedAge === 0 ||
+      props.selectedStudent_id === 0 ||
+      props.selectedDepartment === "학과" ||
       props.selectedSmoke === "할까요?" ||
       props.selectedMBTI === "mbti" ||
-      props.selectedregion === "여기" ||
+      props.selectedRegion === "여기" ||
       props.selectedAgeGroup === "0 ~ 0" ||
-      props.selectedActivityTime === "오전오후" ||
+      props.selectedActivityTime === "오전 오후" ||
       props.favoriteTag.length === 0
     ) {
       setChoiceModal(true)
@@ -107,17 +113,17 @@ const ProfileTendency = (props: profileTendencyProps) => {
     try {
       const profileData: userProfileData = {
         gender: props.selectedGender,
-        myAge: props.selectedAge,
-        smoke: props.selectedSmoke === "합니다" ? true : false,
+        age: props.selectedAge,
+        student_id: props.selectedStudent_id,
+        department: props.selectedDepartment,
+        isSmoke: props.selectedSmoke === "합니다" ? true : false,
         mbti: props.selectedMBTI,
-        region: props.selectedregion,
-        minAge: Number(props.selectedAgeGroup.split("-")[0]),
-        maxAge: Number(props.selectedAgeGroup.split("-")[1]),
+        region: props.selectedRegion,
+        ageGroup: props.selectedAgeGroup,
         activityTime: props.selectedActivityTime,
-        myText: props.mytext,
+        myText: props.myText,
         favoriteTag: props.favoriteTag,
       }
-
       updateProfileTendency(profileData)
     } catch (error) {
       console.error("프로필 업데이트 오류", error)
@@ -160,7 +166,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
           }}
         >
           <div className={styles.dropdownBox}>
-            <p className={styles.dropdownP}> 저의 연령대는</p>
+            <p className={styles.dropdownP}> 저의 나이는</p>
             <div></div>
             <div className={styles.input}>
               <Input
@@ -194,12 +200,79 @@ const ProfileTendency = (props: profileTendencyProps) => {
         </Radio.Group>
         <Radio.Group
           onChange={(e) => {
+            props.setSelectedAge(e.target.value)
+          }}
+        >
+          <div className={styles.dropdownBox}>
+            <p className={styles.dropdownP}> 저의 학번은</p>
+            <div></div>
+            <div className={styles.input}>
+              <Input
+                type="text"
+                style={{
+                  width: 85,
+                  height: 22,
+                  marginTop: 1,
+                  borderRadius: 10,
+                  paddingBottom: 6,
+                }}
+                value={props.selectedStudent_id}
+                onChange={(e) => {
+                  if (e.target.value === "") {
+                    props.setSelectedStudent_id(0)
+                  } else {
+                    const val = parseInt(e.target.value)
+                    if (isNaN(val)) {
+                      message.warning("숫자를 입력해주세요!")
+                    } else {
+                      props.setSelectedStudent_id(val)
+                    }
+                  }
+                }}
+                min={0}
+                max={300000000}
+              />
+            </div>
+            <p className={styles.dropdownP}> 입니다 </p>
+          </div>
+        </Radio.Group>
+        <Radio.Group
+          onChange={(e) => {
+            props.setSelectedDepartment(e.target.value)
+            handleToggleBox("departmentBoxOpen")
+          }}
+        >
+          <div className={styles.dropdownBox}>
+            <p className={styles.dropdownP}> 저의 학과는</p>
+            <div onClick={() => handleToggleBox("departmentBoxOpen")}>
+              <Badge className={styles.dropdownBadge}>
+                {props.selectedDepartment}
+              </Badge>
+            </div>
+            {boxStates.departmentBoxOpen && (
+              <div className={styles.departmentRadioBtn}>
+                {department.map((item, index) => (
+                  <Radio
+                    key={index}
+                    value={item.department}
+                    className={styles.departmentRadio}
+                  >
+                    {item.department}
+                  </Radio>
+                ))}
+              </div>
+            )}
+            <p className={styles.dropdownP}> 입니다 </p>
+          </div>
+        </Radio.Group>
+        <Radio.Group
+          onChange={(e) => {
             props.setSelectedSmoke(e.target.value)
             handleToggleBox("smokeBoxOpen")
           }}
         >
           <div className={styles.dropdownBox}>
-            <p className={styles.dropdownP}> 저는 흡연을</p>
+            <p className={styles.dropdownP}> 저는 </p>
             <div onClick={() => handleToggleBox("smokeBoxOpen")}>
               <Badge className={styles.dropdownBadge}>
                 {props.selectedSmoke}
@@ -218,6 +291,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
                 ))}
               </div>
             )}
+            <p className={styles.dropdownP}> 입니다 </p>
           </div>
         </Radio.Group>
         <Radio.Group
@@ -251,7 +325,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
         </Radio.Group>
         <Radio.Group
           onChange={(e) => {
-            props.setSelectedregion(e.target.value)
+            props.setSelectedRegion(e.target.value)
             handleToggleBox("regionBoxOpen")
           }}
         >
@@ -259,7 +333,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
             <p className={styles.dropdownP}> 제가 희망하는 기숙사는 </p>
             <div onClick={() => handleToggleBox("regionBoxOpen")}>
               <Badge className={styles.dropdownBadge}>
-                {props.selectedregion}
+                {props.selectedRegion}
               </Badge>
             </div>
             {boxStates.regionBoxOpen && (
@@ -359,7 +433,6 @@ const ProfileTendency = (props: profileTendencyProps) => {
               open={tendencyModal}
               onOk={() => {
                 setTendencyModal(false)
-                props.setFavoriteTag(props.favoriteTag)
               }}
               onCancel={() => setTendencyModal(false)}
             >
@@ -367,6 +440,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
                 <Checkbox.Group
                   options={tendencyChoice}
                   onChange={handleTendencyChange}
+                  value={props.favoriteTag} // 현재 선택된 태그를 반영
                 />
               </div>
             </Modal>
@@ -376,7 +450,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
               props.favoriteTag.length === 0 ? styles.tendencyNot : ""
             }`}
           >
-            {props.favoriteTag.length === 0 ? (
+          {props.favoriteTag.length === 0 ? (
               <span className={styles.tendencyNotChoice}>
                 성향을 선택해주세요
               </span>
@@ -400,8 +474,8 @@ const ProfileTendency = (props: profileTendencyProps) => {
               resize: "none",
               background: "#E5E5E5",
             }}
-            onChange={(e) => props.setMytext(e.target.value)}
-            value={props.mytext}
+            onChange={(e) => props.setMyText(e.target.value)}
+            value={props.myText}
           />
           <Button
             className={styles.textareaBtn}

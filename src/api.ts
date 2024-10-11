@@ -1,5 +1,4 @@
 // 사용자 관련 API 엔드포인트 상수 정의
-// 사용자 관련 API 엔드포인트 상수 정의
 export const userLogin = "auth/signin"; // 사용자 로그인 경로
 export const userLogout = "auth/logout"; // 사용자 로그아웃 경로
 export const refreshApiUrl = "auth/refresh"; // 토큰 새로 고침 경로
@@ -29,7 +28,7 @@ export const userChatList = "chat/list"; // 채팅 목록 경로
 
 import axios from 'axios'; // axios 라이브러리를 가져옴
 
-const API_URL = 'http://localhost:3001'; // 백엔드 API 서버 주소
+export const API_URL = 'http://localhost:3001'; // 백엔드 API 서버 주소
 
 // 사용자 로그인 함수 정의l
 export const loginUser = async (email: string, password: string) => {

@@ -46,7 +46,7 @@
 
 .textArea:focus {
   outline: none;
-  border-color: var(--green200);
+  border-color: var(--green300);
 }
 
 .buttonContainer {
@@ -110,8 +110,8 @@
 }
 
 .cardBadgeArea,
-.cardBadgePeriod,
-.cardBadgePrice,
+.cardBadgeAgeGroup,
+.cardBadgeSmoke,
 .cardBadgeGender {
   color: var(--white);
   padding: 5px 10px;
@@ -120,13 +120,13 @@
 }
 
 .cardBadgeArea {
-  background-color: var(--green200);
+  background-color: var(--green400);
 }
-.cardBadgePeriod {
-  background-color: var(--green300);
+.cardBadgeAgeGroup {
+  background-color: var(--green400);
 }
 
-.cardBadgePrice {
+.cardBadgeSmoke {
   background-color: var(--green400);
 }
 
@@ -158,21 +158,21 @@
 }
 
 .searchChoiceArea,
-.searchChoicePeriod,
-.searchChoicePrice,
+.searchChoiceAgeGroup,
+.searchChoiceSmoke,
 .searchChoiceGender {
   margin-right: 10px;
 }
 
 .searchChoiceArea > p {
-  color: var(--green200);
+  color: var(--green400);
 }
 
-.searchChoicePeriod > p {
-  color: var(--green300);
+.searchChoiceAgeGroup > p {
+  color: var(--green400);
 }
 
-.searchChoicePrice > p {
+.searchChoiceSmoke > p {
   color: var(--green400);
 }
 
@@ -189,8 +189,8 @@
   background-color: inherit;
 }
 
-.periodRadioGroup::-webkit-scrollbar,
-.priceRadioGroup::-webkit-scrollbar,
+.ageGroupRadioGroup::-webkit-scrollbar,
+.smokeRadioGroup::-webkit-scrollbar,
 .genderRadioGroup::-webkit-scrollbar {
   display: none;
 }
@@ -210,16 +210,16 @@
   margin: 0px;
 }
 
-.periodRadioGroup,
-.priceRadioGroup {
+.ageGroupRadioGroup,
+.smokeRadioGroup {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   height: 200px;
   overflow-y: scroll;
 }
 
-.periodRadioBtn,
-.priceRadioBtn {
+.ageGroupRadioBtn,
+.smokeRadioBtn {
   display: flex;
   justify-items: start;
   align-items: center;
@@ -249,6 +249,6 @@
   color: var(--red);
 }
 
-.priceInput {
+.smokeInput {
   margin-top: 10px;
 }

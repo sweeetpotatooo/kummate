@@ -1,11 +1,162 @@
-.cardContainer {
-  cursor: pointer;
-  width: 250px;
+/* src/components/PostCard/postCard.module.css */
+
+/* 공통 배지 스타일 */
+.badgePresent,
+.isBadgePresent,
+.save,
+.apply,
+.cardBadgeArea,
+.cardBadgeAgeGroup,
+.cardBadgeSmoke {
+  color: var(--white);
+  padding: 5px 8px;
+  border-radius: var(--badge-border-radius);
 }
 
-.cardContainer:hover {
-  transform: scale(1.05);
+.badgePresent {
+  background-color: var(--green400);
+}
+
+.save {
+  background-color: var(--black200);
+  margin-left: 15px;
+  cursor: pointer;
+  min-width: 55px;
+  max-height: 29px;
+}
+
+.apply {
+  background-color: var(--black200);
+  float: right;
+  cursor: pointer;
+}
+
+.saveActive,
+.applyActive {
+  background-color: var(--green600);
+  cursor: pointer;
+}
+
+.title {
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-h5);
+}
+
+.content {
+  font-size: var(--font-size-sub1);
+  line-height: 16px;
+  min-height: 70px;
+  max-height: 500px;
+  color: var(--black300);
+  margin-top: 5px;
+  overflow-y: auto;
+  white-space: pre;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: center;
+}
+
+.ProfileContainer {
+  position: relative;
+}
+
+.profileImg {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: var(--black100);
+  margin-top: 2px;
+}
+
+.ProfileContent {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 5px;
+  font-size: var(--font-size-sub2);
+  color: var(--black300);
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 10px; /* 버튼 간 간격 조절 */
+  justify-content: flex-end; /* 버튼을 오른쪽으로 정렬 */
+  margin-top: 15px; /* 버튼 상단 여백 */
+}
+
+.line {
+  border-bottom: 1px solid var(--black200);
+  max-width: 470px;
+  margin: 0 auto;
+  padding-top: 10px;
+}
+
+.cardBadgeContainer {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.cardBadgeArea,
+.cardBadgeAgeGroup,
+.cardBadgeSmoke {
+  background-color: var(--green400);
+}
+
+.isBadgePresent {
+  background-color: var(--black200);
+}
+
+/* 수정 및 삭제 버튼 스타일링 */
+.editButton,
+.deleteButton {
+  border: none;
+  box-shadow: none;
+  color: var(--white); /* 텍스트 색상 설정 */
+  padding: 5px 10px; /* 버튼 내부 여백 */
+  border-radius: 5px; /* 버튼 모서리 둥글게 */
+  cursor: pointer;
+  font-size: 14px; /* 텍스트 크기 조절 */
+}
+
+.editButton {
+  background-color: var(--green400); /* 수정 버튼 배경색 */
+}
+
+.deleteButton {
+  background-color: var(--green600); /* 삭제 버튼 배경색 */
+}
+
+.editButton:hover,
+.deleteButton:hover {
+  opacity: 0.8; /* 호버 시 약간 투명해지게 */
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 370px) {
+  .cardBadgeContainer {
+    flex-direction: column;
+  }
+}
+
+/* 그리드 컨테이너 클래스 이름 변경 */
+.postCardGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3열로 설정 */
+  gap: 25px; /* 카드 간격 */
+  padding: 16px;
+}
+
+.postCardContainer { /* 고유한 이름으로 변경 */
+  cursor: pointer;
+  width: 250px;
   transition: transform 0.2s ease-in-out;
+}
+
+.postCardContainer:hover {
+  transform: scale(1.05);
 }
 
 .cardText {
@@ -29,32 +180,6 @@
   color: var(--black300);
 }
 
-.cardBadgeContainer {
-  display: flex;
-  gap: 5px;
-  margin-top: 20px;
-}
-
-.cardBadgeArea,
-.cardBadgePeriod,
-.cardBadgePrice {
-  color: var(--white);
-  padding: 5px;
-  font-size: 10px;
-  border-radius: var(--badge-border-radius);
-}
-
-.cardBadgeArea {
-  background-color: var(--green200);
-}
-.cardBadgePeriod {
-  background-color: var(--green300);
-}
-
-.cardBadgePrice {
-  background-color: var(--green400);
-}
-
 .user {
   display: flex;
   justify-content: space-between;
@@ -71,6 +196,7 @@
 }
 
 .noPosts {
-  position: absolute;
-  left: 45%;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #888;
 }

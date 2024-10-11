@@ -59,7 +59,7 @@
   flex-direction: column;
   align-items: center;
   min-width: 320px;
-  height: 700px;
+  height: 750px;
   margin-top: 40px;
 }
 
@@ -253,7 +253,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 110px;
+  width: 130px;
   height: 120px;
   padding: 5px 0px;
   border-radius: 10px;
@@ -270,7 +270,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80px;
+  width: 100px;
+  margin: 4px;  
+}
+
+.departmentRadioBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
+  height: 120px;
+  padding: 5px 0px;
+  border-radius: 10px;
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+  overflow-y: scroll;
+  position: absolute;
+  top: 100%;
+  left: 40%;
+  z-index: 50;
+}
+
+.departmentRadio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
   margin: 4px;  
 }
 

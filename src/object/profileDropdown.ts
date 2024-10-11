@@ -1,10 +1,10 @@
 //src/object/profileDropdown.ts
-export const gender = [{ name: "여성" }, { name: "남성" }]
+export const gender = [{ name: "여자" }, { name: "남자" }]
 
 export const Searchgender = [
   { name: "상관 없음" },
-  { name: "여성" },
-  { name: "남성" },
+  { name: "여자" },
+  { name: "남자" },
 ]
 
 export const age = [{ age: 20 }, { age: 30 }]
@@ -12,22 +12,47 @@ export const age = [{ age: 20 }, { age: 30 }]
 export const ageGroup = [
   { ageGroup: "20 ~ 22" },
   { ageGroup: "23 ~ 25" },
-  { ageGroup: "26 ~ 30" },
+  { ageGroup: "26 ~ " },
 ]
 
 export const SearchageGroup = [
   { ageGroup: "상관 없음" },
-  { ageGroup: "20-22" },
-  { ageGroup: "23-25" },
-  { ageGroup: "26-30" },
+  { ageGroup: "20 ~ 22" },
+  { ageGroup: "23 ~ 25" },
+  { ageGroup: "26 ~ " },
 ]
 
-export const smoke = [{ smoke: "합니다" }, { smoke: "하지 않습니다" }]
+export const department = [
+  { department: '경영학과' },
+  { department: '경제통상학과' },
+  { department: '경찰학과'},
+  { department: '소방방제학과'},
+  { department: '문헌정보학과'},
+  { department: '유아교육과'},
+  { department: '사회복지학과'},
+  { department: '신문방송학과'},
+  { department: '동화한국어문화학과'},
+  { department: '영어문화학과'},
+  { department: '메카트로닉스공학과'},
+  { department: '컴퓨터공학과'},
+  { department: '바이오메디컬공학과'},
+  { department: '녹색기술융합학과'},
+  { department: '에너지신소재공학과'},
+  { department: '간호학과'},
+  { department: '바이오의약학과'},
+  { department: '생명공학과'},
+  { department: '식품영양학과'},
+  { department: '뷰티화장품학과'},
+  { department: '스포츠건강학과'},
+  { department: '골프산업학과'},
+  { department: '의예과'},
+];
+export const smoke = [{ smoke: "흡연" }, { smoke: "비흡연" }]
 
 export const Searchsmoke =[
-  { smoke: "상관 없음" },
-  { smoke: "합니다" }, 
-  { smoke: "하지 않습니다" }
+  { label: "상관 없음", value: "" },
+  { label: "흡연" , value: "true" }, 
+  { label: "비흡연", value: "false" },
 ]
 
 export const activityTime = [
@@ -90,66 +115,3 @@ export const tendencyChoice = [
   { label: "적당히 깔끔한", value: "적당히 깔끔한" },
 ]
 
-export const period = [
-  { quarter: "1개월 ~ 3개월" },
-  { quarter: "3개월 ~ 6개월" },
-  { quarter: "6개월 ~ 9개월" },
-  { quarter: "9개월 ~ 12개월" },
-  { quarter: "1년 이상 ~" },
-]
-
-export const Searchperiod = [
-  { quarter: "상관 없음" },
-  { quarter: "1개월 ~ 3개월" },
-  { quarter: "3개월 ~ 6개월" },
-  { quarter: "6개월 ~ 9개월" },
-  { quarter: "9개월 ~ 12개월" },
-  { quarter: "1년 이상 ~" },
-]
-
-export const price = [
-  { deposit: 1000000, display: "~1,000,000원" },
-  { deposit: 2000000, display: "~2,000,000원" },
-  { deposit: 3000000, display: "~3,000,000원" },
-  { deposit: 4000000, display: "~4,000,000원" },
-  { deposit: 5000000, display: "~5,000,000원" },
-  { deposit: 6000000, display: "~6,000,000원" },
-  { deposit: 7000000, display: "~7,000,000원" },
-  { deposit: 8000000, display: "~8,000,000원" },
-  { deposit: 9000000, display: "~9,000,000원" },
-  { deposit: 10000000, display: "~10,000,000원" },
-  { deposit: 11000000, display: "~11,000,000원" },
-  { deposit: 12000000, display: "~12,000,000원" },
-  { deposit: 13000000, display: "~13,000,000원" },
-  { deposit: 14000000, display: "~14,000,000원" },
-  { deposit: 15000000, display: "~15,000,000원" },
-  { deposit: 16000000, display: "~16,000,000원" },
-  { deposit: 17000000, display: "~17,000,000원" },
-  { deposit: 18000000, display: "~18,000,000원" },
-  { deposit: 19000000, display: "~19,000,000원" },
-  { deposit: 20000000, display: "~20,000,000원" },
-]
-
-export const Searchprice = [
-  { deposit: "상관 없음", display: "상관 없음" },
-  { deposit: 1000000, display: "~1,000,000원" },
-  { deposit: 2000000, display: "~2,000,000원" },
-  { deposit: 3000000, display: "~3,000,000원" },
-  { deposit: 4000000, display: "~4,000,000원" },
-  { deposit: 5000000, display: "~5,000,000원" },
-  { deposit: 6000000, display: "~6,000,000원" },
-  { deposit: 7000000, display: "~7,000,000원" },
-  { deposit: 8000000, display: "~8,000,000원" },
-  { deposit: 9000000, display: "~9,000,000원" },
-  { deposit: 10000000, display: "~10,000,000원" },
-  { deposit: 11000000, display: "~11,000,000원" },
-  { deposit: 12000000, display: "~12,000,000원" },
-  { deposit: 13000000, display: "~13,000,000원" },
-  { deposit: 14000000, display: "~14,000,000원" },
-  { deposit: 15000000, display: "~15,000,000원" },
-  { deposit: 16000000, display: "~16,000,000원" },
-  { deposit: 17000000, display: "~17,000,000원" },
-  { deposit: 18000000, display: "~18,000,000원" },
-  { deposit: 19000000, display: "~19,000,000원" },
-  { deposit: 20000000, display: "~20,000,000원" },
-]

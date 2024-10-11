@@ -19,7 +19,8 @@ import Kakao from "./components/SocialLogin/kakao"
 import Apply from "./pages/MyPage/Applicant/apply"
 import Google from "./components/SocialLogin/google"
 import Chat from "./components/Header/chat/chat"
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const App: React.FC = () => {
   return (
     <Provider store={store}>
@@ -53,6 +54,7 @@ const App: React.FC = () => {
           <Footer />
         </BrowserRouter>
       </ConfigProvider>
+      <ToastContainer /> 
     </Provider>
   )
 }

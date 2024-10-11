@@ -1,3 +1,4 @@
+// src/Redux/applyReducer.ts
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
 import { ApplyProps } from "../interface/interface"
 import { userMyFromApplicants, userMyToApplicants } from "../api"
@@ -7,6 +8,8 @@ interface ApplyState {
   applyStatus: boolean          // 신청 상태를 나타내는 boolean 값
   applyPosts: ApplyProps[]      // 신청된 게시물 목록
   totalCount: number            // 총 게시물 수
+  loading: boolean              // 비동기 작업 로딩 상태
+  error: string | null          // 비동기 작업 에러 메시지
 }
 
 // 초기 상태 정의
@@ -14,12 +17,15 @@ const initialState: ApplyState = {
   applyStatus: false,           // 초기 상태는 신청되지 않음으로 설정
   totalCount: 0,                // 총 게시물 수 초기값 0
   applyPosts: [],               // 게시물 목록 초기값 빈 배열
+  loading: false,
+  error: null,
 }
 
 // 비동기 작업 정의: fetchData
 export const fetchData = createAsyncThunk<
   { applyPageList: ApplyProps[], totalCount: number },  // 반환값 타입
-  { showApply: boolean, currentPage: number, userToken: string }  // 인자 타입
+  { showApply: boolean, currentPage: number, userToken: string },  // 인자 타입
+  { rejectValue: string }
 >(
   'apply/fetchData',  // 작업 이름
   async ({ showApply, currentPage, userToken }, thunkAPI) => {
@@ -44,8 +50,9 @@ export const fetchData = createAsyncThunk<
       // 응답 데이터를 JSON으로 변환
       const responseData = await response.json()
       return { applyPageList: responseData.data.applyPageList, totalCount: responseData.data.totalCount }
-    } catch (error) {
-      return thunkAPI.rejectWithValue({ message: `서버 상태 응답: ${error}` })  // 예외 발생 시 처리
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error.message || '데이터 가져오기 실패')  // 예외 발생 시 처리
     }
   }
 )
@@ -56,10 +63,18 @@ const applySlice = createSlice({
   initialState,            // 초기 상태 설정
   reducers: {},            // 동기 액션이 없는 슬라이스
   extraReducers: (builder) => {
-    // fetchData 작업이 성공적으로 완료된 경우
+    builder.addCase(fetchData.pending, (state) => {
+      state.loading = true
+      state.error = null
+    })
     builder.addCase(fetchData.fulfilled, (state, action: PayloadAction<{ applyPageList: ApplyProps[], totalCount: number }>) => {
+      state.loading = false
       state.applyPosts = action.payload.applyPageList  // 신청된 게시물 목록 상태 업데이트
       state.totalCount = action.payload.totalCount     // 총 게시물 수 상태 업데이트
+    })
+    builder.addCase(fetchData.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.payload as string || '데이터 가져오기 실패'
     })
   },
 })

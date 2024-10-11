@@ -1,186 +1,177 @@
-import { Badge, Form, RadioChangeEvent } from "antd" // Ant Design 라이브러리에서 Badge, Form, RadioChangeEvent 컴포넌트 임포트
-import styles from "./writePageSelect.module.css" // CSS 모듈로 스타일 적용
-import { Radio } from "antd" // Ant Design의 Radio 컴포넌트 임포트
-import { useState } from "react" // React의 useState 훅 임포트
-import { FormInstance } from "antd" // Ant Design의 FormInstance 타입 임포트
-import { region, ageGroup, smoke } from "../../object/profileDropdown" // 외부 파일에서 지역, 나이, 흡연 여부 선택지 가져오기
+// src/components/WritePageSelect/writePageSelect.tsx
 
-// WritePageSelect 컴포넌트의 props 인터페이스 정의 (폼 인스턴스 필요)
+import { Badge, Form, RadioChangeEvent } from "antd";
+import styles from "./writePageSelect.module.css";
+import { Radio } from "antd";
+import { useState } from "react";
+import { FormInstance } from "antd";
+import { region, ageGroup } from "../../object/profileDropdown"; // 'smoke'는 더 이상 필요하지 않음
+
 interface WritePageSelectProps {
-  form: FormInstance
+  form: FormInstance;
 }
 
-// WritePageSelect 컴포넌트 정의
-const writePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
-  // 지역, 나이, 흡연 여부 선택값을 관리하는 상태 변수
-  const [searchBoxOpen, setSearchBoxOpen] = useState(false) // 검색 상자가 열려있는지 여부를 제어하는 상태 변수
-  const [selectedArea, setSelectedArea] = useState<string>("지역") // 선택된 지역 저장
-  const [selectedPeriod, setSelectedPeriod] = useState<string>("나이") // 선택된 나이 저장
-  const [selectedPrice, setSelectedPrice] = useState<string>("흡연") // 선택된 흡연 여부 저장
+const WritePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
+  const [searchBoxOpen, setSearchBoxOpen] = useState(false);
+  const [selectedArea, setSelectedArea] = useState<string>("지역");
+  const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>("나이");
+  const [selectedSmoke, setSelectedSmoke] = useState<string>(""); // 'true' 또는 'false'
 
   // 지역 선택 시 호출되는 핸들러
   const handleRegionChange = (e: RadioChangeEvent) => {
-    const region = e.target.value // 선택된 지역 값을 가져옴
-    setSelectedArea(region) // 선택된 지역 상태 업데이트
-    form.setFieldsValue({ region }) // 폼 필드에 지역 값을 설정
-  }
+    const regionValue = e.target.value;
+    setSelectedArea(regionValue);
+    form.setFieldsValue({ region: regionValue });
+  };
 
   // 나이 선택 시 호출되는 핸들러
-  const handlePeriodChange = (e: RadioChangeEvent) => {
-    const ageGroup = e.target.value // 선택된 나이 값을 가져옴
-    setSelectedPeriod(ageGroup) // 선택된 나이 상태 업데이트
-    form.setFieldsValue({ ageGroup }) // 폼 필드에 나이 값을 설정
-  }
+  const handleAgeGroupChange = (e: RadioChangeEvent) => {
+    const ageGroupValue = e.target.value;
+    setSelectedAgeGroup(ageGroupValue);
+    form.setFieldsValue({ ageGroup: ageGroupValue });
+  };
 
   // 흡연 여부 선택 시 호출되는 핸들러
   const handleSmokeChange = (e: RadioChangeEvent) => {
-    const smoke = e.target.value // 선택된 흡연 여부 값을 가져옴
-    setSelectedPrice(smoke) // 선택된 흡연 여부 상태 업데이트
-    form.setFieldsValue({ smoke }) // 폼 필드에 흡연 여부 값을 설정
-  }
+    const smokeValue = e.target.value; // 'true' 또는 'false'
+    setSelectedSmoke(smokeValue);
+    form.setFieldsValue({ smoke: smokeValue });
+  };
 
-  // 검색 상자 열고 닫기 상태를 토글하는 함수
   const handleToggleSearchBox = () => {
-    setSearchBoxOpen(!searchBoxOpen) // 현재 상태의 반대값으로 설정 (열고 닫기)
-  }
+    setSearchBoxOpen(!searchBoxOpen);
+  };
+
+  // 흡연 여부를 표시하는 함수
+  const renderSmokeBadge = () => {
+    switch (selectedSmoke) {
+      case "true":
+        return "흡연";
+      case "false":
+        return "비흡연";
+      default:
+        return "흡연 여부";
+    }
+  };
 
   return (
-    <>
-      <div className={styles.searchContainer}>
-        <div className={styles.searchBox}>
-          {/* 검색 바 클릭 시 검색 상자 열기/닫기 */}
-          <div className={styles.searchBar} onClick={handleToggleSearchBox}>
-            <div>
-              {/* 기숙사 선택 섹션 */}
-              <p className={styles.title}>
-                <span className={styles.require}>*</span>기숙사
-              </p>
-              {/* 선택된 지역 값 배지로 표시 */}
-              <Badge className={styles.cardBadgeArea}>{selectedArea}</Badge>
-            </div>
-            <div>
-              {/* 나이 선택 섹션 */}
-              <p className={styles.title}>
-                <span className={styles.require}>*</span>나이
-              </p>
-              {/* 선택된 나이 값 배지로 표시 */}
-              <Badge className={styles.cardBadgePeriod}>{selectedPeriod}</Badge>
-            </div>
-            <div className={styles.lastDiv}>
-              {/* 흡연 여부 선택 섹션 */}
-              <p className={styles.title}>
-                <span className={styles.require}>*</span>흡연 여부
-              </p>
-              {/* 선택된 흡연 여부 값 배지로 표시 */}
-              <Badge className={styles.cardBadgePrice}>{selectedPrice}</Badge>
-            </div>
+    <div className={styles.searchContainer}>
+      <div className={styles.searchBox}>
+        <div className={styles.searchBar} onClick={handleToggleSearchBox}>
+          <div>
+            <p className={styles.title}>
+              <span className={styles.require}>*</span>기숙사
+            </p>
+            <Badge className={styles.cardBadgeArea}>{selectedArea}</Badge>
           </div>
+          <div>
+            <p className={styles.title}>
+              <span className={styles.require}>*</span>나이
+            </p>
+            <Badge className={styles.cardBadgeAgeGroup}>{selectedAgeGroup}</Badge>
+          </div>
+          <div className={styles.lastDiv}>
+            <p className={styles.title}>
+              <span className={styles.require}>*</span>흡연 여부
+            </p>
+            <Badge className={styles.cardBadgeSmoke}>{renderSmokeBadge()}</Badge>
+          </div>
+        </div>
 
-          {/* 검색 상자가 열려있으면 선택 메뉴 표시 */}
-          <div
-            className={
-              searchBoxOpen
-                ? styles.searchChoiceContainer // 상자가 열렸을 때
-                : styles.searchChoiceContainerHide // 상자가 닫혔을 때
-            }
-          >
-            <div className={styles.searchChoiceBox}>
-              {/* 지역 선택 라디오 그룹 */}
-              <div className={styles.searchChoiceArea}>
-                <p>지역</p>
-                <div className={styles.areaRadioGroup}>
-                  <Form.Item
-                    name="region" // 폼 필드 이름
-                    rules={[
-                      {
-                        required: true, // 필수 항목
-                        message: "지역을 선택해 주세요.", // 미선택 시 표시할 메시지
-                      },
-                    ]}
-                  >
-                    <Radio.Group onChange={handleRegionChange}>
-                      {/* 지역 목록을 반복하여 라디오 버튼으로 렌더링 */}
-                      {region.map((item, index) => (
-                        <Radio
-                          key={index} // 고유 키 값
-                          value={item.region} // 지역 값 설정
-                          className={styles.areaRadioBtn}
-                        >
-                          {item.region} {/* 지역 이름 표시 */}
-                        </Radio>
-                      ))}
-                    </Radio.Group>
-                  </Form.Item>
-                </div>
-              </div>
-
-              {/* 나이 선택 라디오 그룹 */}
-              <div className={styles.searchChoicePeriod}>
-                <p>나이</p>
+        <div
+          className={
+            searchBoxOpen
+              ? styles.searchChoiceContainer
+              : styles.searchChoiceContainerHide
+          }
+        >
+          <div className={styles.searchChoiceBox}>
+            <div className={styles.searchChoiceArea}>
+              <p>지역</p>
+              <div className={styles.areaRadioGroup}>
                 <Form.Item
-                  name="period" // 폼 필드 이름
+                  name="region"
                   rules={[
                     {
-                      required: true, // 필수 항목
-                      message: "나이를 선택해 주세요.", // 미선택 시 표시할 메시지
+                      required: true,
+                      message: "지역을 선택해 주세요.",
                     },
                   ]}
                 >
-                  <Radio.Group
-                    className={styles.periodRadioGroup}
-                    value={selectedPeriod} // 선택된 나이 값
-                    onChange={handlePeriodChange} // 나이 선택 변경 핸들러
-                  >
-                    {/* 나이 목록을 반복하여 라디오 버튼으로 렌더링 */}
-                    {ageGroup.map((item, index) => (
+                  <Radio.Group onChange={handleRegionChange}>
+                    {region.map((item, index) => (
                       <Radio
-                        key={index} // 고유 키 값
-                        value={item.ageGroup} // 나이 값 설정
-                        className={styles.periodRadioBtn}
+                        key={index}
+                        value={item.region}
+                        className={styles.areaRadioBtn}
                       >
-                        {item.ageGroup} {/* 나이 그룹 이름 표시 */}
+                        {item.region}
                       </Radio>
                     ))}
                   </Radio.Group>
                 </Form.Item>
               </div>
+            </div>
 
-              {/* 흡연 여부 선택 라디오 그룹 */}
-              <div className={styles.searchChoicePrice}>
-                <p>흡연 여부</p>
-                <Form.Item
-                  name="price" // 폼 필드 이름
-                  rules={[
-                    {
-                      required: true, // 필수 항목
-                      message: "흡연 여부를 선택해 주세요.", // 미선택 시 표시할 메시지
-                    },
-                  ]}
+            <div className={styles.searchChoiceAgeGroup}>
+              <p>나이</p>
+              <Form.Item
+                name="ageGroup"
+                rules={[
+                  {
+                    required: true,
+                    message: "나이를 선택해 주세요.",
+                  },
+                ]}
+              >
+                <Radio.Group
+                  className={styles.AgeGroupRadioGroup}
+                  value={selectedAgeGroup}
+                  onChange={handleAgeGroupChange}
                 >
-                  <Radio.Group
-                    className={styles.priceRadioGroup}
-                    value={selectedPeriod} // 선택된 흡연 여부 값
-                    onChange={handleSmokeChange} // 흡연 여부 선택 변경 핸들러
-                  >
-                    {/* 흡연 여부 목록을 반복하여 라디오 버튼으로 렌더링 */}
-                    {smoke.map((item, index) => (
-                      <Radio
-                        key={index} // 고유 키 값
-                        value={item.smoke} // 흡연 여부 값 설정
-                        className={styles.priceRadioBtn}
-                      >
-                        {item.smoke} {/* 흡연 여부 표시 */}
-                      </Radio>
-                    ))}
-                  </Radio.Group>
-                </Form.Item>
-              </div>
+                  {ageGroup.map((item, index) => (
+                    <Radio
+                      key={index}
+                      value={item.ageGroup}
+                      className={styles.ageGroupRadioBtn}
+                    >
+                      {item.ageGroup}
+                    </Radio>
+                  ))}
+                </Radio.Group>
+              </Form.Item>
+            </div>
+
+            <div className={styles.searchChoiceSmoke}>
+              <p>흡연 여부</p>
+              <Form.Item
+                name="smoke"
+                rules={[
+                  {
+                    required: true,
+                    message: "흡연 여부를 선택해 주세요.",
+                  },
+                ]}
+              >
+                <Radio.Group
+                  className={styles.SmokeRadioGroup}
+                  value={selectedSmoke}
+                  onChange={handleSmokeChange}
+                >
+                  <Radio value="true" className={styles.smokeRadioBtn}>
+                    흡연
+                  </Radio>
+                  <Radio value="false" className={styles.smokeRadioBtn}>
+                    비흡연
+                  </Radio>
+                </Radio.Group>
+              </Form.Item>
             </div>
           </div>
         </div>
       </div>
-    </>
-  )
-}
+    </div>
+  );
+};
 
-export default writePageSelect
+export default WritePageSelect;

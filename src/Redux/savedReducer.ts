@@ -1,3 +1,4 @@
+//src/Redux/savedReducer.ts
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 // SavedState 타입 정의: postId를 키로 하고, 저장 상태를 boolean으로 가지는 Record 타입

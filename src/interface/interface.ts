@@ -24,18 +24,18 @@ export interface LoginValues {
 }
 
 export interface Post {
-  readonly id: number
-  readonly email?: string
-  readonly title: string
-  readonly nickname: string
-  readonly content: string
-  readonly gender: string
-  readonly createdDate: string
-  readonly region: string
-  readonly period: string
-  readonly price: number
-  readonly recruiting: boolean
-  readonly image?: string
+  readonly id: number;
+  readonly email?: string;
+  readonly title: string;
+  readonly nickname: string;
+  readonly content: string;
+  readonly gender: string;
+  readonly createDate: string;
+  readonly region: string;
+  readonly ageGroup: string;
+  readonly smoke: boolean;
+  readonly isRecruiting: boolean;
+  readonly image?: string;
 }
 
 export interface User {
@@ -47,13 +47,13 @@ export interface User {
   readonly isSmoker: boolean
   readonly mbti: string
   readonly region: string
-  readonly minAge: number
-  readonly maxAge: number
-  readonly myAge: number
+  readonly age: number
   readonly activityTime: string
-  readonly faviteTag: string
+  readonly favoriteTag: string[]
   readonly hateTag: string
   readonly myText: string
+  readonly student_id: number
+  readonly department: string
   readonly post: Post
   readonly detail: string
 }
@@ -85,6 +85,7 @@ export interface GlobalState extends UserState {
 
 export interface profileTendencyDropdown {
   readonly genderBoxOpen: boolean
+  readonly departmentBoxOpen: boolean
   readonly smokeBoxOpen: boolean
   readonly MBTIBoxOpen: boolean
   readonly regionBoxOpen: boolean
@@ -100,12 +101,13 @@ export interface profileBasicValues {
 export interface userProfileData extends profileBasicValues {
   readonly password?: string
   readonly gender?: string
-  readonly smoke?: boolean
+  readonly isSmoke?: boolean
   readonly mbti?: string
   readonly region?: string
-  readonly minAge?: number
-  readonly maxAge?: number
-  readonly myAge?: number
+  readonly ageGroup:string
+  readonly age?: number
+  readonly student_id?: number
+  readonly department?: string;
   readonly activityTime?: string
   readonly favoriteTag?: string[]
   readonly hateTag?: string
@@ -133,14 +135,18 @@ export interface profileTendencyProps {
   readonly setSelectedSmoke: React.Dispatch<React.SetStateAction<string>>
   readonly selectedMBTI: string
   readonly setSelectedMBTI: React.Dispatch<React.SetStateAction<string>>
-  readonly selectedregion: string
-  readonly setSelectedregion: React.Dispatch<React.SetStateAction<string>>
+  readonly selectedRegion: string
+  readonly setSelectedRegion: React.Dispatch<React.SetStateAction<string>>
   readonly selectedAgeGroup: string
   readonly setSelectedAgeGroup: React.Dispatch<React.SetStateAction<string>>
   readonly selectedActivityTime: string
   readonly setSelectedActivityTime: React.Dispatch<React.SetStateAction<string>>
-  readonly mytext: string
-  readonly setMytext: React.Dispatch<React.SetStateAction<string>>
+  readonly selectedStudent_id: number
+  readonly setSelectedStudent_id: React.Dispatch<React.SetStateAction<number>>
+  readonly selectedDepartment: string
+  readonly setSelectedDepartment: React.Dispatch<React.SetStateAction<string>>
+  readonly myText: string
+  readonly setMyText: React.Dispatch<React.SetStateAction<string>>
   readonly favoriteTag: string[]
   readonly setFavoriteTag: React.Dispatch<React.SetStateAction<string[]>>
   readonly handleUpdateProfileSuccess: () => void
@@ -209,12 +215,13 @@ export interface UserProfile {
   readonly isSmoker: boolean
   readonly activityTime: string
   readonly gender: string
+  readonly ageGroup: string
+  readonly department: string
+  readonly student_id: number
   readonly region: string
   readonly mbti: string
   readonly tags: [string]
-  readonly minAge: number
-  readonly maxAge: number
-  readonly myAge: number
+  readonly age: number
   readonly detail: string
 }
 
@@ -233,10 +240,22 @@ export interface FetchData {
   }[]
 }
 
-export interface PostData {
-  readonly articleList: Post[]
-  readonly totalCnt: number
+export interface PostDataAll {
+  code: number
+  data: Post[]
 }
+
+// 필터링된 게시글을 반환하는 응답
+export interface PostDataFiltered {
+  code: number
+  data: {
+    articles: Post[]
+    totalCnt: number
+  }
+}
+
+// PostData는 두 가지 형태 중 하나
+export type PostData = PostDataAll | PostDataFiltered
 
 export interface ChatMessage {
   readonly msg: string

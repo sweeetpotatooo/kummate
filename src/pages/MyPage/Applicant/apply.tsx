@@ -1,11 +1,12 @@
+// src/pages/MyPage/Applicant/apply.tsx
 import { RedoOutlined } from '@ant-design/icons'
 import styles from './applicant.module.css'
-import { Button, Pagination } from 'antd'
+import { Button, Pagination, Spin, message } from 'antd'
 import { useEffect, useState } from 'react'
 import Applicant from './applicant'
 import MyPage from '../myPage'
 import { useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../../../Redux/store'
+import { RootState, AppDispatch } from '../../../Redux/store'
 import { useDispatch } from 'react-redux'
 import { fetchData } from '../../../Redux/applyReducer'
 
@@ -16,7 +17,7 @@ const Apply: React.FC = () => {
   const [fromCurrentPage, setFromCurrentPage] = useState(1)
   const pageSize = 3
   const dispatch: AppDispatch = useDispatch()
-  const { applyPosts, totalCount } = useSelector((state: RootState) => state.apply)
+  const { applyPosts, totalCount, loading, error } = useSelector((state: RootState) => state.apply)
 
   // '신청 했어요' '신청 받았어요'
   const toggleShowApply = () => {
@@ -25,7 +26,12 @@ const Apply: React.FC = () => {
 
   // 새로고침
   const refresh = () => {
-    window.location.reload()
+    dispatch(fetchData({ 
+      showApply: showApply, 
+      currentPage: showApply ? toCurrentPage : fromCurrentPage, 
+      userToken: userToken.atk.toString()
+    }))
+    message.success("신청 현황이 새로고침되었습니다.")
   }
 
   // '신청 했어요' 페이지네이션
@@ -47,6 +53,13 @@ const Apply: React.FC = () => {
     }))
   }, [dispatch, toCurrentPage, fromCurrentPage, showApply, userToken])
 
+  // 에러 처리
+  useEffect(() => {
+    if (error) {
+      message.error(error)
+    }
+  }, [error])
+
   return (
     <>
       <MyPage />
@@ -63,20 +76,20 @@ const Apply: React.FC = () => {
           </div>
         </div>
         <div className={styles.applicantContainer}>
-          {
-            applyPosts.length === 0 ? (
-              <p className={styles.applyPostsP}>신청현황이 없습니다</p>
-            ) : (
-              applyPosts.map((post) => (
-                <div key={post.applyId}>
-                  <Applicant
-                    post={post}
-                    currentPage={showApply ? toCurrentPage : fromCurrentPage}
-                    showApply={showApply} />
-                </div>
-              ))
-            )
-          }
+          {loading ? (
+            <Spin tip="Loading..." />
+          ) : applyPosts.length === 0 ? (
+            <p className={styles.applyPostsP}>신청현황이 없습니다</p>
+          ) : (
+            applyPosts.map((post) => (
+              <div key={post.applyId}>
+                <Applicant
+                  post={post}
+                  currentPage={showApply ? toCurrentPage : fromCurrentPage}
+                  showApply={showApply} />
+              </div>
+            ))
+          )}
           {showApply ? (
             <Pagination 
               className={styles.pagination}

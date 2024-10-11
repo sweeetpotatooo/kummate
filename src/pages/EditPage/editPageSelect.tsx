@@ -1,58 +1,60 @@
+// src/pages/editPage/editPageSelect.tsx
+
 import { Badge, Form, RadioChangeEvent } from "antd"
 import styles from "./editPageSelect.module.css"
 import { Radio } from "antd"
 import { useState, useEffect } from "react"
 import { FormInstance } from "antd"
-import { region, period, price } from "../../object/profileDropdown"
+import { region, smoke, ageGroup } from "../../object/profileDropdown"
 import { useLocation } from "react-router-dom"
 
 interface EditPageSelectProps {
   form: FormInstance
 }
 
-const editPageSelect: React.FC<EditPageSelectProps> = ({ form }) => {
+const EditPageSelect: React.FC<EditPageSelectProps> = ({ form }) => {
   const [searchBoxOpen, setSearchBoxOpen] = useState(false)
-  const [selectedArea, setSelectedArea] = useState<string>("지역")
-  const [selectedPeriod, setSelectedPeriod] = useState<string>("기간")
-  const [selectedPrice, setSelectedPrice] = useState<String>("보증금")
+  const [selectedArea, setSelectedArea] = useState<string>("기숙사")
+  const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>("연령대")
+  const [selectedSmoke, setSelectedSmoke] = useState<string>("흡연")
 
   const editPost = useLocation().state.post
 
   const handleRegionChange = (e: RadioChangeEvent) => {
-    const region = e.target.value
-    setSelectedArea(region)
-    form.setFieldsValue({ region })
+    const regionValue = e.target.value
+    setSelectedArea(regionValue)
+    form.setFieldsValue({ region: regionValue })
   }
 
-  const handlePeriodChange = (e: RadioChangeEvent) => {
-    const period = e.target.value
-    setSelectedPeriod(period)
-    form.setFieldsValue({ period })
+  const handleAgeGroupChange = (e: RadioChangeEvent) => {
+    const ageGroupValue = e.target.value
+    setSelectedAgeGroup(ageGroupValue)
+    form.setFieldsValue({ ageGroup: ageGroupValue })
   }
 
-  const handlePriceChange = (e: RadioChangeEvent) => {
-    const deposit = e.target.value
-    const selectedPriceDisplay = price.find(
-      (item) => item.deposit === deposit,
-    )?.display
-    setSelectedPrice(selectedPriceDisplay || "보증금")
-    form.setFieldsValue({ price: deposit })
+  const handleSmokeChange = (e: RadioChangeEvent) => {
+    const smokeValue = e.target.value
+    setSelectedSmoke(smokeValue)
+    form.setFieldsValue({ smoke: smokeValue })
   }
-
-
 
   const handleToggleSearchBox = () => {
     setSearchBoxOpen(!searchBoxOpen)
   }
 
-    useEffect(() => {
-      if (editPost) {
-        setSelectedArea(editPost.region)
-        setSelectedPeriod(editPost.period)
-        setSelectedPrice(editPost.price)
+  useEffect(() => {
+    if (editPost) {
+      setSelectedArea(editPost.region)
+      setSelectedAgeGroup(editPost.ageGroup)
+      setSelectedSmoke(editPost.smoke ? "흡연" : "비흡연")
 
-      }
-    }, [editPost])
+      form.setFieldsValue({
+        region: editPost.region,
+        ageGroup: editPost.ageGroup,
+        smoke: editPost.smoke ? "흡연" : "비흡연",
+      })
+    }
+  }, [editPost, form]) // 의존성 배열에 form 추가
 
   return (
     <>
@@ -61,21 +63,23 @@ const editPageSelect: React.FC<EditPageSelectProps> = ({ form }) => {
           <div className={styles.searchBar} onClick={handleToggleSearchBox}>
             <div>
               <p className={styles.title}>
-                <span className={styles.require}>*</span>지역
+                <span className={styles.require}>*</span>기숙사
               </p>
               <Badge className={styles.cardBadgeArea}>{selectedArea}</Badge>
             </div>
             <div>
               <p className={styles.title}>
-                <span className={styles.require}>*</span>기간
+                <span className={styles.require}>*</span>연령대
               </p>
-              <Badge className={styles.cardBadgePeriod}>{selectedPeriod}</Badge>
+              <Badge className={styles.cardBadgeAgeGroup}>
+                {selectedAgeGroup}
+              </Badge>
             </div>
             <div>
               <p className={styles.title}>
-                <span className={styles.require}>*</span>보증금
+                <span className={styles.require}>*</span>흡연여부
               </p>
-              <Badge className={styles.cardBadgePrice}>{selectedPrice}</Badge>
+              <Badge className={styles.cardBadgeSmoke}>{selectedSmoke}</Badge>
             </div>
           </div>
           <div
@@ -87,18 +91,22 @@ const editPageSelect: React.FC<EditPageSelectProps> = ({ form }) => {
           >
             <div className={styles.searchChoiceBox}>
               <div className={styles.searchChoiceArea}>
-                <p>지역</p>
+                <p>기숙사</p>
                 <div className={styles.areaRadioGroup}>
                   <Form.Item
                     name="region"
                     rules={[
                       {
                         required: true,
-                        message: "지역을 선택해 주세요.",
+                        message: "기숙사를 선택해 주세요.",
                       },
                     ]}
+                    initialValue={selectedArea} // 초기값 설정
                   >
-                    <Radio.Group onChange={handleRegionChange}>
+                    <Radio.Group
+                      onChange={handleRegionChange}
+                      value={selectedArea}
+                    >
                       {region.map((item, index) => (
                         <Radio
                           key={index}
@@ -112,57 +120,59 @@ const editPageSelect: React.FC<EditPageSelectProps> = ({ form }) => {
                   </Form.Item>
                 </div>
               </div>
-              <div className={styles.searchChoicePeriod}>
-                <p>기간</p>
+              <div className={styles.searchChoiceAgeGroup}>
+                <p>연령대</p>
                 <Form.Item
-                  name="period"
+                  name="ageGroup"
                   rules={[
                     {
                       required: true,
-                      message: "기간을 선택해 주세요.",
+                      message: "연령대를 선택해 주세요.",
                     },
                   ]}
+                  initialValue={selectedAgeGroup} // 초기값 설정
                 >
                   <Radio.Group
-                    className={styles.periodRadioGroup}
-                    value={selectedPeriod}
-                    onChange={handlePeriodChange}
+                    className={styles.ageGroupRadioGroup}
+                    onChange={handleAgeGroupChange}
+                    value={selectedAgeGroup}
                   >
-                    {period.map((item, index) => (
+                    {ageGroup.map((item, index) => (
                       <Radio
                         key={index}
-                        value={item.quarter}
-                        className={styles.periodRadioBtn}
+                        value={item.ageGroup}
+                        className={styles.ageGroupRadioBtn}
                       >
-                        {item.quarter}
+                        {item.ageGroup}
                       </Radio>
                     ))}
                   </Radio.Group>
                 </Form.Item>
               </div>
-              <div className={styles.searchChoicePrice}>
-                <p>보증금</p>
+              <div className={styles.searchChoiceSmoke}>
+                <p>흡연 여부</p>
                 <Form.Item
-                  name="price"
+                  name="smoke"
                   rules={[
                     {
                       required: true,
-                      message: "소유한 보증금을 선택해 주세요.",
+                      message: "흡연 여부를 선택해 주세요.",
                     },
                   ]}
+                  initialValue={selectedSmoke} // 초기값 설정
                 >
                   <Radio.Group
-                    className={styles.priceRadioGroup}
-                    value={selectedPeriod}
-                    onChange={handlePriceChange}
+                    className={styles.smokeRadioGroup}
+                    onChange={handleSmokeChange}
+                    value={selectedSmoke}
                   >
-                    {price.map((item, index) => (
+                    {smoke.map((item, index) => (
                       <Radio
                         key={index}
-                        value={item.deposit}
-                        className={styles.priceRadioBtn}
+                        value={item.smoke}
+                        className={styles.smokeRadioBtn}
                       >
-                        {item.display}
+                        {item.smoke}
                       </Radio>
                     ))}
                   </Radio.Group>
@@ -176,4 +186,4 @@ const editPageSelect: React.FC<EditPageSelectProps> = ({ form }) => {
   )
 }
 
-export default editPageSelect
+export default EditPageSelect

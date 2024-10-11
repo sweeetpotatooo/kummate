@@ -1,3 +1,4 @@
+//src/Redux/store.ts
 import { Action, ThunkAction, ThunkDispatch, configureStore } from "@reduxjs/toolkit"
 import { useDispatch as useReduxDispatch } from 'react-redux'
 import userReducer from "./user"

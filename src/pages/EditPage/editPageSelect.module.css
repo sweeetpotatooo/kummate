@@ -45,8 +45,8 @@
 }
 
 .cardBadgeArea,
-.cardBadgePeriod,
-.cardBadgePrice,
+.cardBadgeAgeGroup,
+.cardBadgeSmoke,
 .cardBadgeGender {
   color: var(--white);
   padding: 5px 10px;
@@ -55,16 +55,16 @@
 }
 
 .cardBadgeArea {
-  background-color: var(--green200);
+  background-color: var(--green400);
   white-space: nowrap;
 }
 
-.cardBadgePeriod {
-  background-color: var(--green300);
+.cardBadgeAgeGroup {
+  background-color: var(--green400);
   white-space: nowrap;
 }
 
-.cardBadgePrice {
+.cardBadgeSmoke {
   background-color: var(--green400);
   white-space: nowrap;
 }
@@ -79,8 +79,8 @@
   }
 
   .cardBadgeArea,
-  .cardBadgePeriod,
-  .cardBadgePrice,
+  .cardBadgeAgeGroup,
+  .cardBadgeSmoke,
   .cardBadgeGender {
     font-size: 10px;
   }
@@ -136,17 +136,17 @@
 
 .searchChoiceArea > p {
   margin-bottom: 10px;
-  color: var(--green200);
+  color: var(--green400);
   white-space: nowrap;
 }
 
-.searchChoicePeriod > p {
+.searchChoiceAgeGroup > p {
   margin-bottom: 10px;
-  color: var(--green300);
+  color: var(--green400);
   white-space: nowrap;
 }
 
-.searchChoicePrice > p {
+.searchChoiceSmoke > p {
   margin-bottom: 10px;
   color: var(--green400);
   white-space: nowrap;
@@ -168,23 +168,23 @@
 }
 
 .areaRadioGroup::-webkit-scrollbar-thumb,
-.priceRadioGroup::-webkit-scrollbar-thumb {
+.smokeRadioGroup::-webkit-scrollbar-thumb {
   background-color: var(--black100);
   border-radius: var(--badge-border-radius);
 }
 
 .areaRadioGroup::-webkit-scrollbar,
-.priceRadioGroup::-webkit-scrollbar {
+.smokeRadioGroup::-webkit-scrollbar {
   background-color: inherit;
 }
 
-.periodRadioGroup::-webkit-scrollbar,
+.ageGroupRadioGroup::-webkit-scrollbar,
 .genderRadioGroup::-webkit-scrollbar {
   display: none;
 }
 
 .areaRadioGroup,
-.priceRadioGroup {
+.smokeRadioGroup {
   width: 140px;
   height: 200px;
   overflow: auto;
@@ -202,8 +202,8 @@
   margin: 0;
 }
 
-.periodRadioBtn,
-.priceRadioBtn {
+.ageGroupRadioBtn,
+.smokeRadioBtn {
   display: flex;
   height: 40px;
   justify-items: start;
