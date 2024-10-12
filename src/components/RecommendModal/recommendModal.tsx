@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react"
-import { Button, Input, List, Modal, Radio } from "antd"
-import styles from "./recommendModal.module.css"
-import { RecommendModalProps } from "../../interface/interface"
-import { userArticle } from "../../api"
-import { Post } from "../../interface/interface"
-import PostModal from "../PostModal/postModal"
-import useFetch from "../../hooks/useFetch"
+// RecommendModal.tsx
+import React, { useState, useEffect } from "react";
+import { Button, Input, List, Modal, Radio, message } from "antd";
+import styles from "./recommendModal.module.css";
+import { RecommendModalProps } from "../../interface/interface";
+import { userArticle } from "../../api";
+import { Post } from "../../interface/interface";
+import PostModal from "../PostModal/postModal";
 
 const RecommendModal: React.FC<RecommendModalProps> = ({
   visible,
@@ -13,68 +13,59 @@ const RecommendModal: React.FC<RecommendModalProps> = ({
   userProfile,
   user,
 }) => {
-  const [checkedGender, setCheckedGender] = useState<string>("")
-  const [checkedSmoking, setCheckedSmoking] = useState<string>("")
-  const [userArticles, setUserArticles] = useState<Post[]>([])
-  const [selectedArticle, setSelectedArticle] = useState<Post | null>(null)
+  const [checkedGender, setCheckedGender] = useState<string>("");
+  const [checkedSmoking, setCheckedSmoking] = useState<string>("");
+  const [userArticles, setUserArticles] = useState<Post[]>([]);
+  const [selectedArticle, setSelectedArticle] = useState<Post | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (userProfile) {
-          setCheckedGender(userProfile.gender)
-          setCheckedSmoking(userProfile.isSmoker ? "흡연" : "비흡연")
+          setCheckedGender(userProfile.gender);
+          setCheckedSmoking(userProfile.isSmoker ? "흡연" : "비흡연");
 
-          const response = await fetch(`/api/${userArticle}/users/${user?.id}`)
-          const data = await response.json()
-          setUserArticles(data.data)
+          const response = await fetch(`/api/${userArticle}/users/${user?.id}`);
+          if (!response.ok) {
+            throw new Error("게시글을 불러오는데 실패했습니다.");
+          }
+          const data = await response.json();
+          setUserArticles(data.data);
         }
       } catch (error) {
-        console.error("Error:", error)
+        console.error("Error:", error);
+        message.error("추천 유저의 게시글을 불러오는데 실패했습니다.");
       }
-    }
+    };
 
     if (visible) {
-      fetchData()
+      fetchData();
     }
-  }, [visible, userProfile, user])
+  }, [visible, userProfile, user, userArticle]);
 
   const smokingOptions = [
     { label: "흡연", value: "흡연" },
     { label: "비흡연", value: "비흡연" },
-  ]
+  ];
 
   const genderOptions = [
     { label: "여성", value: "여성" },
     { label: "남성", value: "남성" },
-  ]
+  ];
 
-  const {
-    datas: articleData,
-    isSuccess: articleSuccess,
-    setUrl: setArticleUrl,
-    setHeaders: setArticleHeaders,
-    setMethod: setArticleMethod,
-    setBody: setArticleBody,
-  } = useFetch<Post>("", "", {}, null)
-
-  const handleArticleClick = (articleId: string) => {
-    setArticleUrl(`/api/articles/${articleId}`)
-    setArticleMethod("GET")
-    setArticleHeaders()
-    setArticleBody()
-    setSelectedArticle(articleData)
-  }
-
-  useEffect(() => {
-    if (articleSuccess) {
-      try {
-        setSelectedArticle(articleData)
-      } catch (error) {
-        console.error(error)
+  const handleArticleClick = async (articleId: string) => {
+    try {
+      const response = await fetch(`/api/articles/${articleId}`);
+      if (!response.ok) {
+        throw new Error("게시글을 불러오는데 실패했습니다.");
       }
+      const data = await response.json();
+      setSelectedArticle(data.data); // API 응답 형식에 맞게 수정
+    } catch (error) {
+      console.error("Error fetching article:", error);
+      message.error("게시글을 불러오는데 실패했습니다.");
     }
-  }, [articleSuccess, articleData])
+  };
 
   return (
     <>
@@ -99,55 +90,49 @@ const RecommendModal: React.FC<RecommendModalProps> = ({
           </span>
         </div>
         <div className={styles.profileBox}>
-          <div
-            className={`${styles.profileSection} ${styles.profileSection2Col}`}
-          >
+          <div className={`${styles.profileSection} ${styles.profileSection2Col}`}>
             <span>성별</span>
             <Radio.Group
               options={genderOptions}
               value={checkedGender}
               optionType="button"
+              disabled
             />
           </div>
-          <div
-            className={`${styles.profileSection} ${styles.profileSection2Col}`}
-          >
+          <div className={`${styles.profileSection} ${styles.profileSection2Col}`}>
             <span>흡연</span>
             <Radio.Group
               options={smokingOptions}
               value={checkedSmoking}
               optionType="button"
+              disabled
             />
           </div>
           <div className={styles.profileSection}>
             <span>활동시간</span>
             <Input
               value={userProfile?.activityTime}
-              style={{ width: 50 }}
+              style={{ width: 100 }}
               readOnly
             />
           </div>
-          <div
-            className={`${styles.profileSection} ${styles.profileSection4Col}`}
-          >
+          <div className={`${styles.profileSection} ${styles.profileSection4Col}`}>
+            <span>학과</span>
+            <Input value={userProfile?.department} style={{ width: 100 }} readOnly />
+          </div>
+          <div className={`${styles.profileSection} ${styles.profileSection4Col}`}>
             <span>MBTI</span>
-            <Input value={userProfile?.mbti} style={{ width: 50 }} readOnly />
+            <Input value={userProfile?.mbti} style={{ width: 100 }} readOnly />
           </div>
-          <div
-            className={`${styles.profileSection} ${styles.profileSection4Col}`}
-          >
-            <span>지역</span>
-            <Input value={userProfile?.region} style={{ width: 60 }} readOnly />
+          <div className={`${styles.profileSection} ${styles.profileSection4Col}`}>
+            <span>기숙사</span>
+            <Input value={userProfile?.region} style={{ width: 120 }} readOnly />
           </div>
-          <div
-            className={`${styles.profileSection} ${styles.profileSection4Col}`}
-          >
+          <div className={`${styles.profileSection} ${styles.profileSection4Col}`}>
             <span>연령</span>
-            <Input value={userProfile?.age} style={{ width: 50 }} readOnly />
+            <Input value={userProfile?.age} style={{ width: 60 }} readOnly />
           </div>
-          <div
-            className={`${styles.profileSection} ${styles.profileSection4Col}`}
-          >
+          <div className={`${styles.profileSection} ${styles.profileSection4Col}`}>
             <span>본인 소개</span>
             <Input.TextArea
               autoSize={{ minRows: 1, maxRows: 5 }}
@@ -159,23 +144,25 @@ const RecommendModal: React.FC<RecommendModalProps> = ({
               }}
               readOnly
             />
+          </div>
+          <div className={styles.postsSection}>
             <span className={styles.postsCreated}>
               {userProfile?.nickname}님이 작성한 게시글
             </span>
-              <List
-                bordered
-                dataSource={userArticles}
-                renderItem={(article) => (
-                  <List.Item>
-                    <a
-                      onClick={() => handleArticleClick(article.id.toString())}
-                      className={styles.articleTitle}
-                    >
-                      {article.title}
-                    </a>
-                  </List.Item>
-                )}
-              />
+            <List
+              bordered
+              dataSource={userArticles}
+              renderItem={(article) => (
+                <List.Item>
+                  <a
+                    onClick={() => handleArticleClick(article.id.toString())}
+                    className={styles.articleTitle}
+                  >
+                    {article.title}
+                  </a>
+                </List.Item>
+              )}
+            />
           </div>
         </div>
       </Modal>
@@ -187,7 +174,7 @@ const RecommendModal: React.FC<RecommendModalProps> = ({
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default RecommendModal
+export default RecommendModal;

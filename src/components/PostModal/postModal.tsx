@@ -27,7 +27,6 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
   useEffect(() => {
     dispatch(fetchFavorites());
   }, [dispatch]);
-  
 
   const decodeHTML = (html: string) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
@@ -55,26 +54,28 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
   const [isFavorite, toggleFavorite] = useFavorite(post.id); // [isFavorite, toggleFavorite]
   const [isLoadingFavorite, setIsLoadingFavorite] = useState(false);
 
-  // 신청 상태
-  const [, toggleApply] = useApply(post.id);
-  const [applyIsSaved, setApplyIsSaved] = useState(false);
-  const applySave = applyIsSaved
-    ? `${styles.apply} ${styles.applyActive}`
-    : styles.apply;
+  // 신청 상태 관리
+  const [isApplied, setIsApplied] = useState(false); // 초기 상태는 false로 설정
 
-  // 신청하기
+  // useApply 훅 사용 (신청 취소 기능 없음)
+  const [saved, apply] = useApply(post.id)
+
+  // isApplied 상태를 saved 상태에 따라 초기화
+  useEffect(() => {
+    setIsApplied(saved)
+  }, [saved])
+
+  // 신청하기 버튼 클릭 핸들러
   const handleApplyClick = useCallback(async () => {
     try {
-      await toggleApply();
-      setApplyIsSaved((prevIsSaved) => !prevIsSaved);
+      await apply(); // 신청 동작 수행
+      setIsApplied(true); // 신청 완료 후 상태 업데이트
+      toast.success("신청이 완료되었습니다.");
     } catch (error) {
       console.error(error);
       toast.error("신청 처리에 실패했습니다.");
     }
-  }, [toggleApply]);
-
-  // 신청 현황 가져오기
-  // Removed manual fetchFavoriteStatus and fetchApplyStatus
+  }, [apply]);
 
   // 삭제하기
   const {
@@ -191,9 +192,10 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
               </div>
             ) : (
               <button
-                className={applySave}
-                style={{ float: "right" }}
+                className={`${styles.apply} ${isApplied ? styles.applyActive : ""}`}
+                style={{ float: "right", marginTop: '10px' }}
                 onClick={handleApplyClick}
+                disabled={isApplied} // 이미 신청한 경우 버튼 비활성화
               >
                 신청하기
               </button>
@@ -241,9 +243,10 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
               </div>
             ) : (
               <button
-                className={applySave}
-                style={{ float: "right" }}
+                className={`${styles.apply} ${isApplied ? styles.applyActive : ""}`}
+                style={{ float: "right", marginTop: '10px' }}
                 onClick={handleApplyClick}
+                disabled={isApplied} // 이미 신청한 경우 버튼 비활성화
               >
                 신청하기
               </button>

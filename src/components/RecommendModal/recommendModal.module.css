@@ -25,6 +25,10 @@
   grid-column: span 1;
 }
 
+.profileSection4Col {
+  grid-column: span 4;
+}
+
 .profileTitle {
   display: flex;
   align-items: center;

@@ -1,4 +1,4 @@
-//src/pages/MyPage/Applicant/otherUserProfile.tsx
+// src/pages/MyPage/Applicant/otherUserProfile.tsx
 import { Button, Input, Modal, Radio } from "antd"
 import React from "react"
 import styles from "../../../components/RecommendModal/recommendModal.module.css"
@@ -28,7 +28,7 @@ const OtherUserProfile: React.FC<RecommendModalProps> = ({
       }
     }
     fetchData()
-  }, [])
+  }, [userProfile])
 
   const smokingOptions = [
     { label: "흡연", value: "흡연" },
@@ -54,81 +54,109 @@ const OtherUserProfile: React.FC<RecommendModalProps> = ({
           </Button>,
         ]}
       >
-      {userProfile && (
-        <>
-        <div className={styles.profileTitle}>
-          <span>
-            <span className={styles.userProfileNickname}>
-              {userProfile?.nickname}
-            </span>{" "}
-            님의 프로필
-          </span>
-        </div>
-        <div className={styles.profileBox}>
-          <div
-            className={`${styles.profileSection} ${styles.profileSection2Col}`}
-          >
-            <span>성별</span>
-            <Radio.Group
-              options={genderOptions}
-              value={checkedGender}
-              optionType="button"
-            />
-          </div>
-          <div
-            className={`${styles.profileSection} ${styles.profileSection2Col}`}
-          >
-            <span>흡연</span>
-            <Radio.Group
-              options={smokingOptions}
-              value={checkedSmoking}
-              optionType="button"
-            />
-          </div>
-          <div className={styles.profileSection}>
-            <span>활동시간</span>
-            <Input
-              value={userProfile?.activityTime}
-              style={{ width: 50 }}
-              readOnly
-            />
-          </div>
-          <div
-            className={`${styles.profileSection} ${styles.profileSection4Col}`}
-          >
-            <span>MBTI</span>
-            <Input value={userProfile?.mbti} style={{ width: 50 }} readOnly />
-          </div>
-          <div
-            className={`${styles.profileSection} ${styles.profileSection4Col}`}
-          >
-            <span>기숙사</span>
-            <Input value={userProfile?.region} style={{ width: 60 }} readOnly />
-          </div>
-          <div
-            className={`${styles.profileSection} ${styles.profileSection4Col}`}
-          >
-            <span>나이</span>
-            <Input value={userProfile?.age} style={{ width: 50 }} readOnly />
-          </div>
-          <div
-            className={`${styles.profileSection} ${styles.profileSection4Col}`}
-          >
-            <span>본인 소개</span>
-            <Input.TextArea
-              autoSize={{ minRows: 1, maxRows: 5 }}
-              value={userProfile?.detail}
-              style={{
-                maxWidth: 472,
-                overflowWrap: "break-word",
-                wordWrap: "break-word",
-              }}
-              readOnly
-            />
-          </div>
-        </div>
-      </>
-      )}
+        {userProfile && (
+          <>
+            <div className={styles.profileTitle}>
+              <span>
+                <span className={styles.userProfileNickname}>
+                  {userProfile.nickname}
+                </span>{" "}
+                님의 프로필
+              </span>
+            </div>
+            <div className={styles.profileBox}>
+              {/* 첫 번째 줄 */}
+              <div
+                className={`${styles.profileSection} ${styles.profileSection2Col}`}
+              >
+                <span>성별</span>
+                <Radio.Group
+                  options={genderOptions}
+                  value={checkedGender}
+                  optionType="button"
+                />
+              </div>
+              <div
+                className={`${styles.profileSection} ${styles.profileSection2Col}`}
+              >
+                <span>흡연</span>
+                <Radio.Group
+                  options={smokingOptions}
+                  value={checkedSmoking}
+                  optionType="button"
+                />
+              </div>
+
+              {/* 두 번째 줄 */}
+              <div className={styles.profileSection}>
+                <span>활동시간</span>
+                <Input
+                  value={userProfile.activityTime}
+                  style={{ width: 50 }}
+                  readOnly
+                />
+              </div>
+              <div className={styles.profileSection}>
+                <span>기숙사</span>
+                <Input
+                  value={userProfile.region}
+                  style={{ width: 90 }}
+                  readOnly
+                />
+              </div>
+              <div className={styles.profileSection}>
+                <span>나이</span>
+                <Input
+                  value={userProfile.age}
+                  style={{ width: 50 }}
+                  readOnly
+                />
+              </div>
+              <div className={styles.profileSection}>
+                {/* 빈 칸 */}
+              </div>
+
+              {/* 세 번째 줄 */}
+              <div
+                className={`${styles.profileSection} ${styles.profileSection2Col}`}
+              >
+                <span>학과</span>
+                <Input
+                  value={userProfile.department}
+                  style={{ width: 100 }}
+                  readOnly
+                />
+              </div>
+              <div
+                className={`${styles.profileSection} ${styles.profileSection2Col}`}
+              >
+                <span>MBTI</span>
+                <Input
+                  value={userProfile.mbti}
+                  style={{ width: 50 }}
+                  readOnly
+                />
+              </div>
+
+              {/* 네 번째 줄 */}
+              <div
+                className={`${styles.profileSection} ${styles.profileSection4Col}`}
+              >
+                <span>본인 소개</span>
+                <Input.TextArea
+                  autoSize={{ minRows: 1, maxRows: 5 }}
+                  value={userProfile.detail}
+                  style={{
+                    maxWidth: 472,
+                    overflowWrap: "break-word",
+                    wordWrap: "break-word",
+                  }}
+                  readOnly
+                />
+              </div>
+            </div>
+          </>
+        )}
       </Modal>
       {selectedArticle && (
         <PostModal

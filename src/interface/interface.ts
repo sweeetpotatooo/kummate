@@ -7,7 +7,7 @@ export interface Token {
 
 export interface UserState {
   readonly isLogged: boolean
-  readonly signUp: boolean
+  readonly signUp?: boolean
   readonly data: {
     readonly email: string
     readonly token: Token
@@ -40,6 +40,7 @@ export interface Post {
 
 export interface User {
   readonly id: number
+  readonly user_id: number
   readonly nickname: string
   readonly image: string
   readonly email: string
@@ -230,14 +231,29 @@ export interface Article {
   readonly title: string
 }
 
+export interface ApiResponse<T> {
+  code: number;
+  data: T;
+}
+
+export interface ArticlePageDto {
+  id: number;
+  title: string;
+  content: string;
+  region: string;
+  ageGroup: string;
+  smoke: boolean;
+  isRecruiting: boolean;
+  createDate: string;
+  nickname: string;
+  email?: string;
+  gender:string;
+  // 기타 필요한 필드
+}
+
 export interface FetchData {
-  readonly mbti: string
-  readonly nickname: string
-  readonly recommendDtoList: {
-    readonly id: number
-    readonly nickname: string
-    readonly mbti: string
-  }[]
+  articles: ArticlePageDto[];
+  totalCnt: number;
 }
 
 export interface PostDataAll {
@@ -290,5 +306,4 @@ export interface MbitCalculatorModalProps {
 export interface RecommendProps {
   readonly user: RecommendUser
   readonly onClick?: () => void
-  readonly data: Data
 }

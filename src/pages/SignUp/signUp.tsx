@@ -1,18 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// SignUp.tsx
+
 import { Input, Button, Form, message, Row, Col } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import styles from "./signUp.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { registerUser } from "../../Redux/user";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { useSelector } from "react-redux";
-import { RootState } from "../../Redux/store";
 import { useState } from "react";
 import axios from "axios";
 import { API_URL } from "../../api";
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [messageApi, contextHolder] = message.useMessage();
   const [isVerificationSent, setIsVerificationSent] = useState(false);
   const [isVerificationConfirmed, setIsVerificationConfirmed] = useState(false);
@@ -22,28 +20,34 @@ const SignUp: React.FC = () => {
     navigate("/MainPage");
   };
 
-  const registerUserStatus = useSelector(
-    (state: RootState) => state.user.signUp
-  );
-
-  const onFinish = async (values: {
-    email: string;
-    password: string;
-    nickname: string;
-  }) => {
+  const onFinish = async (values: any) => {
     if (!isVerificationConfirmed) {
       messageApi.error('이메일 인증을 완료해주세요.');
       return;
     }
-  
-    const result = await dispatch(registerUser(values));
-  
-    if (result.payload === true && registerUserStatus === true) {
-      navigate('/');
-    } else {
-      messageApi.error('이메일 또는 닉네임이 중복되었습니다.');
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { passwordCheck, verificationCode, ...signupData } = values;
+
+    try {
+      // 회원가입 요청
+      await axios.post(`${API_URL}/user/signup`, signupData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      messageApi.success('회원가입에 성공했습니다.');
+      navigate('/'); // 회원가입 후 로그인 페이지로 이동
+    } catch (error: any) {
+      if (axios.isAxiosError(error) && error.response) {
+        messageApi.error(error.response.data.message || '회원가입에 실패했습니다.');
+      } else {
+        messageApi.error('회원가입에 실패했습니다.');
+      }
     }
   };
+
   const sendVerificationCode = async () => {
     try {
       const values = await form.validateFields(["email"]); // 이메일 필드만 검증
@@ -71,16 +75,16 @@ const SignUp: React.FC = () => {
       const values = await form.validateFields(['email', 'verificationCode']);
       const email = values.email;
       const code = values.verificationCode;
-  
+
       console.log('Email:', email);
       console.log('Code:', code);
-  
+
       await axios.post(`${API_URL}/user/verify-code`, { email, code }, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-  
+
       messageApi.success('인증번호가 확인되었습니다.');
       setIsVerificationConfirmed(true);
     } catch (error) {
@@ -163,7 +167,6 @@ const SignUp: React.FC = () => {
                 </>
               )}
 
-              {/* 나머지 폼 항목들도 동일한 방식으로 수정 */}
               <Form.Item
                 name="password"
                 rules={[{ required: true, message: "비밀번호를 입력하세요." }]}
@@ -181,7 +184,7 @@ const SignUp: React.FC = () => {
                 rules={[
                   { required: true, message: "비밀번호를 한번 더 입력하세요." },
                   ({ getFieldValue }) => ({
-                    validator(_, value) {
+                    validator(_: any, value: any) {
                       if (!value || getFieldValue("password") === value) {
                         return Promise.resolve();
                       }
