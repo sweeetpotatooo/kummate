@@ -18,7 +18,10 @@ const Favorite = () => {
   const handleCloseModal = () => {
     setSelectedPost(null);
   };
-  
+  useEffect(() => {
+    console.log('Selected Post:', selectedPost);
+  }, [selectedPost]);
+
   useEffect(() => {
     console.log('Favorites state:', favorites);
   }, [favorites]);

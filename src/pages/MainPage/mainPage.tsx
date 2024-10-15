@@ -16,7 +16,7 @@ import MainPostCard from "../../components/MainPostCard/mainPostCard";
 import PostModal from "../../components/PostModal/postModal";
 import RecommendModal from "../../components/RecommendModal/recommendModal";
 import useFetch from "../../hooks/useFetch";
-import { Post, User, FetchData } from "../../interface/interface";
+import { Post, User, FetchData, ApiResponse } from "../../interface/interface";
 import RecommendCard from "../../components/RecommendCard/recommendCard";
 
 const CustomRightArrow: React.FC<{ onClick?: () => void }> = ({ onClick }) => (
@@ -79,7 +79,7 @@ const MainPage: React.FC = () => {
     setHeaders: setProfileHeaders,
     setMethod: setProfileMethod,
     setBody: setProfileBody,
-  } = useFetch<User | null>("", "", {}, null);
+  } = useFetch<ApiResponse<User> | null>("", "", {}, null);
 
   // 추천 룸메이트 제목 설정
   let recommendTitle: React.ReactNode = "방갑고에서 추천하는 룸메이트를 만나보세요";
@@ -92,6 +92,24 @@ const MainPage: React.FC = () => {
       </>
     );
   }
+
+  useEffect(() => {
+    if (postSuccess && postDatas) {
+      setPosts(postDatas.data.articles || []);
+    }
+  }, [postSuccess, postDatas, posts]);
+
+  useEffect(() => {
+    if (selectedUser) {
+      console.log("Selected User:", selectedUser);
+    }
+  }, [selectedUser]);
+  
+  useEffect(() => {
+    if (selectedUserProfile) {
+      console.log("Selected User Profile:", selectedUserProfile);
+    }
+  }, [selectedUserProfile]);
 
   // 추천 룸메이트 데이터 패칭
   useEffect(() => {
@@ -124,15 +142,15 @@ const MainPage: React.FC = () => {
 
   useEffect(() => {
     if (postSuccess && postDatas) {
-      setPosts(postDatas.articles || []);
-      console.log("Fetched posts:", postDatas.articles); // 추가된 로그
+      setPosts(postDatas.data.articles || []);
+      console.log("Fetched posts:", postDatas.data.articles); // 추가된 로그
     }
   }, [postSuccess, postDatas]);
 
   // 유저 프로필 데이터 패칭
   useEffect(() => {
     if (selectedUser) {
-      setProfileDatasUrl(`${API_URL}/user/profile/${selectedUser.id}`);
+      setProfileDatasUrl(`${API_URL}/user/profile/${selectedUser.user_id}`); // user_id 사용
       setProfileMethod("GET");
       setProfileHeaders({
         Authorization: `Bearer ${userToken.atk}`,
@@ -141,10 +159,10 @@ const MainPage: React.FC = () => {
       setProfileBody(null);
     }
   }, [selectedUser, userToken.atk, setProfileDatasUrl, setProfileMethod, setProfileHeaders, setProfileBody]);
-
+  
   useEffect(() => {
-    if (profileDatasSuccess) {
-      setSelectedUserProfile(profileDatas);
+    if (profileDatasSuccess&& profileDatas) {
+      setSelectedUserProfile(profileDatas.data);
     }
   }, [profileDatasSuccess, profileDatas]);
 
@@ -196,6 +214,7 @@ const MainPage: React.FC = () => {
   };
 
   const handleUserClick = (user: User) => {
+    console.log("Selected user:", user); // 추가된 로그
     setSelectedUser(user);
     setIsModalVisible(true);
   };
@@ -257,7 +276,7 @@ const MainPage: React.FC = () => {
               customLeftArrow={<CustomLeftArrow />}
             >
               {users.map((user) => (
-                <div key={user.id} className={styles.carouselItem}>
+                <div key={user.user_id} className={styles.carouselItem}>
                   <RecommendCard
                     user={user}
                     onClick={() => handleUserClick(user)}
@@ -275,7 +294,7 @@ const MainPage: React.FC = () => {
       {selectedPost && (
         <PostModal post={selectedPost} onClose={handleCloseModal} />
       )}
-      {selectedUser && (
+      {selectedUser && selectedUserProfile &&(
         <RecommendModal
           user={selectedUser}
           userProfile={selectedUserProfile}

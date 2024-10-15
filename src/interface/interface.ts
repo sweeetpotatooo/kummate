@@ -25,6 +25,7 @@ export interface LoginValues {
 
 export interface Post {
   readonly id: number;
+  readonly userId: number;
   readonly email?: string;
   readonly title: string;
   readonly nickname: string;
@@ -40,7 +41,7 @@ export interface Post {
 
 export interface User {
   readonly id: number
-  readonly user_id: number
+  readonly user_id: number;
   readonly nickname: string
   readonly image: string
   readonly email: string
@@ -204,7 +205,7 @@ export interface Data {
 }
 
 export interface RecommendUser {
-  readonly id: number
+  readonly user_id: number
   readonly nickname: string
   readonly mbti: string
 }
@@ -252,8 +253,11 @@ export interface ArticlePageDto {
 }
 
 export interface FetchData {
-  articles: ArticlePageDto[];
-  totalCnt: number;
+  code: number;
+  data: {
+    articles: Post[];
+    totalCnt: number;
+  };
 }
 
 export interface PostDataAll {

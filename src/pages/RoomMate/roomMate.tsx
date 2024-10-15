@@ -319,7 +319,6 @@ const RoomMate: React.FC = () => {
             <Button onClick={goToWritePage}>글쓰기</Button> {/* 글쓰기 버튼 */}
           </div>
         </div>
-        <div className={styles.cardGrid}>
           {fetchDataLoading ? (
             <Spin
               style={{
@@ -332,7 +331,6 @@ const RoomMate: React.FC = () => {
           ) : (
             <PostCard posts={posts} /> // 데이터를 불러온 후 게시글 카드 렌더링
           )}
-        </div>
         <Pagination
           className={styles.pagination}
           current={currentPage}

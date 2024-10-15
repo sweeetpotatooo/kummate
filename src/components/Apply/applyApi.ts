@@ -128,29 +128,24 @@ export const updateApprove = async (userTokenAtk: string, userId: number, articl
 };
 
 // 거절
+// applyApi.ts
+
 export const updateRefuse = async (userTokenAtk: string, applyId: number, articleId: number) => {
   try {
-    console.log('updateRefuse - applyId:', applyId);
-    console.log('updateRefuse - articleId:', articleId);
-
-    const response = await fetch(`${API_URL}/api/${userRefuse}/${applyId}`, {
+    const response = await fetch(`${API_URL}/api/${userRefuse}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${userTokenAtk}`,
       },
-      body: JSON.stringify({ articleId }),
+      body: JSON.stringify({ applyId, articleId }),
     });
-
-    console.log('updateRefuse 응답 상태:', response.status);
-    console.log('updateRefuse 응답:', response);
 
     if (!response.ok) {
       throw new Error('매칭 거절 실패');
     }
 
     const refuseData = await response.json();
-    console.log('매칭 거절 데이터:', refuseData.data);
     return refuseData.data;
 
   } catch (error) {

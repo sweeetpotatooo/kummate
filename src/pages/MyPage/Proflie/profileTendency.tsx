@@ -99,9 +99,9 @@ const ProfileTendency = (props: profileTendencyProps) => {
       props.selectedAge === 0 ||
       props.selectedStudent_id === 0 ||
       props.selectedDepartment === "학과" ||
-      props.selectedSmoke === "할까요?" ||
+      props.selectedSmoke === "흡연 여부" ||
       props.selectedMBTI === "mbti" ||
-      props.selectedRegion === "여기" ||
+      props.selectedRegion === "기숙사" ||
       props.selectedAgeGroup === "0 ~ 0" ||
       props.selectedActivityTime === "오전 오후" ||
       props.favoriteTag.length === 0
@@ -116,7 +116,7 @@ const ProfileTendency = (props: profileTendencyProps) => {
         age: props.selectedAge,
         student_id: props.selectedStudent_id,
         department: props.selectedDepartment,
-        isSmoke: props.selectedSmoke === "합니다" ? true : false,
+        isSmoke: props.selectedSmoke === "흡연" ? true : false,
         mbti: props.selectedMBTI,
         region: props.selectedRegion,
         ageGroup: props.selectedAgeGroup,

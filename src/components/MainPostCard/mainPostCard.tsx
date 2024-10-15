@@ -19,7 +19,7 @@ const MainPostCard: React.FC<MainPostCardProps> = ({ post, onClick }) => {
     } as const;
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
-
+  
   return (
     <div className={styles.cardContainer} onClick={onClick}>
       <Badge.Ribbon text="모집">
@@ -41,6 +41,7 @@ const MainPostCard: React.FC<MainPostCardProps> = ({ post, onClick }) => {
           <div className={styles.cardBadgeContainer}>
             <Badge className={styles.cardBadgeArea}>{post.region}</Badge>
             <Badge className={styles.cardBadgeAgeGroup}>{post.ageGroup}</Badge>
+            <Badge className={styles.cardBadgeSmoke}>{post.smoke} {post.smoke ? "흡연" : "비흡연"}</Badge>
           </div>
         </Card>
       </Badge.Ribbon>

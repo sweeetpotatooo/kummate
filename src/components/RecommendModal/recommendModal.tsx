@@ -1,11 +1,13 @@
 // RecommendModal.tsx
+
 import React, { useState, useEffect } from "react";
-import { Button, Input, List, Modal, Radio, message } from "antd";
+import { Button, Input, List, Modal, Radio, message, Spin } from "antd";
 import styles from "./recommendModal.module.css";
-import { RecommendModalProps } from "../../interface/interface";
-import { userArticle } from "../../api";
-import { Post } from "../../interface/interface";
+import { RecommendModalProps, Post } from "../../interface/interface"; // Post 인터페이스 포함
+import { API_URL, userArticle } from "../../api";
 import PostModal from "../PostModal/postModal";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Redux/store";
 
 const RecommendModal: React.FC<RecommendModalProps> = ({
   visible,
@@ -18,19 +20,28 @@ const RecommendModal: React.FC<RecommendModalProps> = ({
   const [userArticles, setUserArticles] = useState<Post[]>([]);
   const [selectedArticle, setSelectedArticle] = useState<Post | null>(null);
 
+  const userToken = useSelector((state: RootState) => state.user.data.token);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (userProfile) {
+        if (userProfile && user) {
           setCheckedGender(userProfile.gender);
           setCheckedSmoking(userProfile.isSmoker ? "흡연" : "비흡연");
 
-          const response = await fetch(`/api/${userArticle}/users/${user?.id}`);
+          const response = await fetch(`${API_URL}/api/${userArticle}/users/${user.user_id}`, {
+            headers: {
+              Authorization: `Bearer ${userToken.atk}`, // 토큰 포함
+              "Content-Type": "application/json",
+            },
+          });
+          console.log("Fetch response status:", response.status);
           if (!response.ok) {
             throw new Error("게시글을 불러오는데 실패했습니다.");
           }
           const data = await response.json();
-          setUserArticles(data.data);
+          console.log("Fetched data:", data);
+          setUserArticles(data.data.articles || []);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -41,7 +52,7 @@ const RecommendModal: React.FC<RecommendModalProps> = ({
     if (visible) {
       fetchData();
     }
-  }, [visible, userProfile, user, userArticle]);
+  }, [visible, userProfile, user, userArticle, userToken]);
 
   const smokingOptions = [
     { label: "흡연", value: "흡연" },
@@ -49,13 +60,17 @@ const RecommendModal: React.FC<RecommendModalProps> = ({
   ];
 
   const genderOptions = [
-    { label: "여성", value: "여성" },
-    { label: "남성", value: "남성" },
+    { label: "여자", value: "여자" },
+    { label: "남자", value: "남자" },
   ];
 
   const handleArticleClick = async (articleId: string) => {
     try {
-      const response = await fetch(`/api/articles/${articleId}`);
+      const response = await fetch(`${API_URL}/api/articles/${articleId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (!response.ok) {
         throw new Error("게시글을 불러오는데 실패했습니다.");
       }
@@ -66,6 +81,26 @@ const RecommendModal: React.FC<RecommendModalProps> = ({
       message.error("게시글을 불러오는데 실패했습니다.");
     }
   };
+
+  // 로딩 상태 처리
+  if (!userProfile) {
+    return (
+      <Modal
+        centered
+        open={visible}
+        onOk={onClose}
+        onCancel={onClose}
+        closeIcon={null}
+        footer={[
+          <Button key="submit" type="primary" onClick={onClose}>
+            닫기
+          </Button>,
+        ]}
+      >
+        <Spin />
+      </Modal>
+    );
+  }
 
   return (
     <>
@@ -80,63 +115,93 @@ const RecommendModal: React.FC<RecommendModalProps> = ({
             닫기
           </Button>,
         ]}
+        width={600} // 모달 너비 조정 (필요시 변경)
       >
         <div className={styles.profileTitle}>
           <span>
             <span className={styles.userProfileNickname}>
-              {userProfile?.nickname}
+              {userProfile.nickname}
             </span>{" "}
             님의 프로필
           </span>
         </div>
         <div className={styles.profileBox}>
-          <div className={`${styles.profileSection} ${styles.profileSection2Col}`}>
-            <span>성별</span>
-            <Radio.Group
-              options={genderOptions}
-              value={checkedGender}
-              optionType="button"
-              disabled
-            />
+          {/* 첫 번째 줄: 성별, 흡연 */}
+          <div className={styles.profileRow}>
+            <div className={styles.profileSection}>
+              <span>성별</span>
+              <Radio.Group
+                options={genderOptions}
+                value={checkedGender}
+                optionType="button"
+                className={styles.customGenderRadioGroup}
+              />
+            </div>
+            <div className={styles.profileSection}>
+              <span>흡연</span>
+              <Radio.Group
+                options={smokingOptions}
+                value={checkedSmoking}
+                optionType="button"
+                className={styles.customSmokingRadioGroup}
+              />
+            </div>
           </div>
-          <div className={`${styles.profileSection} ${styles.profileSection2Col}`}>
-            <span>흡연</span>
-            <Radio.Group
-              options={smokingOptions}
-              value={checkedSmoking}
-              optionType="button"
-              disabled
-            />
+
+          {/* 두 번째 줄: 학과, 연령 */}
+          <div className={styles.profileRow}>
+            <div className={styles.profileSection}>
+              <span>학과</span>
+              <Input
+                value={userProfile.department}
+                style={{ width: 150 }}
+                readOnly
+              />
+            </div>
+            <div className={styles.profileSection}>
+              <span>나이</span>
+              <Input
+                value={userProfile.age}
+                style={{ width: 60 }}
+                readOnly
+              />
+            </div>
           </div>
+
+          {/* 세 번째 줄: 기숙사, 활동시간, MBTI */}
+          <div className={styles.profileRow}>
+            <div className={styles.profileSection}>
+              <span>기숙사</span>
+              <Input
+                value={userProfile.region}
+                style={{ width: 120 }}
+                readOnly
+              />
+            </div>
+            <div className={styles.profileSection}>
+              <span>활동시간</span>
+              <Input
+                value={userProfile.activityTime}
+                style={{ width: 100 }}
+                readOnly
+              />
+            </div>
+            <div className={styles.profileSection}>
+              <span>MBTI</span>
+              <Input
+                value={userProfile.mbti}
+                style={{ width: 80 }}
+                readOnly
+              />
+            </div>
+          </div>
+
+          {/* 본인 소개 */}
           <div className={styles.profileSection}>
-            <span>활동시간</span>
-            <Input
-              value={userProfile?.activityTime}
-              style={{ width: 100 }}
-              readOnly
-            />
-          </div>
-          <div className={`${styles.profileSection} ${styles.profileSection4Col}`}>
-            <span>학과</span>
-            <Input value={userProfile?.department} style={{ width: 100 }} readOnly />
-          </div>
-          <div className={`${styles.profileSection} ${styles.profileSection4Col}`}>
-            <span>MBTI</span>
-            <Input value={userProfile?.mbti} style={{ width: 100 }} readOnly />
-          </div>
-          <div className={`${styles.profileSection} ${styles.profileSection4Col}`}>
-            <span>기숙사</span>
-            <Input value={userProfile?.region} style={{ width: 120 }} readOnly />
-          </div>
-          <div className={`${styles.profileSection} ${styles.profileSection4Col}`}>
-            <span>연령</span>
-            <Input value={userProfile?.age} style={{ width: 60 }} readOnly />
-          </div>
-          <div className={`${styles.profileSection} ${styles.profileSection4Col}`}>
             <span>본인 소개</span>
             <Input.TextArea
               autoSize={{ minRows: 1, maxRows: 5 }}
-              value={userProfile?.detail}
+              value={userProfile.detail}
               style={{
                 maxWidth: 472,
                 overflowWrap: "break-word",
@@ -145,9 +210,11 @@ const RecommendModal: React.FC<RecommendModalProps> = ({
               readOnly
             />
           </div>
+
+          {/* 작성한 게시글 */}
           <div className={styles.postsSection}>
             <span className={styles.postsCreated}>
-              {userProfile?.nickname}님이 작성한 게시글
+              {userProfile.nickname}님이 작성한 게시글
             </span>
             <List
               bordered

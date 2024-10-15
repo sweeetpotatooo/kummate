@@ -1,9 +1,8 @@
 // src/pages/MyPage/Applicant/otherUserProfile.tsx
 import { Button, Input, Modal, Radio } from "antd"
-import React from "react"
-import styles from "../../../components/RecommendModal/recommendModal.module.css"
+import React, { useEffect, useState } from "react"
+import styles from "./otherUserProfile.module.css"
 import { Post, RecommendModalProps } from "../../../interface/interface"
-import { useEffect, useState } from "react"
 import PostModal from "../../../components/PostModal/postModal"
 
 const OtherUserProfile: React.FC<RecommendModalProps> = ({
@@ -14,7 +13,7 @@ const OtherUserProfile: React.FC<RecommendModalProps> = ({
   const [checkedGender, setCheckedGender] = useState<string>("")
   const [checkedSmoking, setCheckedSmoking] = useState<string>("")
   const [selectedArticle, setSelectedArticle] = useState<Post | null>(null)
-  
+
   // 유저 정보 가져오기
   useEffect(() => {
     const fetchData = async () => {
@@ -56,6 +55,15 @@ const OtherUserProfile: React.FC<RecommendModalProps> = ({
       >
         {userProfile && (
           <>
+            {/* 프로필 이미지 추가 */}
+            <div className={styles.profileImageContainer}>
+              <img
+                src={userProfile.image || "/profile.svg"}
+                alt={`${userProfile.nickname}의 프로필`}
+                className={styles.profileImage}
+              />
+            </div>
+
             <div className={styles.profileTitle}>
               <span>
                 <span className={styles.userProfileNickname}>
@@ -65,92 +73,77 @@ const OtherUserProfile: React.FC<RecommendModalProps> = ({
               </span>
             </div>
             <div className={styles.profileBox}>
-              {/* 첫 번째 줄 */}
-              <div
-                className={`${styles.profileSection} ${styles.profileSection2Col}`}
-              >
+              {/* 첫 번째 줄: 성별과 흡연 */}
+              <div className={`${styles.profileSection} ${styles.profileSection2Col}`}>
                 <span>성별</span>
                 <Radio.Group
                   options={genderOptions}
                   value={checkedGender}
                   optionType="button"
+                  className={styles.customGenderRadioGroup}
                 />
               </div>
-              <div
-                className={`${styles.profileSection} ${styles.profileSection2Col}`}
-              >
+              <div className={`${styles.profileSection} ${styles.profileSection2Col}`}>
                 <span>흡연</span>
                 <Radio.Group
                   options={smokingOptions}
                   value={checkedSmoking}
                   optionType="button"
+                  className={styles.customSmokingRadioGroup}
                 />
               </div>
 
-              {/* 두 번째 줄 */}
-              <div className={styles.profileSection}>
-                <span>활동시간</span>
-                <Input
-                  value={userProfile.activityTime}
-                  style={{ width: 50 }}
-                  readOnly
-                />
-              </div>
-              <div className={styles.profileSection}>
-                <span>기숙사</span>
-                <Input
-                  value={userProfile.region}
-                  style={{ width: 90 }}
-                  readOnly
-                />
-              </div>
-              <div className={styles.profileSection}>
-                <span>나이</span>
-                <Input
-                  value={userProfile.age}
-                  style={{ width: 50 }}
-                  readOnly
-                />
-              </div>
-              <div className={styles.profileSection}>
-                {/* 빈 칸 */}
-              </div>
-
-              {/* 세 번째 줄 */}
-              <div
-                className={`${styles.profileSection} ${styles.profileSection2Col}`}
-              >
+              {/* 두 번째 줄: 학과와 나이 */}
+              <div className={`${styles.profileSection} ${styles.profileSection2Col}`}>
                 <span>학과</span>
                 <Input
                   value={userProfile.department}
-                  style={{ width: 100 }}
+                  style={{ width: '100%' }}
                   readOnly
                 />
               </div>
-              <div
-                className={`${styles.profileSection} ${styles.profileSection2Col}`}
-              >
-                <span>MBTI</span>
+              <div className={`${styles.profileSection} ${styles.profileSection2Col}`}>
+                <span>나이</span>
                 <Input
-                  value={userProfile.mbti}
-                  style={{ width: 50 }}
+                  value={userProfile.age}
+                  style={{ width: '100%' }}
                   readOnly
                 />
               </div>
 
-              {/* 네 번째 줄 */}
-              <div
-                className={`${styles.profileSection} ${styles.profileSection4Col}`}
-              >
+              {/* 세 번째 줄: 활동시간, 기숙사, MBTI */}
+              <div className={`${styles.profileSection} ${styles.profileSection3Col}`}>
+                <span>활동시간</span>
+                <Input
+                  value={userProfile.activityTime}
+                  style={{ width: '100%' }}
+                  readOnly
+                />
+              </div>
+              <div className={`${styles.profileSection} ${styles.profileSection3Col}`}>
+                <span>기숙사</span>
+                <Input
+                  value={userProfile.region}
+                  style={{ width: '100%' }}
+                  readOnly
+                />
+              </div>
+              <div className={`${styles.profileSection} ${styles.profileSection3Col}`}>
+                <span>MBTI</span>
+                <Input
+                  value={userProfile.mbti}
+                  style={{ width: '100%' }}
+                  readOnly
+                />
+              </div>
+
+              {/* 네 번째 줄: 본인 소개 */}
+              <div className={`${styles.profileSection} ${styles.profileSection4Col}`}>
                 <span>본인 소개</span>
                 <Input.TextArea
                   autoSize={{ minRows: 1, maxRows: 5 }}
                   value={userProfile.detail}
-                  style={{
-                    maxWidth: 472,
-                    overflowWrap: "break-word",
-                    wordWrap: "break-word",
-                  }}
+                  className={styles.profileInput}
                   readOnly
                 />
               </div>

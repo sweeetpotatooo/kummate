@@ -13,6 +13,19 @@
   border-radius: var(--badge-border-radius);
 }
 
+.save,
+.apply,
+.saveActive,
+.applyActive {
+  border: none; /* 테두리 제거 */
+}
+.save:hover,
+.apply:hover,
+.saveActive:hover,
+.applyActive:hover {
+  background-color: var(--green500); /* 호버 시 배경색 변경 */
+}
+
 .badgePresent {
   background-color: var(--green400);
 }
@@ -132,6 +145,16 @@
 .editButton:hover,
 .deleteButton:hover {
   opacity: 0.8; /* 호버 시 약간 투명해지게 */
+}
+
+.nicknameButton {
+  background: none;
+  border: none;
+  color: #006400;
+  cursor: pointer;
+  font-size: inherit;
+  padding: 0;
+  margin: 0;
 }
 
 /* 반응형 디자인 */
