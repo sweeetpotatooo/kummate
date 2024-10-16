@@ -86,7 +86,7 @@ const Apply: React.FC = () => {
                 <Applicant
                   post={post}
                   currentPage={showApply ? toCurrentPage : fromCurrentPage}
-                  showApply={showApply} />
+                  showApply={showApply} isIncoming={false} />
               </div>
             ))
           )}

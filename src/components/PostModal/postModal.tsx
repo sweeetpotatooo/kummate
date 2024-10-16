@@ -22,9 +22,6 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
   const userToken = useSelector((state: RootState) => state.user.data.token);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const favoritesStatus = useSelector(
-    (state: RootState) => state.favorites.status
-  );
   const [isProfileVisible, setIsProfileVisible] = useState(false);
   const [authorProfile, setAuthorProfile] = useState(null);
 
@@ -73,7 +70,6 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
 
   // 찜하기 상태 관리
   const [isFavorite, toggleFavorite] = useFavorite(post.id);
-  const [isLoadingFavorite, setIsLoadingFavorite] = useState(false);
 
   // 신청 상태 관리
   const [isApplied, setIsApplied] = useState(false);
@@ -159,13 +155,10 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
   // 찜하기 버튼 클릭 핸들러
   const handleSaveClick = useCallback(async () => {
     try {
-      setIsLoadingFavorite(true);
       await toggleFavorite();
     } catch (error) {
       console.error(error);
       toast.error("찜 처리에 실패했습니다.");
-    } finally {
-      setIsLoadingFavorite(false);
     }
   }, [toggleFavorite]);
 
@@ -193,7 +186,6 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
                       ? `${styles.save} ${styles.saveActive}`
                       : styles.save
                   }
-                  disabled={favoritesStatus === "loading" || isLoadingFavorite}
                 >
                   {isFavorite ? "찜 취소" : "찜하기"}
                 </button>
@@ -264,7 +256,6 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
                       ? `${styles.save} ${styles.saveActive}`
                       : styles.save
                   }
-                  disabled={favoritesStatus === "loading" || isLoadingFavorite}
                 >
                   {isFavorite ? "찜 취소" : "찜하기"}
                 </button>

@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// src/pages/MyPage/Applicant/applicant.tsx
 import styles from "./applicant.module.css"
-import { Badge, Card, Button, Spin, message } from "antd"
+import { Badge, Card } from "antd"
 import Meta from "antd/es/card/Meta"
 import {
   ApplicantProps,
@@ -10,8 +8,11 @@ import {
   User,
 } from "../../../interface/interface"
 import { useSelector } from "react-redux"
-import { RootState, AppDispatch } from "../../../Redux/store"
-import { useEffect, useState, useCallback } from "react"
+import { AppDispatch, RootState } from "../../../Redux/store"
+import { API_URL, usersProfile } from "../../../api"
+import { useEffect, useState } from "react"
+import useFetch from "../../../hooks/useFetch"
+import PostModal from "../../../components/PostModal/postModal"
 import OtherUserProfile from "./otherUserProfile"
 import { useDispatch } from "react-redux"
 import {
@@ -21,9 +22,7 @@ import {
 } from "../../../Redux/applicantReducer"
 import { fetchData } from "../../../Redux/applyReducer"
 import { useNavigate } from "react-router-dom"
-import { API_URL, usersProfile } from "../../../api"
-import PostModal from "../../../components/PostModal/postModal"
-import { useApply } from "../../../components/Apply/applyApi" // 경로 확인
+import { userChatRoom } from "../../../api"
 
 const Applicant: React.FC<ApplicantProps> = ({
   showApply,
@@ -31,185 +30,225 @@ const Applicant: React.FC<ApplicantProps> = ({
   currentPage,
 }) => {
   const userToken = useSelector((state: RootState) => state.user.data.token)
-  const [otherUser, setOtherUser] = useState<User | null>(null)
+  const [otheruser, setOtherUser] = useState<User | null>(null)
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [selectedArticle, setSelectedArticle] = useState<Post | null>(null)
   const navigate = useNavigate()
   const dispatch: AppDispatch = useDispatch()
 
-  // 신청 상태와 toggle 함수 받기
-  const [isSaved, toggleApply] = useApply(post.articleId, post.applyId)
-
-  // ㅅ또는 취소하기 버튼 클릭 핸들러
-  const handleApplyClick = useCallback(async () => {
-    try {
-      await toggleApply()
-      if (isSaved) {
-        message.success("신청이 취소되었습니다.")
-      } else {
-        message.success("신청이 완료되었습니다.")
-      }
-    } catch (error) {
-      console.error(error)
-      message.error("신청 처리에 실패했습니다.")
-    }
-  }, [toggleApply, isSaved])
-
   // 승인
   const handleApprovePost = async (post: ApplyProps) => {
-    try {
-      await dispatch(
-        approvePostAsync({
-          userToken: userToken.atk.toString(),
-          otherUserId: post.otherUserId,
-          articleId: post.articleId,
-        }),
-      ).unwrap()
-      dispatch(
-        fetchData({
-          showApply: true,
-          currentPage: 1,
-          userToken: userToken.atk.toString(),
-        }),
-      )
-      message.success("신청이 승인되었습니다.")
-    } catch (error) {
-      console.error(error)
-      message.error("신청 승인에 실패했습니다.")
-    }
+    await dispatch(
+      approvePostAsync({
+        userToken: userToken.atk.toString(),
+        otherUserId: post.otherUserId,
+        articleId: post.articleId,
+      }),
+    )
+    dispatch(
+      fetchData({
+        showApply: showApply,
+        currentPage: currentPage,
+        userToken: userToken.atk.toString(),
+      }),
+    )
   }
 
   // 거절
   const handleRefusePost = async (post: ApplyProps) => {
-    try {
-      await dispatch(
-        refusePostAsync({
-          userToken: userToken.atk.toString(),
-          applyId: post.applyId,
-          articleId: post.articleId,
-        }),
-      ).unwrap()
-      dispatch(
-        fetchData({
-          showApply: true,
-          currentPage: 1,
-          userToken: userToken.atk.toString(),
-        }),
-      )
-      message.success("신청이 거절되었습니다.")
-    } catch (error) {
-      console.error(error)
-      message.error("신청 거절에 실패했습니다.")
-    }
+    await dispatch(
+      refusePostAsync({
+        userToken: userToken.atk.toString(),
+        applyId: post.applyId,
+        articleId: post.articleId,
+      }),
+    )
+    dispatch(
+      fetchData({
+        showApply: showApply,
+        currentPage: currentPage,
+        userToken: userToken.atk.toString(),
+      }),
+    )
   }
 
   // 삭제
   const handleDeletePost = async (applyId: number) => {
+    await dispatch(
+      deletePostAsync({
+        userToken: userToken.atk.toString(),
+        applyId: applyId,
+      }),
+    )
+    dispatch(
+      fetchData({
+        showApply: showApply,
+        currentPage: currentPage,
+        userToken: userToken.atk.toString(),
+      }),
+    )
+  }
+
+  // 프로필
+  const {
+    datas: profileDatas,
+    isSuccess: profileSuccess,
+    setUrl: setProfileDatasUrl,
+    setHeaders: setProfileHeaders,
+    setMethod: setProfileMethod,
+    setBody: setProfileBody,
+  } = useFetch<User | null>("", "", {}, null)
+
+  const handleUserProfile = (userId: number) => {
     try {
-      await dispatch(
-        deletePostAsync({
-          userToken: userToken.atk.toString(),
-          applyId: applyId,
-        }),
-      ).unwrap()
-      dispatch(
-        fetchData({
-          showApply: showApply,
-          currentPage: currentPage,
-          userToken: userToken.atk.toString(),
-        }),
-      )
-      message.success("신청이 삭제되었습니다.")
+      setProfileDatasUrl(`${API_URL}/${usersProfile}/${userId}`)
+      setProfileMethod("GET")
+      setProfileHeaders({
+        "Content-Type": "application/json",
+      })
+      setProfileBody()
     } catch (error) {
       console.error(error)
-      message.error("신청 삭제에 실패했습니다.")
     }
   }
 
-  // 프로필 로딩 상태 관리
-  const [loadingProfile, setLoadingProfile] = useState(false)
-  const [loadingArticle, setLoadingArticle] = useState(false)
-
   // 프로필 호출
-  const handleUserProfile = (userId: number) => {
-    setLoadingProfile(true);
-    fetch(`${API_URL}/${usersProfile}/${userId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${userToken.atk}`,
-      },
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('프로필을 가져오는데 실패했습니다.');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setOtherUser(data.data);
-        setIsModalVisible(true);
-      })
-      .catch(error => {
-        console.error(error);
-        message.error('프로필을 불러오는 데 실패했습니다.');
-      })
-      .finally(() => {
-        setLoadingProfile(false);
-      });
-  };
+  useEffect(() => {
+    if (profileSuccess) {
+      try {
+        setOtherUser(profileDatas)
+        setIsModalVisible(true)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }, [profileSuccess, profileDatas])
+
+  // 게시글
+  const {
+    datas: articleData,
+    isSuccess: articleSuccess,
+    setUrl: setArticleUrl,
+    setHeaders: setArticleHeaders,
+    setMethod: setArticleMethod,
+    setBody: setArticleBody,
+  } = useFetch<Post>("", "", {}, null)
+
+  const handleArticleClick = (articleId: string) => {
+    setArticleUrl(`${API_URL}/api/articles/${articleId}`)
+    setArticleMethod("GET")
+    setArticleHeaders()
+    setArticleBody()
+  }
 
   // 게시글 호출
-  const handleArticleClick = (articleId: string) => {
-    setLoadingArticle(true)
-    fetch(`${API_URL}/api/articles/${articleId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userToken.atk}`,
-      },
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("게시글을 가져오는데 실패했습니다.")
-        }
-        return response.json()
-      })
-      .then(data => {
-        setSelectedArticle(data.data)
-      })
-      .catch(error => {
+  useEffect(() => {
+    if (articleSuccess) {
+      try {
+        setSelectedArticle(articleData)
+      } catch (error) {
         console.error(error)
-        message.error("게시글을 불러오는 데 실패했습니다.")
-      })
-      .finally(() => {
-        setLoadingArticle(false)
-      })
+      }
+    }
+  }, [articleSuccess, articleData])
+
+  // 채팅방 생성
+  const {
+    isSuccess: chatSuccess,
+    setUrl: setChatUrl,
+    setHeaders: setChatHeaders,
+    setMethod: setChatMethod,
+    setBody: setChatBody,
+  } = useFetch<Post>("", "", {}, null)
+
+  const handleChatClick = (applyId: number) => {
+    setChatUrl(`${API_URL}/api/${userChatRoom}/${applyId}`)
+    setChatMethod("POST")
+    setChatHeaders({
+      "Content-Type": "application/json",
+      Authorization: userToken.atk.toString(),
+    })
+    setChatBody()
   }
+
+  // 채팅방 가기
+  useEffect(() => {
+    if (chatSuccess) {
+      try {
+        navigate("/chat")
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  }, [chatSuccess])
 
   return (
     <>
       {!showApply ? (
-        <div key={`notApply-${post.applyId}`}>
+        post.matchStatus === "대기" ? (
+          <div key={post.applyId}>
+            <Card
+              cover={<Badge.Ribbon text={post.matchStatus} />}
+              className={styles.cardContainer}
+              actions={[
+                <p onClick={() => handleUserProfile(post.otherUserId)}>프로필</p>,
+                <p onClick={() => handleApprovePost(post)}>승인</p>,
+                <p onClick={() => handleRefusePost(post)}>거절</p>,
+              ]}
+            >
+              <Meta
+                title={`'${post.otherUserName}'님이 룸메이트 신청을 하였습니다.`}
+                description={`'${post.articleTitle}' 게시물에 신청이 도착했습니다`}
+              />
+              <div>
+                <p className={styles.content}></p>
+              </div>
+            </Card>
+          </div>
+        ) : post.matchStatus === "거절" ? (
+          <div key={post.applyId}>
+            <Card
+              cover={<Badge.Ribbon text={post.matchStatus} />}
+              className={styles.cardContainer}
+              actions={[
+                <p onClick={() => handleDeletePost(post.applyId)}>삭제</p>,
+              ]}
+            >
+              <Meta
+                title={`'${post.otherUserName}'님의 룸메이트 매칭을 거절 하였습니다.`}
+                description="다른 룸메이트를 구해보세요"
+              />
+              <div>
+                <p className={styles.content}></p>
+              </div>
+            </Card>
+          </div>
+        ) : post.matchStatus === "승인" ? (
+          <div key={post.applyId}>
+            <Card
+              cover={<Badge.Ribbon text={post.matchStatus} />}
+              className={styles.cardContainer}
+              actions={[
+                <p onClick={() => handleChatClick(post.applyId)}>
+                  채팅방 만들기
+                </p>,
+                <p onClick={() => handleUserProfile(post.otherUserId)}>프로필</p>,
+              ]}
+            >
+              <Meta
+                title={`'${post.articleTitle}' 게시물에 '${post.otherUserName}'님과 룸메이트 매칭이 되었습니다.`}
+                description="1:1 채팅으로 원활한 대화를 나눠보세요"
+              />
+              <div>
+                <p className={styles.content}></p>
+              </div>
+            </Card>
+          </div>
+        ) : null
+      ) : post.matchStatus === "대기" ? (
+        <div key={post.applyId}>
           <Card
-            cover={<Badge.Ribbon text={post.matchStatus} color="orange" />}
-            className={styles.cardContainer}
-            actions={[
-              <p onClick={() => handleUserProfile(post.otherUserId)}>프로필</p>,
-              <p onClick={() => handleApprovePost(post)}>승인</p>,
-              <p onClick={() => handleRefusePost(post)}>거절</p>,
-            ]}
-          >
-            <Meta
-              title={`'${post.otherUserName}'님이 룸메이트 신청을 하였습니다.`}
-              description={`'${post.articleTitle}' 게시물에 신청이 도착했습니다`}
-            />
-          </Card>
-        </div>
-      ) : (
-        <div key={`apply-${post.applyId}`}>
-          <Card
-            cover={<Badge.Ribbon text={post.matchStatus} color="orange" />}
+            cover={<Badge.Ribbon text={post.matchStatus} />}
             className={styles.cardContainer}
             actions={[
               <p onClick={() => handleUserProfile(post.otherUserId)}>프로필</p>,
@@ -222,30 +261,59 @@ const Applicant: React.FC<ApplicantProps> = ({
               title={`'${post.articleTitle}' 게시물에 룸메이트 신청을 하였습니다.`}
               description="룸메이트 매칭 결과를 기다리세요"
             />
-            <button
-              className={
-                isSaved ? `${styles.apply} ${styles.applyActive}` : styles.apply
-              }
-              style={{ float: "right", marginTop: '10px' }}
-              onClick={handleApplyClick}
-            >
-              {isSaved ? "신청 취소" : "신청하기"}
-            </button>
+            <div>
+              <p className={styles.content}></p>
+            </div>
           </Card>
         </div>
-      )}
-
-      {otherUser && (
+      ) : post.matchStatus === "거절" ? (
+        <div key={post.applyId}>
+          <Card
+            cover={<Badge.Ribbon text={post.matchStatus} />}
+            className={styles.cardContainer}
+            actions={[
+              <p onClick={() => handleDeletePost(post.applyId)}>삭제</p>,
+            ]}
+          >
+            <Meta
+              title={`'${post.articleTitle}' 게시물 룸메이트 매칭이 거절 되었습니다.`}
+              description="아쉽네요. 다른 룸메이트를 구해보세요"
+            />
+            <div>
+              <p className={styles.content}></p>
+            </div>
+          </Card>
+        </div>
+      ) : post.matchStatus === "승인" ? (
+        <Card
+          cover={<Badge.Ribbon text={post.matchStatus} />}
+          className={styles.cardContainer}
+          actions={[
+            <p onClick={() => handleChatClick(post.applyId)}>채팅방 만들기</p>,
+            <p onClick={() => handleUserProfile(post.otherUserId)}>프로필</p>,
+          ]}
+        >
+          <Meta
+            title={`'${post.articleTitle}' 게시물에 '${post.otherUserName}'님과 룸메이트 매칭이 되었습니다.`}
+            description="1:1 채팅으로 원활한 대화를 나눠보세요"
+          />
+          <div>
+            <p className={styles.content}></p>
+          </div>
+        </Card>
+      ) : null}
+      {otheruser && (
         <OtherUserProfile
-          userProfile={otherUser}
+          userProfile={otheruser}
           visible={isModalVisible}
           onClose={() => setOtherUser(null)}
         />
       )}
       {selectedArticle && (
         <PostModal
-          post={selectedArticle}
+          visible={!!selectedArticle}
           onClose={() => setSelectedArticle(null)}
+          post={selectedArticle}
         />
       )}
     </>

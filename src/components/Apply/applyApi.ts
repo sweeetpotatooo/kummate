@@ -7,6 +7,7 @@ import { useSelector } from "react-redux"
 import { fetchData } from "../../Redux/applyReducer"
 import { setSaved } from "../../Redux/savedReducer"
 import { Modal } from "antd"
+import { ApplyProps } from "../../interface/interface"
 // 신청
 export const useApply = (postId: number, applyId?: number) => {
   const dispatch = useDispatch<ThunkDispatch<RootState, unknown, AnyAction>>()
@@ -130,15 +131,15 @@ export const updateApprove = async (userTokenAtk: string, userId: number, articl
 // 거절
 // applyApi.ts
 
-export const updateRefuse = async (userTokenAtk: string, applyId: number, articleId: number) => {
+export const updateRefuse = async (userTokenAtk: string, applyId: number, articleId: number): Promise<ApplyProps> => {
   try {
-    const response = await fetch(`${API_URL}/api/${userRefuse}`, {
+    const response = await fetch(`${API_URL}/api/${userRefuse}/${applyId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${userTokenAtk}`,
       },
-      body: JSON.stringify({ applyId, articleId }),
+      body: JSON.stringify({ applyId, articleId }), // articleId 추가
     });
 
     if (!response.ok) {

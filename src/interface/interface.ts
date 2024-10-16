@@ -161,6 +161,13 @@ export interface SearchQuery {
   readonly gender: string
 }
 
+// src/interface/interface.ts
+
+export interface ProfileResponse {
+  data: User;
+}
+
+
 export interface RoomMateSearchProps {
   readonly onSearch?: (
     query: SearchQuery,
@@ -172,6 +179,7 @@ export interface RoomMateSearchProps {
   readonly onClick?: () => void
   readonly query?: Post[]
 }
+type MatchStatus = '대기' | '승인' | '거절';
 
 export interface ApplyProps {
   readonly applyId: number
@@ -179,13 +187,14 @@ export interface ApplyProps {
   readonly articleTitle: string
   readonly otherUserId: number
   readonly otherUserName: string
-  readonly matchStatus: string
+  readonly matchStatus: MatchStatus
 }
 
 export interface ApplicantProps {
   readonly post: ApplyProps
   readonly currentPage: number
   readonly showApply: boolean
+  readonly isIncoming: boolean
 }
 
 export interface RecommendModalProps extends ModalProps {
