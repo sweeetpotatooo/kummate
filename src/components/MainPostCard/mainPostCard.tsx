@@ -29,7 +29,7 @@ const MainPostCard: React.FC<MainPostCardProps> = ({ post, onClick }) => {
           </div>
           <div className={styles.author}>
             <span>{post.nickname}</span>
-            {post.gender === "여성" ? (
+            {post.gender === "여자" ? (
               <UserOutlined style={{ color: "#ff0000" }} />
             ) : (
               <UserOutlined style={{ color: "#2858FF" }} />

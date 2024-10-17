@@ -57,13 +57,13 @@
 
 .content {
   font-size: var(--font-size-sub1);
-  line-height: 16px;
+  line-height: 20px;
   min-height: 70px;
   max-height: 500px;
   color: var(--black300);
   margin-top: 5px;
   overflow-y: auto;
-  white-space: pre;
+  white-space: pre-wrap;
 }
 
 .titleContainer {

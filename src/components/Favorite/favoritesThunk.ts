@@ -1,4 +1,4 @@
-//
+//src/components/Favorite/favoritesThunk.ts
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { RootState } from "../../Redux/store"
 import { API_URL, userMyFavorite } from '../../api'
@@ -25,7 +25,7 @@ export const fetchFavorites = createAsyncThunk('favorites/fetch', async (_, thun
 
     console.log('fetchFavorites 응답 데이터:', responseData)
 
-    return responseData.data
+    return responseData
   } catch (error) {
     console.error(error)
     return thunkAPI.rejectWithValue(error)

@@ -48,8 +48,6 @@ const PostCard: React.FC<PostCardProps> = ({ posts, onPostClick }) => {
       ) : (
         <div className={styles.postCardGrid}>
           {posts.map((post) => {
-            // 콘솔 로그 추가: 각 게시글의 gender 값을 출력
-            console.log(`Post ID: ${post.id}, Gender: "${post.gender}"`)
 
             return (
               <div

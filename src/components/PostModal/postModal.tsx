@@ -147,11 +147,6 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
     }
   }, [isDeleted]);
 
-  useEffect(() => {
-    console.log("Current User Email:", userEmail);
-    console.log("Post Author Email:", post.email);
-  }, [userEmail, post.email]);
-
   // 찜하기 버튼 클릭 핸들러
   const handleSaveClick = useCallback(async () => {
     try {

@@ -105,8 +105,9 @@ const Applicant: React.FC<ApplicantProps> = ({
       setProfileMethod("GET")
       setProfileHeaders({
         "Content-Type": "application/json",
+        Authorization: `Bearer ${userToken.atk}`,
       })
-      setProfileBody()
+      setProfileBody(null)
     } catch (error) {
       console.error(error)
     }
@@ -116,7 +117,7 @@ const Applicant: React.FC<ApplicantProps> = ({
   useEffect(() => {
     if (profileSuccess) {
       try {
-        setOtherUser(profileDatas)
+        setOtherUser(profileDatas.data)
         setIsModalVisible(true)
       } catch (error) {
         console.error(error)
@@ -137,15 +138,18 @@ const Applicant: React.FC<ApplicantProps> = ({
   const handleArticleClick = (articleId: string) => {
     setArticleUrl(`${API_URL}/api/articles/${articleId}`)
     setArticleMethod("GET")
-    setArticleHeaders()
-    setArticleBody()
+    setArticleHeaders({
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken.atk}`,
+    })
+    setArticleBody(null)
   }
 
   // 게시글 호출
   useEffect(() => {
     if (articleSuccess) {
       try {
-        setSelectedArticle(articleData)
+        setSelectedArticle(articleData.data)
       } catch (error) {
         console.error(error)
       }
@@ -168,7 +172,11 @@ const Applicant: React.FC<ApplicantProps> = ({
       "Content-Type": "application/json",
       Authorization: userToken.atk.toString(),
     })
-    setChatBody()
+    setChatBody({
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${userToken.atk}`,
+    }
+    )
   }
 
   // 채팅방 가기
