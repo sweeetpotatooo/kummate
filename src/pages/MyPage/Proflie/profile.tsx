@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../Redux/store';
 import { UserProfile } from '../../../interface/interface';
 import { Spin, message } from 'antd';
+import { API_URL } from '../../../api';
 
 const defaultProfileImage = "/profile.svg";
 
@@ -41,7 +42,6 @@ const Profile: React.FC = () => {
     setProfileUpdated(prevState => !prevState)
     // 추가로 프로필 정보를 다시 불러올 수 있습니다.
   }
-  const API_URL = 'http://localhost:3001';
 
   const [fetchProfileLoading, setFetchProfileLoading] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

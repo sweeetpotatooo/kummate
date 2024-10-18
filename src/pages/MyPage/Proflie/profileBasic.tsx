@@ -5,7 +5,7 @@ import styles from './profile.module.css' // 스타일 모듈 임포트
 import { useSelector } from "react-redux" // Redux의 useSelector 훅을 사용해 Redux 상태 접근
 import { RootState } from "../../../Redux/store" // Redux store의 타입을 정의하는 RootState 임포트
 import { ProfileBasicProps } from "../../../interface/interface" // 컴포넌트 props 타입 정의를 위한 인터페이스 임포트
-import { userMyprofileNickname } from '../../../api' // API 엔드포인트 임포트
+import { API_URL, userMyprofileNickname } from '../../../api' // API 엔드포인트 임포트
 import ProfileFile from "./profileFile" // 프로필 사진 파일 관리용 컴포넌트 임포트
 
 // ProfileBasic 컴포넌트 - 프로필 기본 정보를 수정하는 기능을 제공
@@ -23,7 +23,6 @@ const ProfileBasic = (props: ProfileBasicProps) => {
       console.error('프로필 업데이트 실패', error) // 에러 발생 시 콘솔에 에러 출력
     }
   }
-  const API_URL = 'http://localhost:3001';
   // 닉네임 수정 API 호출 함수
   const updateProfile = async (profileData: { nickname: string }) => {
     try {

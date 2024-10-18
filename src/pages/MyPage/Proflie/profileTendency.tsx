@@ -24,9 +24,7 @@ import {
 } from "../../../interface/interface"
 import { useSelector } from "react-redux"
 import { RootState } from "../../../Redux/store"
-import { userMyprofile } from "../../../api"
-
-const API_URL = 'http://localhost:3001';
+import { API_URL, userMyprofile } from "../../../api"
 
 const ProfileTendency = (props: profileTendencyProps) => {
   const [tendencyModal, setTendencyModal] = useState(false)
