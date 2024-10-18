@@ -1,56 +1,54 @@
-import React, { useState, useEffect } from "react"
-import styles from "./mainPage.module.css"
-import { Carousel } from "react-responsive-carousel"
-import "react-responsive-carousel/lib/styles/carousel.min.css"
-import MainPostCard from "../../components/MainPostCard/mainPostCard"
-import RecommendPostCard from "../../components/RecommendCard/recommendCard"
-import MultiCarousel from "react-multi-carousel"
-import "react-multi-carousel/lib/styles.css"
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai"
-import PostModal from "../../components/PostModal/postModal"
-import RecommendModal from "../../components/RecommendModal/recommendModal"
-import { userArticle, usersRecommend, usersProfile, API_URL } from "../../api"
-import { message, Spin, Modal } from "antd"
-import { Post, User, FetchData, PostData } from "../../interface/interface"
-import { useSelector } from "react-redux"
-import { RootState } from "../../Redux/store"
-import useFetch from "../../hooks/useFetch"
-import { useNavigate } from "react-router-dom"
+// MainPage.tsx
 
-const CustomRightArrow: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
-  return (
-    <button onClick={onClick} className={styles.customRightArrow}>
-      <AiFillCaretRight className={styles.RightArrow} size={50} />
-    </button>
-  )
-}
+import React, { useState, useEffect } from "react";
+import styles from "./mainPage.module.css";
+import MultiCarousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import { RootState } from "../../Redux/store";
+import { useNavigate } from "react-router-dom";
+import { message, Spin, Modal } from "antd";
+import {
+  API_URL,
+} from "../../api";
+import MainPostCard from "../../components/MainPostCard/mainPostCard";
+import PostModal from "../../components/PostModal/postModal";
+import RecommendModal from "../../components/RecommendModal/recommendModal";
+import useFetch from "../../hooks/useFetch";
+import { Post, User, FetchData, ApiResponse } from "../../interface/interface";
+import RecommendCard from "../../components/RecommendCard/recommendCard";
 
-const CustomLeftArrow: React.FC<{ onClick?: () => void }> = ({ onClick }) => {
-  return (
-    <button onClick={onClick} className={styles.customLeftArrow}>
-      <AiFillCaretLeft className={styles.LeftArrow} size={50} />
-    </button>
-  )
-}
+const CustomRightArrow: React.FC<{ onClick?: () => void }> = ({ onClick }) => (
+  <button onClick={onClick} className={styles.customRightArrow}>
+    <AiFillCaretRight className={styles.RightArrow} size={50} />
+  </button>
+);
+
+const CustomLeftArrow: React.FC<{ onClick?: () => void }> = ({ onClick }) => (
+  <button onClick={onClick} className={styles.customLeftArrow}>
+    <AiFillCaretLeft className={styles.LeftArrow} size={50} />
+  </button>
+);
 
 const MainPage: React.FC = () => {
-  const [posts, setPosts] = useState<Post[]>([])
-  const [users, setUsers] = useState<User[]>([])
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
-  const [selectedUserProfile, setSelectedUserProfile] = useState<User | null>(
-    null,
-  )
-  const [messageApi, contextHolder] = message.useMessage()
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const [data, setData] = useState<FetchData | null>(null)
-  const userToken = useSelector((state: RootState) => state.user.data.token)
-
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [selectedUserProfile, setSelectedUserProfile] = useState<User | null>(null);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  const [messageApi, contextHolder] = message.useMessage();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const userToken = useSelector((state: RootState) => state.user.data.token);
+  
   // 로그인 상태 체크
   const isLogged = useSelector((state: RootState) =>
     Boolean(state.user.data.token.atk),
-  )
+  );
 
-  //추천 룸메이트
+  const navigate = useNavigate();
+
+  // 추천 룸메이트 패칭
   const {
     datas: recommendDatas,
     isSuccess: recommendSuccess,
@@ -60,44 +58,9 @@ const MainPage: React.FC = () => {
     setMethod: setRecommendMethod,
     setBody: setRecommendBody,
     isLoading: recommendLoading,
-  } = useFetch<FetchData | null>("", "", {}, null)
+  } = useFetch<User[]>("", "", {}, null);
 
-  // 추천 룸메이트 표시 제목
-  let recommendTitle: React.ReactNode =
-    "방갑고에서 추천하는 룸메이트를 만나보세요"
-  if (!isLogged) {
-    recommendTitle = "로그인 후 추천하는 룸메이트를 만나보세요"
-  } else if (recommendError) {
-    recommendTitle = (
-      <>
-        회원님의 정보를 입력 후 <br /> 추천하는 룸메이트를 만나보세요
-      </>
-    )
-  }
-
-  useEffect(() => {
-    if (isLogged) {
-      setRecommendUrl(`${API_URL}/api/${usersRecommend}?size=12`)
-      setRecommendMethod("GET")
-      setRecommendHeaders({
-        Authorization: `Bearer ${userToken.atk}`,
-      })
-      setRecommendBody()
-    }
-  }, [usersRecommend, userToken.atk])
-
-  useEffect(() => {
-    if (recommendSuccess) {
-      try {
-        setUsers((recommendDatas?.recommendDtoList as User[]) || [])
-        setData(recommendDatas)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-  }, [recommendSuccess, recommendDatas])
-
-  //메인페이지 게시글
+  // 게시글 패칭
   const {
     datas: postDatas,
     isSuccess: postSuccess,
@@ -106,26 +69,9 @@ const MainPage: React.FC = () => {
     setHeaders: setPostHeaders,
     setMethod: setPostMethod,
     setBody: setPostBody,
-  } = useFetch<PostData | null>("", "", {}, null)
+  } = useFetch<FetchData | null>("", "", {}, null);
 
-  useEffect(() => {
-    setPostUrl(`/api/${userArticle}?page=1&size=12&isRecruiting=true`)
-    setPostMethod("GET")
-    setPostHeaders()
-    setPostBody()
-  }, [userArticle])
-
-  useEffect(() => {
-    if (postSuccess) {
-      try {
-        setPosts(postDatas?.data || [])
-      } catch (error) {
-        console.error(error)
-      }
-    }
-  }, [postSuccess, postDatas])
-
-  // 추천 룸메이트 정보
+  // 유저 프로필 패칭
   const {
     datas: profileDatas,
     isSuccess: profileDatasSuccess,
@@ -133,35 +79,103 @@ const MainPage: React.FC = () => {
     setHeaders: setProfileHeaders,
     setMethod: setProfileMethod,
     setBody: setProfileBody,
-  } = useFetch<User | null>("", "", {}, null)
+  } = useFetch<ApiResponse<User> | null>("", "", {}, null);
+
+  // 추천 룸메이트 제목 설정
+  let recommendTitle: React.ReactNode = "방갑고에서 추천하는 룸메이트를 만나보세요";
+  if (!isLogged) {
+    recommendTitle = "로그인 후 추천하는 룸메이트를 만나보세요";
+  } else if (recommendError) {
+    recommendTitle = (
+      <>
+        회원님의 정보를 입력 후 <br /> 추천하는 룸메이트를 만나보세요
+      </>
+    );
+  }
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        if (selectedUser) {
-          setProfileDatasUrl(`${API_URL}/api/${usersProfile}/${selectedUser.id}`)
-          setProfileMethod("GET")
-          setProfileHeaders({
-            Authorization: `Bearer ${userToken.atk}`,
-          })
-          setProfileBody()
-          setSelectedUserProfile(profileDatas)
-        }
-      } catch (error) {
-        console.error(error)
-      }
+    if (postSuccess && postDatas) {
+      setPosts(postDatas.data.articles || []);
     }
+  }, [postSuccess, postDatas, posts]);
 
+  useEffect(() => {
     if (selectedUser) {
-      fetchUserProfile()
+      console.log("Selected User:", selectedUser);
     }
-  }, [selectedUser, messageApi, userToken, profileDatasSuccess])
+  }, [selectedUser]);
+  
+  useEffect(() => {
+    if (selectedUserProfile) {
+      console.log("Selected User Profile:", selectedUserProfile);
+    }
+  }, [selectedUserProfile]);
+
+  // 추천 룸메이트 데이터 패칭
+  useEffect(() => {
+    if (isLogged) {
+      setRecommendUrl(`${API_URL}/user/similar?size=12`);
+      setRecommendMethod("GET");
+      setRecommendHeaders({
+        Authorization: `Bearer ${userToken.atk}`,
+        "Content-Type": "application/json",
+      });
+      setRecommendBody(null);
+    }
+  }, [isLogged, setRecommendUrl, setRecommendMethod, setRecommendHeaders, setRecommendBody, userToken.atk]);
 
   useEffect(() => {
-    if (profileDatasSuccess) {
-      setSelectedUserProfile(profileDatas)
+    if (recommendSuccess) {
+      setUsers(recommendDatas || []);
     }
-  }, [profileDatasSuccess, profileDatas])
+  }, [recommendSuccess, recommendDatas]);
+
+  // 메인 페이지 게시글 데이터 패칭
+  useEffect(() => {
+    setPostUrl(`${API_URL}/api/articles?page=1&size=12&isRecruiting=true`);
+    setPostMethod("GET");
+    setPostHeaders({
+      "Content-Type": "application/json",
+    });
+    setPostBody(null);
+  }, [setPostUrl, setPostMethod, setPostHeaders, setPostBody]);
+
+  useEffect(() => {
+    if (postSuccess && postDatas) {
+      setPosts(postDatas.data.articles || []);
+      console.log("Fetched posts:", postDatas.data.articles); // 추가된 로그
+    }
+  }, [postSuccess, postDatas]);
+
+  // 유저 프로필 데이터 패칭
+  useEffect(() => {
+    if (selectedUser) {
+      setProfileDatasUrl(`${API_URL}/user/profile/${selectedUser.user_id}`); // user_id 사용
+      setProfileMethod("GET");
+      setProfileHeaders({
+        Authorization: `Bearer ${userToken.atk}`,
+        "Content-Type": "application/json",
+      });
+      setProfileBody(null);
+    }
+  }, [selectedUser, userToken.atk, setProfileDatasUrl, setProfileMethod, setProfileHeaders, setProfileBody]);
+  
+  useEffect(() => {
+    if (profileDatasSuccess&& profileDatas) {
+      setSelectedUserProfile(profileDatas.data);
+    }
+  }, [profileDatasSuccess, profileDatas]);
+
+  // 추천 룸메이트 오류 처리
+  useEffect(() => {
+    if (isLogged && recommendError) {
+      Modal.error({
+        title: "프로필 설정",
+        content: "내 정보 설정 후 이용해주세요.",
+        onOk: () => navigate("/MyPage"),
+      });
+    }
+  }, [recommendError, navigate, isLogged]);
 
   const responsive = {
     XLarge: {
@@ -185,42 +199,28 @@ const MainPage: React.FC = () => {
       items: 1,
       slidesToSlide: 1,
     },
-  }
-
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null)
+  };
 
   const handlePostClick = (post: Post) => {
-    if (isLogged === true) {
-      setSelectedPost(post)
+    if (isLogged) {
+      setSelectedPost(post);
     } else {
-      messageApi.error("로그인이 필요합니다.")
+      messageApi.error("로그인이 필요합니다.");
     }
-  }
+  };
 
   const handleCloseModal = () => {
-    setSelectedPost(null)
-  }
+    setSelectedPost(null);
+  };
 
   const handleUserClick = (user: User) => {
-    setSelectedUser(user)
-    setIsModalVisible(true)
-  }
-
-  // 내정보를 입력하지 않으면 내 정보를 입력하라고 모달창이 나옴
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (isLogged && recommendError) {
-      Modal.error({
-        title: "프로필 설정",
-        content: "내 정보 설정 후 이용해주세요.",
-        onOk: () => navigate("/MyPage"),
-      })
-    }
-  }, [recommendError, navigate, isLogged])
+    console.log("Selected user:", user); // 추가된 로그
+    setSelectedUser(user);
+    setIsModalVisible(true);
+  };
 
   return (
-    <div className={styles.conatainer}>
+    <div className={styles.container}>
       <div className={styles.mainPost}>
         <div className={styles.title}>룸메이트 구해요</div>
         <div className={styles.carouselWrapper}>
@@ -242,10 +242,9 @@ const MainPage: React.FC = () => {
               customRightArrow={<CustomRightArrow />}
               customLeftArrow={<CustomLeftArrow />}
             >
-              {posts.slice(0, 12).map((post) => (
-                <div key={post.article_id} className={styles.carouselItem}>
+              {posts.map((post) => (
+                <div key={post.id} className={styles.carouselItem}>
                   <MainPostCard
-                    key={post.article_id}
                     post={post}
                     onClick={() => handlePostClick(post)}
                   />
@@ -276,22 +275,14 @@ const MainPage: React.FC = () => {
               customRightArrow={<CustomRightArrow />}
               customLeftArrow={<CustomLeftArrow />}
             >
-              {users
-                .filter(
-                  (user) => data)
-                .slice(0, 12)
-                .map((user) =>
-                  data ? (
-                    <div key={user.id} className={styles.carouselItem}>
-                      <RecommendPostCard
-                        key={user.id}
-                        user={user}
-                        onClick={() => handleUserClick(user)}
-                        data={data}
-                      />
-                    </div>
-                  ) : null,
-                )}
+              {users.map((user) => (
+                <div key={user.user_id} className={styles.carouselItem}>
+                  <RecommendCard
+                    user={user}
+                    onClick={() => handleUserClick(user)}
+                  />
+                </div>
+              ))}
             </MultiCarousel>
           ) : (
             <p className={styles.noRecommend}>
@@ -303,7 +294,7 @@ const MainPage: React.FC = () => {
       {selectedPost && (
         <PostModal post={selectedPost} onClose={handleCloseModal} />
       )}
-      {selectedUser && (
+      {selectedUser && selectedUserProfile &&(
         <RecommendModal
           user={selectedUser}
           userProfile={selectedUserProfile}
@@ -313,7 +304,7 @@ const MainPage: React.FC = () => {
       )}
       {contextHolder}
     </div>
-  )
-}
+  );
+};
 
-export default MainPage
+export default MainPage;

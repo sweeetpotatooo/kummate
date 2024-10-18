@@ -25,6 +25,10 @@
   grid-column: span 1;
 }
 
+.profileSection4Col {
+  grid-column: span 4;
+}
+
 .profileTitle {
   display: flex;
   align-items: center;
@@ -71,4 +75,74 @@
   font-size: 17px;
   margin: 0 auto;
 
+}
+
+/* 프로필 타이틀 스타일 */
+.profileTitle {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* 프로필 박스 스타일 */
+.profileBox {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* 각 섹션 간의 간격 */
+}
+
+/* 프로필 행 스타일 */
+.profileRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; /* 각 프로필 섹션 간의 간격 */
+}
+
+/* 프로필 섹션 스타일 */
+.profileSection {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 150px; /* 최소 너비 설정 */
+}
+
+/* 레이블 스타일 */
+.profileSection span {
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* Radio.Group 커스텀 스타일 */
+.customGenderRadioGroup .ant-radio-button-wrapper-checked {
+  background-color: #1890ff; /* 원하는 색상 */
+  border-color: #1890ff;
+  color: white;
+}
+
+.customSmokingRadioGroup .ant-radio-button-wrapper-checked {
+  background-color: #52c41a; /* 원하는 색상 */
+  border-color: #52c41a;
+  color: white;
+}
+
+/* 작성한 게시글 섹션 스타일 */
+.postsSection {
+  margin-top: 16px;
+}
+
+.postsCreated {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+/* 게시글 제목 링크 스타일 */
+.articleTitle {
+  color: #1890ff;
+  cursor: pointer;
+}
+
+.articleTitle:hover {
+  text-decoration: underline;
 }

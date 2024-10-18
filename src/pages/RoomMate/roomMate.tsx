@@ -14,7 +14,8 @@ import SearchBar from "../../components/SearchBar/searchBar";
 import useFetch from "../../hooks/useFetch";
 import { UserProfile } from "../../interface/interface";
 import { userMyprofile } from "../../api";
-import { Searchsmoke, Searchregion } from "../../object/profileDropdown";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Searchsmoke } from "../../object/profileDropdown";
 
 const RoomMate: React.FC = () => {
   // 상태 선언
@@ -319,7 +320,6 @@ const RoomMate: React.FC = () => {
             <Button onClick={goToWritePage}>글쓰기</Button> {/* 글쓰기 버튼 */}
           </div>
         </div>
-        <div className={styles.cardGrid}>
           {fetchDataLoading ? (
             <Spin
               style={{
@@ -332,7 +332,6 @@ const RoomMate: React.FC = () => {
           ) : (
             <PostCard posts={posts} /> // 데이터를 불러온 후 게시글 카드 렌더링
           )}
-        </div>
         <Pagination
           className={styles.pagination}
           current={currentPage}

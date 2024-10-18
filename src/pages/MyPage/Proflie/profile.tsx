@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // src/pages/MyPage/Profile/profile.tsx
 
 import { useEffect, useState } from 'react';
@@ -21,17 +22,17 @@ const Profile: React.FC = () => {
   const [nickname, setNickname] = useState('');
   const [email, setEmail] = useState('');
   const [profileImage, setProfileImage] = useState(defaultProfileImage);
-  const [selectedGender, setSelectedGender] = useState('');
+  const [selectedGender, setSelectedGender] = useState('성별');
   const [selectedAge, setSelectedAge] = useState(0);
   const [selectedSmoke, setSelectedSmoke] = useState('');
-  const [selectedMBTI, setSelectedMBTI] = useState('');
-  const [selectedRegion, setSelectedRegion] = useState('');
-  const [selectedAgeGroup, setSelectedAgeGroup] = useState('');
-  const [selectedActivityTime, setSelectedActivityTime] = useState('');
+  const [selectedMBTI, setSelectedMBTI] = useState('MBTI');
+  const [selectedRegion, setSelectedRegion] = useState('기숙사');
+  const [selectedAgeGroup, setSelectedAgeGroup] = useState(' ~ ');
+  const [selectedActivityTime, setSelectedActivityTime] = useState('활동 시간');
   const [myText, setMyText] = useState('');
   const [favoriteTag, setFavoriteTag] = useState<string[]>([]);
-  const [selectedStudent_id, setSelectedStudent_id] = useState(0);
-  const [selectedDepartment, setSelectedDepartment] = useState('');
+  const [selectedStudent_id, setSelectedStudent_id] = useState(200000000);
+  const [selectedDepartment, setSelectedDepartment] = useState('학과');
 
   const [, setProfileUpdated] = useState(false);
 
@@ -43,8 +44,8 @@ const Profile: React.FC = () => {
   const API_URL = 'http://localhost:3001';
 
   const [fetchProfileLoading, setFetchProfileLoading] = useState<boolean>(false);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-  const [fetchProfileError, setFetchProfileError] = useState<any>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [, setFetchProfileError] = useState<any>(null);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -75,19 +76,17 @@ const Profile: React.FC = () => {
         setSelectedGender(data.gender ?? '성별');
         setNickname(data.nickname ?? '');
         setSelectedAge(data.age ?? 0);
-        setSelectedStudent_id(data.student_id ?? 0);
-        setSelectedDepartment(data.department ?? '학과');
+        setSelectedStudent_id(data.student_id ?? 200000000); // 기본값 유지
+        setSelectedDepartment(data.department ?? '학과'); // 기본값 유지
         setEmail(data.email ?? '');
         setProfileImage(data.image ?? defaultProfileImage);
         setSelectedSmoke(data.isSmoker === true ? '흡연' : '비흡연');
         setSelectedMBTI(data.mbti ?? 'MBTI');
-        setSelectedRegion(data.region ?? '지역');
+        setSelectedRegion(data.region ?? '기숙사');
         setSelectedAgeGroup(data.ageGroup ?? ' ~ ');
         setSelectedActivityTime(data.activityTime ?? '활동 시간');
         setMyText(data.detail ?? '추가로 하고 싶은 말을 적어주세요! :)');
         setFavoriteTag(data.tags ?? []);
-        setSelectedStudent_id(data.student_id);
-        setSelectedDepartment(data.department);
       } catch (error) {
         console.error('프로필 정보를 불러오는 중 에러 발생:', error);
         setFetchProfileError(error);

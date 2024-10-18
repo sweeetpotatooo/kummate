@@ -7,7 +7,7 @@ export interface Token {
 
 export interface UserState {
   readonly isLogged: boolean
-  readonly signUp: boolean
+  readonly signUp?: boolean
   readonly data: {
     readonly email: string
     readonly token: Token
@@ -25,6 +25,7 @@ export interface LoginValues {
 
 export interface Post {
   readonly id: number;
+  readonly userId: number;
   readonly email?: string;
   readonly title: string;
   readonly nickname: string;
@@ -40,6 +41,7 @@ export interface Post {
 
 export interface User {
   readonly id: number
+  readonly user_id: number;
   readonly nickname: string
   readonly image: string
   readonly email: string
@@ -159,6 +161,13 @@ export interface SearchQuery {
   readonly gender: string
 }
 
+// src/interface/interface.ts
+
+export interface ProfileResponse {
+  data: User;
+}
+
+
 export interface RoomMateSearchProps {
   readonly onSearch?: (
     query: SearchQuery,
@@ -170,6 +179,7 @@ export interface RoomMateSearchProps {
   readonly onClick?: () => void
   readonly query?: Post[]
 }
+type MatchStatus = '대기' | '승인' | '거절';
 
 export interface ApplyProps {
   readonly applyId: number
@@ -177,13 +187,14 @@ export interface ApplyProps {
   readonly articleTitle: string
   readonly otherUserId: number
   readonly otherUserName: string
-  readonly matchStatus: string
+  readonly matchStatus: MatchStatus
 }
 
 export interface ApplicantProps {
   readonly post: ApplyProps
   readonly currentPage: number
   readonly showApply: boolean
+  readonly isIncoming: boolean
 }
 
 export interface RecommendModalProps extends ModalProps {
@@ -203,7 +214,7 @@ export interface Data {
 }
 
 export interface RecommendUser {
-  readonly id: number
+  readonly user_id: number
   readonly nickname: string
   readonly mbti: string
 }
@@ -230,14 +241,32 @@ export interface Article {
   readonly title: string
 }
 
+export interface ApiResponse<T> {
+  code: number;
+  data: T;
+}
+
+export interface ArticlePageDto {
+  id: number;
+  title: string;
+  content: string;
+  region: string;
+  ageGroup: string;
+  smoke: boolean;
+  isRecruiting: boolean;
+  createDate: string;
+  nickname: string;
+  email?: string;
+  gender:string;
+  // 기타 필요한 필드
+}
+
 export interface FetchData {
-  readonly mbti: string
-  readonly nickname: string
-  readonly recommendDtoList: {
-    readonly id: number
-    readonly nickname: string
-    readonly mbti: string
-  }[]
+  code: number;
+  data: {
+    articles: Post[];
+    totalCnt: number;
+  };
 }
 
 export interface PostDataAll {
@@ -290,5 +319,9 @@ export interface MbitCalculatorModalProps {
 export interface RecommendProps {
   readonly user: RecommendUser
   readonly onClick?: () => void
-  readonly data: Data
+}
+
+export interface ArticlePageResultDto {
+  articles: Post[];
+  totalCnt: number;
 }

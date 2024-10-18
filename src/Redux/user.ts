@@ -22,6 +22,7 @@ const API_URL = 'http://localhost:3001';
 // 초기 상태 설정, 로컬 스토리지에서 불러오거나 기본값을 설정
 const initialState: UserState = loadFromLocalStorage() || {
   isLogged: false,
+  signUp: false,
   data: {
     email: "",
     token: {
@@ -29,7 +30,6 @@ const initialState: UserState = loadFromLocalStorage() || {
       rtk: "",
     },
   },
-  signUp: false,
   status: "idle",
 }
 
@@ -119,7 +119,7 @@ export const loginUser = createAsyncThunk<
 
       const userState: UserState = {
         isLogged: true,
-        signUp: false,
+        
         data: {
           email: credentials.email,
           token: data.token,
@@ -309,10 +309,6 @@ const userSlice = createSlice({
       saveToLocalStorage(state);
     },
     
-    signUp: (state) => {
-      console.log("회원가입 상태 초기화 중..."); // 회원가입 상태 변경 확인
-      state.signUp = false;
-    },
     // 카카오 로그인 성공 시 상태 업데이트
     kakaoLogin: (state, action) => {
       state.isLogged = true;
@@ -353,16 +349,6 @@ const userSlice = createSlice({
       state.isLogged = false;
       state.data.token = { atk: "", rtk: "" };
       state.data.email = "";
-    });
-
-    // 회원가입 성공 시 처리
-    builder.addCase(registerUser.fulfilled, (state) => {
-      state.signUp = true;
-    });
-
-    // 회원가입 실패 시 처리
-    builder.addCase(registerUser.rejected, (state) => {
-      state.signUp = false;
     });
 
     // 카카오 로그인 성공 시 처리

@@ -9,7 +9,7 @@ import PostCard from '../../../components/PostCard/postCard'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../../Redux/store'
 import useFetch from '../../../hooks/useFetch'
-import { Spin, Pagination } from 'antd' // Pagination 임포트
+import { Spin, Pagination } from 'antd'
 
 const Board: React.FC = () => {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null)
@@ -17,7 +17,7 @@ const Board: React.FC = () => {
   const [totalCnt, setTotalCnt] = useState<number>(0)
   const [currentPage, setCurrentPage] = useState<number>(1)
   const pageSize = 10 // 페이지당 게시글 수
-  const userToken = useSelector((state : RootState) => state.user.data.token)
+  const userToken = useSelector((state: RootState) => state.user.data.token)
 
   // 게시글 fetch 훅
   const {
@@ -29,7 +29,7 @@ const Board: React.FC = () => {
     setHeaders: setBoardHeaders,
     setMethod: setBoardMethod,
     setBody: setBoardBody,
-  } = useFetch<ArticlePageResultDto | null>("", "GET", {}, null) // 올바른 제네릭 타입 설정
+  } = useFetch<ArticlePageResultDto | null>("", "GET", {}, null) // ArticlePageResultDto 사용
 
   const handleBoard = (page: number = 1) => {
     setBoardUrl(`${API_URL}/api/${userMyArticles}?page=${page}&size=${pageSize}`)

@@ -2,15 +2,9 @@
   max-width: 800px;
   padding: 60px;
   margin: 0 auto;
-}
-
-.cardGrid {
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
   justify-content: center;
-  gap: 25px;
+  gap: 10px;
 }
 
 @media (max-width: 768px) {

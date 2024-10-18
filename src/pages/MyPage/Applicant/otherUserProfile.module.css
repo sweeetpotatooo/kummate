@@ -1,0 +1,80 @@
+/* src/pages/MyPage/Applicant/otherUserProfile.module.css */
+
+/* 기존 스타일 유지 및 추가 */
+
+.profileTitle {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.userProfileNickname {
+  font-weight: bold;
+  color: #006400;
+}
+
+.profileBox {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin: 0 auto;
+}
+
+.profileBox > div:last-child {
+  grid-column: span 4;
+}
+
+.profileSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profileSection span {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.profileSection2Col {
+  grid-column: span 2;
+}
+
+.profileSection3Col {
+  grid-column: span 1;
+}
+
+.profileSection4Col {
+  grid-column: span 4;
+}
+
+.profileInput {
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.customGenderRadioGroup .ant-radio-button-wrapper-checked {
+  background-color: #1890ff; /* 원하는 색상 */
+  border-color: #1890ff;
+  color: white;
+}
+
+.customSmokingRadioGroup .ant-radio-button-wrapper-checked {
+  background-color: #52c41a; /* 원하는 색상 */
+  border-color: #52c41a;
+  color: white;
+}
+
+/* 프로필 이미지 스타일 추가 */
+.profileImageContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.profileImage {
+  width: 100px; /* 원하는 크기로 조정 */
+  height: 100px; /* 원하는 크기로 조정 */
+  border-radius: 50%;
+  object-fit: cover;
+}

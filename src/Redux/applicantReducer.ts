@@ -31,9 +31,9 @@ interface ThunkArgApprove {
 
 // 거절 작업을 위한 Thunk 인자 인터페이스 정의
 interface ThunkArgRefuse {
-  userToken: string       // 사용자 토큰
-  articleId: number       // 게시물 ID
-  applyId: number         // 신청 ID
+  userToken: string;
+  applyId: number;
+  articleId: number
 }
 
 // 삭제 작업을 위한 Thunk 인자 인터페이스 정의
@@ -62,21 +62,22 @@ export const approvePostAsync = createAsyncThunk<
 
 // 거절 비동기 작업 정의
 export const refusePostAsync = createAsyncThunk<
-  ApplyProps, 
+  ApplyProps,
   ThunkArgRefuse,
   { rejectValue: string }
 >(
-  'applicant/refusePost',  // 작업 이름
-  async ({ userToken, applyId, articleId }: ThunkArgRefuse, thunkAPI) => {
+  'applicant/refusePost',
+  async ({ userToken, applyId, articleId }, thunkAPI) => {
     try {
-      const refusedPost = await updateRefuse(userToken, applyId, articleId)  // 거절 API 호출
-      return refusedPost
+      const refusedPost = await updateRefuse(userToken, applyId, articleId); // articleId 전달
+      return refusedPost;
     } catch (error: any) {
-      console.error('룸메이트 매칭 거절 오류', error)  // 오류 로그 출력
-      return thunkAPI.rejectWithValue(error.message || '거절에 실패했습니다.')  // 오류 처리
+      console.error('룸메이트 매칭 거절 오류', error);
+      return thunkAPI.rejectWithValue(error.message || '거절에 실패했습니다.');
     }
-  }
-)
+  },
+);
+
 
 // 삭제 비동기 작업 정의
 export const deletePostAsync = createAsyncThunk<
