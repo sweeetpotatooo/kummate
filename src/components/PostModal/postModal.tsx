@@ -156,7 +156,7 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
       toast.error("찜 처리에 실패했습니다.");
     }
   }, [toggleFavorite]);
-
+  console.log("PostModal Props:", post)
   return (
     <>
       <Modal

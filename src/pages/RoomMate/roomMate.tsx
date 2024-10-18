@@ -14,7 +14,8 @@ import SearchBar from "../../components/SearchBar/searchBar";
 import useFetch from "../../hooks/useFetch";
 import { UserProfile } from "../../interface/interface";
 import { userMyprofile } from "../../api";
-import { Searchsmoke, Searchregion } from "../../object/profileDropdown";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { Searchsmoke } from "../../object/profileDropdown";
 
 const RoomMate: React.FC = () => {
   // 상태 선언

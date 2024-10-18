@@ -13,7 +13,6 @@ const OtherUserProfile: React.FC<RecommendModalProps> = ({
   const [checkedGender, setCheckedGender] = useState<string>("")
   const [checkedSmoking, setCheckedSmoking] = useState<string>("")
   const [selectedArticle, setSelectedArticle] = useState<Post | null>(null)
-
   // 유저 정보 가져오기
   useEffect(() => {
     const fetchData = async () => {
@@ -38,7 +37,7 @@ const OtherUserProfile: React.FC<RecommendModalProps> = ({
     { label: "여자", value: "여자" },
     { label: "남자", value: "남자" },
   ]
-
+  console.log("OtherUserProfile Props:", userProfile)
   return (
     <>
       <Modal

@@ -45,7 +45,7 @@ const Profile: React.FC = () => {
 
   const [fetchProfileLoading, setFetchProfileLoading] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [fetchProfileError, setFetchProfileError] = useState<any>(null);
+  const [, setFetchProfileError] = useState<any>(null);
 
   useEffect(() => {
     const fetchProfile = async () => {

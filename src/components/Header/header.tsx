@@ -45,7 +45,8 @@ const Header: React.FC = () => {
   };
 
   // 창의 너비를 상태로 관리하기 위한 useState
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [, setWindowWidth] = useState(window.innerWidth);
 
   // 창 크기 변경 시 windowWidth 업데이트
   useEffect(() => {

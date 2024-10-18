@@ -1,3 +1,5 @@
+// src/pages/MyPage/Applicant/applicant.tsx
+
 import styles from "./applicant.module.css"
 import { Badge, Card } from "antd"
 import Meta from "antd/es/card/Meta"
@@ -7,14 +9,13 @@ import {
   Post,
   User,
 } from "../../../interface/interface"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { AppDispatch, RootState } from "../../../Redux/store"
-import { API_URL, usersProfile } from "../../../api"
+import { API_URL, usersProfile, userChatRoom } from "../../../api"
 import { useEffect, useState } from "react"
 import useFetch from "../../../hooks/useFetch"
 import PostModal from "../../../components/PostModal/postModal"
 import OtherUserProfile from "./otherUserProfile"
-import { useDispatch } from "react-redux"
 import {
   approvePostAsync,
   deletePostAsync,
@@ -22,7 +23,6 @@ import {
 } from "../../../Redux/applicantReducer"
 import { fetchData } from "../../../Redux/applyReducer"
 import { useNavigate } from "react-router-dom"
-import { userChatRoom } from "../../../api"
 
 const Applicant: React.FC<ApplicantProps> = ({
   showApply,
@@ -97,7 +97,10 @@ const Applicant: React.FC<ApplicantProps> = ({
     setHeaders: setProfileHeaders,
     setMethod: setProfileMethod,
     setBody: setProfileBody,
-  } = useFetch<User | null>("", "", {}, null)
+  } = useFetch<{ data: User } | null>("", "GET", {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${userToken.atk}`,
+  }, null)
 
   const handleUserProfile = (userId: number) => {
     try {
@@ -115,8 +118,9 @@ const Applicant: React.FC<ApplicantProps> = ({
 
   // 프로필 호출
   useEffect(() => {
-    if (profileSuccess) {
+    if (profileSuccess && profileDatas) {
       try {
+        console.log("Profile Data:", profileDatas)
         setOtherUser(profileDatas.data)
         setIsModalVisible(true)
       } catch (error) {
@@ -133,22 +137,30 @@ const Applicant: React.FC<ApplicantProps> = ({
     setHeaders: setArticleHeaders,
     setMethod: setArticleMethod,
     setBody: setArticleBody,
-  } = useFetch<Post>("", "", {}, null)
+  } = useFetch<{ data: Post } | null>("", "GET", {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${userToken.atk}`,
+  }, null)
 
   const handleArticleClick = (articleId: string) => {
-    setArticleUrl(`${API_URL}/api/articles/${articleId}`)
-    setArticleMethod("GET")
-    setArticleHeaders({
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userToken.atk}`,
-    })
-    setArticleBody(null)
+    try {
+      setArticleUrl(`${API_URL}/api/articles/${articleId}`)
+      setArticleMethod("GET")
+      setArticleHeaders({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userToken.atk}`,
+      })
+      setArticleBody(null)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   // 게시글 호출
   useEffect(() => {
-    if (articleSuccess) {
+    if (articleSuccess && articleData) {
       try {
+        console.log("Article Data:", articleData)
         setSelectedArticle(articleData.data)
       } catch (error) {
         console.error(error)
@@ -163,20 +175,24 @@ const Applicant: React.FC<ApplicantProps> = ({
     setHeaders: setChatHeaders,
     setMethod: setChatMethod,
     setBody: setChatBody,
-  } = useFetch<Post>("", "", {}, null)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } = useFetch<any>("", "POST", {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${userToken.atk}`
+  }, null)
 
   const handleChatClick = (applyId: number) => {
-    setChatUrl(`${API_URL}/api/${userChatRoom}/${applyId}`)
-    setChatMethod("POST")
-    setChatHeaders({
-      "Content-Type": "application/json",
-      Authorization: userToken.atk.toString(),
-    })
-    setChatBody({
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${userToken.atk}`,
+    try {
+      setChatUrl(`${API_URL}/api/${userChatRoom}/${applyId}`)
+      setChatMethod("POST")
+      setChatHeaders({
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userToken.atk}`
+      })
+      setChatBody({}) // 실제로 필요한 데이터가 있다면 여기에 추가
+    } catch (error) {
+      console.error(error)
     }
-    )
   }
 
   // 채팅방 가기
@@ -188,7 +204,7 @@ const Applicant: React.FC<ApplicantProps> = ({
         console.error(error)
       }
     }
-  }, [chatSuccess])
+  }, [chatSuccess, navigate])
 
   return (
     <>

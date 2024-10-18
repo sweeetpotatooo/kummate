@@ -56,6 +56,7 @@ const useFetch = <T = unknown>(
         }
 
         const result = await response.json()
+        console.log("Fetched Data:", result) // 로그 추가
 
         setDatas(result)
         setIsSuccess(true)

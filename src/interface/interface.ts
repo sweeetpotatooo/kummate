@@ -320,3 +320,8 @@ export interface RecommendProps {
   readonly user: RecommendUser
   readonly onClick?: () => void
 }
+
+export interface ArticlePageResultDto {
+  articles: Post[];
+  totalCnt: number;
+}
