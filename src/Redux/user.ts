@@ -5,6 +5,7 @@ import { saveToLocalStorage, loadFromLocalStorage } from "./localStorage"
 import { Dispatch } from "redux"
 import { RootState, AppDispatch } from "./store"
 import {
+  API_URL,
   googleLogin,
   kakaoLogin,
   refreshApiUrl,
@@ -17,7 +18,6 @@ import { useSelector } from "react-redux"
 import { useEffect } from "react"
 
 // API URL 설정
-const API_URL = 'http://localhost:3001';
 
 // 초기 상태 설정, 로컬 스토리지에서 불러오거나 기본값을 설정
 const initialState: UserState = loadFromLocalStorage() || {
