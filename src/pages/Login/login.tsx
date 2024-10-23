@@ -7,7 +7,6 @@ import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { loginUser } from "../../Redux/user"
 import { useAppDispatch } from "../../hooks/useAppDispatch"
-import { googleUserLogin, kakaoUserLogin } from "../../api"
 
 const Login: React.FC = () => {
   const navigate = useNavigate()
@@ -21,14 +20,6 @@ const Login: React.FC = () => {
     } else {
       messageApi.info("이메일과 비밀번호를 확인하세요.")
     }
-  }
-
-  const kakao = () => {
-    window.location.href = kakaoUserLogin
-  }
-
-  const google = () => {
-    window.location.href = googleUserLogin
   }
 
   return (
@@ -85,11 +76,8 @@ const Login: React.FC = () => {
             <div className={styles.sociallogin}>
               <div className={styles.socialloginTitle}>
                 <span className={styles.line}></span>
-                <span className={styles.title}>또는</span>
                 <span className={styles.line}></span>
               </div>
-              <img src="/Kakao Login.svg" onClick={kakao} />
-              <img src="/Google Login.svg" onClick={google} />
             </div>
           </div>
         </div>
