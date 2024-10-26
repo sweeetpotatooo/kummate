@@ -46,7 +46,7 @@ export const useApply = (postId: number, applyId?: number) => {
         dispatch(fetchData({
           showApply: false, // 신청 취소 시 내가 한 신청이 아닌 상태로 갱신
           currentPage: 1,
-          userToken: userToken.atk
+          userToken: userToken
         }))
         Modal.success({
           title: "신청이 취소되었습니다.",
@@ -80,7 +80,7 @@ export const useApply = (postId: number, applyId?: number) => {
         dispatch(fetchData({
           showApply: true,
           currentPage: 1,
-          userToken: userToken.atk
+          userToken: userToken
         }))
         Modal.success({
           title: "신청이 완료되었습니다.",
@@ -96,14 +96,14 @@ export const useApply = (postId: number, applyId?: number) => {
 }
 
 // 승인
-export const updateApprove = async (userTokenAtk: string, userId: number, articleId: number) => {
+export const updateApprove = async (userToken: { atk: string }, userId: number, articleId: number) => {
   try {
 
     const response = await fetch(`${API_URL}/api/${userAprove}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${userTokenAtk}`,
+        'Authorization': `Bearer ${userToken.atk}`,
       },
       body: JSON.stringify({
         "userId": userId,
@@ -131,13 +131,13 @@ export const updateApprove = async (userTokenAtk: string, userId: number, articl
 // 거절
 // applyApi.ts
 
-export const updateRefuse = async (userTokenAtk: string, applyId: number, articleId: number): Promise<ApplyProps> => {
+export const updateRefuse = async (userToken: { atk: string }, applyId: number, articleId: number): Promise<ApplyProps> => {
   try {
     const response = await fetch(`${API_URL}/api/${userRefuse}/${applyId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${userTokenAtk}`,
+        'Authorization': `Bearer ${userToken.atk}`,
       },
       body: JSON.stringify({ applyId, articleId }), // articleId 추가
     });
@@ -156,16 +156,16 @@ export const updateRefuse = async (userTokenAtk: string, applyId: number, articl
 };
 
 // 삭제
-export const updateDelete = async (userTokenAtk: string, applyId: number) => {
+export const updateDelete = async (userToken: { atk: string }, applyId: number) => {
   try {
-    console.log('updateDelete - userTokenAtk:', userTokenAtk);
+    console.log('updateDelete - userTokenAtk:', userToken.atk);
     console.log('updateDelete - applyId:', applyId);
 
     const response = await fetch(`${API_URL}/api/${userApplicant}/${applyId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${userTokenAtk}`,
+        'Authorization': `Bearer ${userToken.atk}`,
       },
     });
 

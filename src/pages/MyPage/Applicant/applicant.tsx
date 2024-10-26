@@ -40,7 +40,7 @@ const Applicant: React.FC<ApplicantProps> = ({
   const handleApprovePost = async (post: ApplyProps) => {
     await dispatch(
       approvePostAsync({
-        userToken: userToken.atk.toString(),
+        userToken: userToken,
         otherUserId: post.otherUserId,
         articleId: post.articleId,
       })
@@ -49,7 +49,7 @@ const Applicant: React.FC<ApplicantProps> = ({
       fetchData({
         showApply: showApply,
         currentPage: currentPage,
-        userToken: userToken.atk.toString(),
+        userToken: userToken,
       })
     );
   };
@@ -58,7 +58,7 @@ const Applicant: React.FC<ApplicantProps> = ({
   const handleRefusePost = async (post: ApplyProps) => {
     await dispatch(
       refusePostAsync({
-        userToken: userToken.atk.toString(),
+        userToken: userToken,
         applyId: post.applyId,
         articleId: post.articleId,
       })
@@ -67,7 +67,7 @@ const Applicant: React.FC<ApplicantProps> = ({
       fetchData({
         showApply: showApply,
         currentPage: currentPage,
-        userToken: userToken.atk.toString(),
+        userToken: userToken,
       })
     );
   };
@@ -76,7 +76,7 @@ const Applicant: React.FC<ApplicantProps> = ({
   const handleDeletePost = async (applyId: number) => {
     await dispatch(
       deletePostAsync({
-        userToken: userToken.atk.toString(),
+        userToken: userToken,
         applyId: applyId,
       })
     );
@@ -84,7 +84,7 @@ const Applicant: React.FC<ApplicantProps> = ({
       fetchData({
         showApply: showApply,
         currentPage: currentPage,
-        userToken: userToken.atk.toString(),
+        userToken: userToken,
       })
     );
   };

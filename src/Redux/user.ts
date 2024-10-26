@@ -25,6 +25,7 @@ const initialState: UserState = loadFromLocalStorage() || {
   signUp: false,
   data: {
     email: "",
+    user_id: 0,
     token: {
       atk: "",
       rtk: "",
@@ -122,6 +123,7 @@ export const loginUser = createAsyncThunk<
         
         data: {
           email: credentials.email,
+          user_id: data.user_id,
           token: data.token,
         },
         status: "fulfilled",
@@ -331,6 +333,7 @@ const userSlice = createSlice({
       state.isLogged = true;
       state.data.token = action.payload.data.token; // 토큰 업데이트
       state.data.email = action.payload.data.email;
+      state.data.user_id = action.payload.data.user_id;
       state.status = action.payload.status;
       saveToLocalStorage(state);
     });
@@ -341,6 +344,7 @@ const userSlice = createSlice({
       state.isLogged = false;
       state.data.token = { atk: "", rtk: "" };
       state.data.email = "";
+      state.data.user_id = 0;
     });
 
     // 로그아웃 성공 시 처리
@@ -349,6 +353,7 @@ const userSlice = createSlice({
       state.isLogged = false;
       state.data.token = { atk: "", rtk: "" };
       state.data.email = "";
+      state.data.user_id = 0;
     });
 
     // 카카오 로그인 성공 시 처리
@@ -356,6 +361,7 @@ const userSlice = createSlice({
       state.isLogged = true;
       state.data.token = action.payload.token;
       state.data.email = action.payload.email ?? "";
+      state.data.user_id = 0;
       saveToLocalStorage(state);
     });
 
@@ -363,6 +369,7 @@ const userSlice = createSlice({
     builder.addCase(kakaologinUser.rejected, (state) => {
       state.isLogged = false;
       state.data.email = "";
+      state.data.user_id = 0;
     });
 
     // 구글 로그인 성공 시 처리
@@ -371,12 +378,14 @@ const userSlice = createSlice({
       state.data.token = action.payload.token;
       state.data.email = action.payload.email ?? "";
       saveToLocalStorage(state);
+      state.data.user_id = 0;
     });
 
     // 구글 로그인 실패 시 처리
     builder.addCase(googleloginUser.rejected, (state) => {
       state.isLogged = false;
       state.data.email = "";
+      state.data.user_id = 0;
     });
   },
 });
