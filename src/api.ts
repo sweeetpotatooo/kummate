@@ -27,8 +27,7 @@ export const userChatList = "chat/rooms"; // 채팅 목록 경로
 
 
 import axios from 'axios'; // axios 라이브러리를 가져옴
-export const API_URL = 'http://localhost:3001'; 
-// export const API_URL = 'http://kummates.com:3001'; 
+export const API_URL = 'http://kummates.com:3001'; 
 // 백엔드 API 서버 주소
 
 // 사용자 로그인 함수 정의l
