@@ -10,9 +10,12 @@ export interface UserState {
   readonly signUp?: boolean
   readonly data: {
     readonly email: string
+    readonly user_id?: number;
+
     readonly token: Token
   }
   readonly email?: string 
+  readonly user_id?: number;
   readonly status: "idle" | "loading" | "fulfilled" | "error"
   readonly accessToken?: string
   readonly error?: string
@@ -287,12 +290,16 @@ export interface PostDataFiltered {
 export type PostData = PostDataAll | PostDataFiltered
 
 export interface ChatMessage {
-  readonly msg: string
+  readonly message: string
   readonly userEmail: string
   readonly createData?: string
 }
 
 export interface ChatList {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  user2: any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  user1: any
   readonly userNickname: string
   readonly roomId: string
 }
@@ -300,8 +307,9 @@ export interface ChatList {
 export interface MessageType {
   readonly roomId: string
   readonly userEmail: string
-  readonly msg: string
+  readonly message: string
   readonly createDate: string
+  readonly userId: number
 }
 
 export interface ValidateErrorEntity {

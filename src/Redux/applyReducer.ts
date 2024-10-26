@@ -22,7 +22,7 @@ const initialState: ApplyState = {
 
 export const fetchData = createAsyncThunk<
   { applyPageList: ApplyProps[], totalCount: number },
-  { showApply: boolean, currentPage: number, userToken: string },
+  { showApply: boolean, currentPage: number, userToken: { atk: string } },
   { rejectValue: string }
 >(
   'apply/fetchData',
@@ -34,7 +34,7 @@ export const fetchData = createAsyncThunk<
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${userToken}`,
+          Authorization: `Bearer ${userToken.atk}`,
         },
       })
 

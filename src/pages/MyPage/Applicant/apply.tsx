@@ -18,7 +18,8 @@ const Apply: React.FC = () => {
   const pageSize = 3
   const dispatch: AppDispatch = useDispatch()
   const { applyPosts, totalCount, loading, error } = useSelector((state: RootState) => state.apply)
-
+  console.log('userToken:', userToken);
+  console.log('userToken.atk:', userToken.atk);
   // '신청 했어요' '신청 받았어요'
   const toggleShowApply = () => {
     setShowApply(!showApply)
@@ -29,7 +30,7 @@ const Apply: React.FC = () => {
     dispatch(fetchData({ 
       showApply: showApply, 
       currentPage: showApply ? toCurrentPage : fromCurrentPage, 
-      userToken: userToken.atk.toString()
+      userToken: userToken
     }))
     message.success("신청 현황이 새로고침되었습니다.")
   }
@@ -49,7 +50,7 @@ const Apply: React.FC = () => {
     dispatch(fetchData({ 
       showApply: showApply, 
       currentPage: showApply ? toCurrentPage : fromCurrentPage, 
-      userToken: userToken.atk.toString()
+      userToken: userToken
     }))
   }, [dispatch, toCurrentPage, fromCurrentPage, showApply, userToken])
 

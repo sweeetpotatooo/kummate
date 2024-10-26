@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./chat.module.css";
-import io from "socket.io-client";
+import { io, Socket } from "socket.io-client"; // io를 가져올 때 Socket 타입도 가져옵니다.
 import { ChatList, MessageType } from "../../../interface/interface";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Redux/store";
@@ -14,16 +14,18 @@ moment.locale("ko");
 
 const Chat: React.FC = () => {
   const [chatList, setChatList] = useState<ChatList[]>([]);
-  const [selectedUser, setSelectedUser] = useState<string | null>(null);
+  const [selectedUser, setSelectedUser] = useState<number | null>(null);
   const [otherUserName, setOtherUserName] = useState("");
   const [selectedRoomId, setSelectedRoomId] = useState("");
   const [input, setInput] = useState<string>("");
   const [messages, setMessages] = useState<MessageType[]>([]);
   const messageEndRef = useRef<HTMLDivElement>(null);
+
   const userToken = useSelector((state: RootState) => state.user.data.token);
-  const userEmail = useSelector((state: RootState) => state.user.email);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const socket = useRef<any>(null);
+  const userId = useSelector((state: RootState) => state.user.data.user_id); // 현재 사용자 ID 가져오기
+
+  // Socket.IO 클라이언트 인스턴스를 useRef로 관리
+  const socket = useRef<Socket | null>(null);
 
   // 채팅 목록 불러오기
   useEffect(() => {
@@ -54,38 +56,39 @@ const Chat: React.FC = () => {
       socket.current.disconnect();
     }
 
-    // Socket.IO 서버에 연결
+    // Socket.IO 서버에 연결 (auth 옵션 사용)
     socket.current = io(`${API_URL}/chat`, {
-      extraHeaders: {
-        Authorization: `Bearer ${userToken.atk}`,
+      auth: {
+        token: userToken.atk, // 인증 토큰을 auth에 포함
       },
       transports: ["websocket"],
     });
 
     // 연결 성공 시
     socket.current.on("connect", () => {
-      console.log("Socket connected");
+      console.log("Socket connected with ID:", socket.current?.id);
       // 채팅방에 참가
-      socket.current.emit("joinRoom", roomId);
+      socket.current?.emit("joinRoom", roomId);
 
       // 메시지 수신
-      socket.current.on("message", (data: MessageType) => {
+      socket.current?.on("message", (data: MessageType) => {
+        console.log("Received message from server:", data);
         setMessages((prevMessages) => [...prevMessages, data]);
       });
 
       // 채팅 내역 요청
-      socket.current.emit("getHistory", roomId);
+      socket.current?.emit("getHistory", roomId);
 
       // 채팅 내역 수신
-      socket.current.on("history", (history: MessageType[]) => {
+      socket.current?.on("history", (history: MessageType[]) => {
+        console.log("Received chat history:", history);
         setMessages(history);
       });
     });
 
     // 에러 처리
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    socket.current.on("connect_error", (err: any) => {
-      console.error("Socket connection error:", err);
+    socket.current.on("connect_error", (err) => {
+      console.error("Socket connection error:", err.message);
     });
   };
 
@@ -101,12 +104,12 @@ const Chat: React.FC = () => {
   // 사용자 선택
   const handleUserSelect = (
     roomId: string,
-    userEmail: string,
-    userNickname: string
+    otherUserId: number,
+    otherUserNickname: string
   ) => {
     disconnectHandler();
-    setSelectedUser(userEmail);
-    setOtherUserName(userNickname);
+    setSelectedUser(otherUserId);
+    setOtherUserName(otherUserNickname);
     setSelectedRoomId(roomId);
     connectHandler(roomId);
   };
@@ -116,8 +119,9 @@ const Chat: React.FC = () => {
     if (input && selectedUser && socket.current) {
       const newMessage = {
         roomId: selectedRoomId,
-        message: input,
+        message: input, // message 필드 사용
       };
+      console.log("Sending message:", newMessage);
 
       // 서버에 메시지 전송
       socket.current.emit("message", newMessage);
@@ -152,21 +156,29 @@ const Chat: React.FC = () => {
         <div className={userInforClass}>
           <h2>채팅</h2>
           {chatList.length > 0 ? (
-            chatList.map((user) => (
-              <div
-                key={user.roomId}
-                className={styles.userName}
-                onClick={() =>
-                  handleUserSelect(
-                    user.roomId,
-                    userEmail || "default",
-                    user.userNickname
-                  )
-                }
-              >
-                {user.userNickname}
-              </div>
-            ))
+            chatList.map((chatRoom) => {
+              // 현재 사용자가 user1인지 user2인지 확인
+              const isUser1 = chatRoom.user1.user_id === userId;
+              const otherUser = isUser1 ? chatRoom.user2 : chatRoom.user1;
+              const otherUserNickname = otherUser.nickname;
+              const otherUserId = otherUser.user_id;
+
+              return (
+                <div
+                  key={chatRoom.roomId}
+                  className={styles.userName}
+                  onClick={() =>
+                    handleUserSelect(
+                      chatRoom.roomId,
+                      otherUserId,
+                      otherUserNickname
+                    )
+                  }
+                >
+                  {otherUserNickname}
+                </div>
+              );
+            })
           ) : (
             <div className={styles.noList}>
               대화 상대가 없습니다 <br />
@@ -190,11 +202,10 @@ const Chat: React.FC = () => {
                     key={index}
                     className={styles.messageDiv}
                     style={{
-                      textAlign:
-                        message.userEmail === userEmail ? "right" : "left",
+                      textAlign: message.userId === userId ? "right" : "left",
                     }}
                   >
-                    {message.userEmail === userEmail && (
+                    {message.userId === userId && (
                       <span
                         className={styles.createDate}
                         style={{
@@ -211,14 +222,12 @@ const Chat: React.FC = () => {
                       className={styles.message}
                       style={{
                         backgroundColor:
-                          message.userEmail === userEmail
-                            ? "#7f35fc"
-                            : "#9d54fd",
+                          message.userId === userId ? "#006400" : "#394d3f",
                       }}
                     >
-                      {message.msg}
+                      {message.message} {/* message 필드 사용 */}
                     </span>
-                    {message.userEmail !== userEmail && (
+                    {message.userId !== userId && (
                       <span
                         className={styles.createDate}
                         style={{

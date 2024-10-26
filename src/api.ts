@@ -23,12 +23,12 @@ export const usersProfile = "user/profile"; // 사용자 프로필 정보 경로
 export const userArticleApply = "articles/apply"; // 게시물 신청 경로
 export const userApplicant = "applicant"; // 신청자 관련 경로
 export const userChatRoom = "chat"; // 채팅 방 경로
-export const userChatList = "chat/list"; // 채팅 목록 경로
+export const userChatList = "chat/rooms"; // 채팅 목록 경로
 
 
 import axios from 'axios'; // axios 라이브러리를 가져옴
-
-export const API_URL = 'http://kummates.com:3001'; 
+export const API_URL = 'http://localhost:3001'; 
+// export const API_URL = 'http://kummates.com:3001'; 
 // 백엔드 API 서버 주소
 
 // 사용자 로그인 함수 정의l

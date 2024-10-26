@@ -24,21 +24,21 @@ const initialState: State = {
 
 // 승인 작업을 위한 Thunk 인자 인터페이스 정의
 interface ThunkArgApprove {
-  userToken: string       // 사용자 토큰
+  userToken: { atk: string }       // 사용자 토큰
   otherUserId: number     // 상대 사용자 ID
   articleId: number       // 게시물 ID
 }
 
 // 거절 작업을 위한 Thunk 인자 인터페이스 정의
 interface ThunkArgRefuse {
-  userToken: string;
+  userToken: { atk: string };
   applyId: number;
   articleId: number
 }
 
 // 삭제 작업을 위한 Thunk 인자 인터페이스 정의
 interface ThunkArgDelete {
-  userToken: string       // 사용자 토큰
+  userToken: { atk: string }      // 사용자 토큰
   applyId: number         // 신청 ID
 }
 
