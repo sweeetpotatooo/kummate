@@ -82,7 +82,7 @@ const MainPage: React.FC = () => {
   } = useFetch<ApiResponse<User> | null>("", "", {}, null);
 
   // 추천 룸메이트 제목 설정
-  let recommendTitle: React.ReactNode = "방갑고에서 추천하는 룸메이트를 만나보세요";
+  let recommendTitle: React.ReactNode = "추천하는 룸메이트를 만나보세요";
   if (!isLogged) {
     recommendTitle = "로그인 후 추천하는 룸메이트를 만나보세요";
   } else if (recommendError) {
