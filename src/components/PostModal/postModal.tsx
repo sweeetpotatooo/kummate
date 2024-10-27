@@ -1,5 +1,5 @@
 // src/components/PostModal/postModal.tsx
-
+import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import React, { useCallback, useEffect, useState } from "react";
 import { Modal, Badge, Button } from "antd";
 import styles from "./postModal.module.css";
@@ -156,7 +156,6 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
       toast.error("찜 처리에 실패했습니다.");
     }
   }, [toggleFavorite]);
-  console.log("PostModal Props:", post)
   return (
     <>
       <Modal
@@ -174,16 +173,13 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
             <div className={styles.titleContainer}>
               <span className={styles.title}>{post.title}</span>
               {userEmail !== post.email && (
-                <button
-                  onClick={handleSaveClick}
-                  className={
-                    isFavorite
-                      ? `${styles.save} ${styles.saveActive}`
-                      : styles.save
-                  }
-                >
-                  {isFavorite ? "찜 취소" : "찜하기"}
-                </button>
+                <button onClick={handleSaveClick} className={styles.iconButton}>
+                {isFavorite ? (
+                  <HeartFilled style={{ color: "red", fontSize: "24px" }} />
+                ) : (
+                  <HeartOutlined style={{ fontSize: "24px" }} />
+                )}
+              </button>
               )}
             </div>
             <div className={styles.content}>{decodeHTML(post.content)}</div>

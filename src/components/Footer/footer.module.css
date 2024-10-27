@@ -1,3 +1,4 @@
+/* 기본 스타일 (데스크탑) */
 .footerChild {
   position: absolute;
   top: 0px;
@@ -25,7 +26,7 @@
   height: 61px;
 }
 .footer {
-  position: fixed; /* 푸터를 화면 하단에 고정 */
+  position: fixed; 
   bottom: 0;
   left: 0;
   width: 100%; 
@@ -35,19 +36,54 @@
   font-family: Inter;
   color: #fff;
   background-color: #38773e;
-  z-index: 1000; /* 푸터가 다른 요소 위에 표시되도록 함 */
+  z-index: 1000; 
 }
 
 .socialButtons {
   position: relative; 
   display: flex; 
   align-items: center; 
-  width: calc(100% - 73px); /* 73px 만큼 왼쪽으로 이동 */
+  width: calc(100% - 73px); 
   height: 100%; 
   justify-content: flex-end;
 }
 
 /* 페이지 내용이 푸터에 가려지지 않도록 패딩 추가 */
 body {
-  padding-bottom: 108px; /* 푸터 높이만큼 패딩을 추가 */
+  padding-bottom: 108px;
+}
+
+/* 반응형 디자인: 태블릿 화면 */
+@media (max-width: 768px) {
+  .footer {
+    height: 90px; /* 푸터 높이 줄임 */
+    font-size: 28px; /* 텍스트 크기 줄임 */
+  }
+  .socialButtons {
+    width: calc(100% - 50px); /* 오른쪽 여백 조정 */
+  }
+  .copyright2024 {
+    font-size: 9px; /* 글자 크기 조정 */
+  }
+}
+
+/* 반응형 디자인: 모바일 화면 */
+@media (max-width: 480px) {
+  .footer {
+    height: 70px; 
+    font-size: 20px;
+  }
+  .kummateParent {
+    top: 15px;
+    left: 50px; /* 위치 조정 */
+  }
+  .socialButtons {
+    width: 100%; 
+    justify-content: center; /* 버튼을 가운데 정렬 */
+  }
+  .copyright2024 {
+    font-size: 8px; 
+    top: 40px;
+    left: 10px; /* 위치 조정 */
+  }
 }
