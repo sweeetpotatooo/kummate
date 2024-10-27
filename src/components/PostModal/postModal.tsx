@@ -240,16 +240,13 @@ const PostModal: React.FC<PostModalProps> = ({ post, onClose }) => {
             <div className={styles.titleContainer}>
               <span className={styles.title}>{post.title}</span>
               {userEmail !== post.email && (
-                <button
-                  onClick={handleSaveClick}
-                  className={
-                    isFavorite
-                      ? `${styles.save} ${styles.saveActive}`
-                      : styles.save
-                  }
-                >
-                  {isFavorite ? "찜 취소" : "찜하기"}
-                </button>
+                <button onClick={handleSaveClick} className={styles.iconButton}>
+                {isFavorite ? (
+                  <HeartFilled style={{ color: "red", fontSize: "24px" }} />
+                ) : (
+                  <HeartOutlined style={{ fontSize: "24px" }} />
+                )}
+              </button>
               )}
             </div>
             <div className={styles.content}>{decodeHTML(post.content)}</div>
