@@ -157,6 +157,13 @@
   margin: 0;
 }
 
+.iconButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 20px;
+}
 /* 반응형 디자인 */
 @media screen and (max-width: 370px) {
   .cardBadgeContainer {
