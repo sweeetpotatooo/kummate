@@ -13,7 +13,7 @@ interface WritePageSelectProps {
 
 const WritePageSelect: React.FC<WritePageSelectProps> = ({ form }) => {
   const [searchBoxOpen, setSearchBoxOpen] = useState(false);
-  const [selectedArea, setSelectedArea] = useState<string>("지역");
+  const [selectedArea, setSelectedArea] = useState<string>("기숙사");
   const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>("나이");
   const [selectedSmoke, setSelectedSmoke] = useState<string>(""); // 'true' 또는 'false'
 
