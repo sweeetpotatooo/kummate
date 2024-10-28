@@ -213,7 +213,7 @@ const Chat: React.FC = () => {
                         }}
                       >
                         {moment(message.createDate)
-                          .add(9, "hours")
+                          .local()
                           .locale("ko")
                           .format("A h:mm")}
                       </span>
