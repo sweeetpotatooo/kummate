@@ -277,7 +277,6 @@ export interface PostDataAll {
   data: Post[]
 }
 
-// 필터링된 게시글을 반환하는 응답
 export interface PostDataFiltered {
   code: number
   data: {
