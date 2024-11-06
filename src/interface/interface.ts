@@ -285,7 +285,6 @@ export interface PostDataFiltered {
   }
 }
 
-// PostData는 두 가지 형태 중 하나
 export type PostData = PostDataAll | PostDataFiltered
 
 export interface ChatMessage {
