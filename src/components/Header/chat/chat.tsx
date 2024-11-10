@@ -22,8 +22,9 @@ const Chat: React.FC = () => {
   const messageEndRef = useRef<HTMLDivElement>(null);
 
   const userToken = useSelector((state: RootState) => state.user.data.token);
-  const userId = useSelector((state: RootState) => state.user.data.user_id); // 현재 사용자 ID 가져오기
+  const userId = useSelector((state: RootState) => state.user.data.user_id);
 
+  
   // Socket.IO 클라이언트 인스턴스를 useRef로 관리
   const socket = useRef<Socket | null>(null);
 

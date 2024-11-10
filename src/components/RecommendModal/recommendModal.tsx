@@ -75,14 +75,13 @@ const RecommendModal: React.FC<RecommendModalProps> = ({
         throw new Error("게시글을 불러오는데 실패했습니다.");
       }
       const data = await response.json();
-      setSelectedArticle(data.data); // API 응답 형식에 맞게 수정
+      setSelectedArticle(data.data);
     } catch (error) {
       console.error("Error fetching article:", error);
       message.error("게시글을 불러오는데 실패했습니다.");
     }
   };
 
-  // 로딩 상태 처리
   if (!userProfile) {
     return (
       <Modal
@@ -115,7 +114,7 @@ const RecommendModal: React.FC<RecommendModalProps> = ({
             닫기
           </Button>,
         ]}
-        width={600} // 모달 너비 조정 (필요시 변경)
+        width={600}
       >
         <div className={styles.profileTitle}>
           <span>
@@ -126,7 +125,7 @@ const RecommendModal: React.FC<RecommendModalProps> = ({
           </span>
         </div>
         <div className={styles.profileBox}>
-          {/* 첫 번째 줄: 성별, 흡연 */}
+
           <div className={styles.profileRow}>
             <div className={styles.profileSection}>
               <span>성별</span>
@@ -148,7 +147,7 @@ const RecommendModal: React.FC<RecommendModalProps> = ({
             </div>
           </div>
 
-          {/* 두 번째 줄: 학과, 연령 */}
+
           <div className={styles.profileRow}>
             <div className={styles.profileSection}>
               <span>학과</span>
