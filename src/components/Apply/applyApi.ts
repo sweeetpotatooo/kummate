@@ -129,7 +129,6 @@ export const updateApprove = async (userToken: { atk: string }, userId: number, 
 };
 
 // 거절
-// applyApi.ts
 
 export const updateRefuse = async (userToken: { atk: string }, applyId: number, articleId: number): Promise<ApplyProps> => {
   try {
