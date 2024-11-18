@@ -26,14 +26,14 @@ const Footer: FunctionComponent = () => {
           icon={<GithubOutlined style={{ fontSize: '20px', color: '#38773e' }} />}
           aria-label="GitHub"
           className={styles.socialButton}
-          onClick={handleGithubClick} // GitHub 버튼 클릭 시 handleGithubClick 함수 호출
+          onClick={handleGithubClick} 
         />
         <Button
           shape="circle"
           icon={<SiNotion style={{ fontSize: '20px', color: '#38773e' }} />}
           aria-label="Notion"
           className={styles.socialButton}
-          onClick={handleNotionClick} // Notion 버튼 클릭 시 handleNotionClick 함수 호출
+          onClick={handleNotionClick}
         />
       </div>
     </div>
