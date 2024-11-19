@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import styles from "./header.module.css";  // 헤더 컴포넌트에 대한 CSS 모듈
-import { useSelector, useDispatch } from "react-redux";  // Redux의 상태 관리를 위한 hook들
+import styles from "./header.module.css";  
+import { useSelector, useDispatch } from "react-redux";  
 import { AppDispatch, RootState } from "../../Redux/store";  // dispatch 및 RootState의 타입 정의
 import { logOutUser } from "../../Redux/user";  // 로그아웃 액션
 import { RiMessage3Fill } from "react-icons/ri";  // 채팅 아이콘에 사용할 React 아이콘
