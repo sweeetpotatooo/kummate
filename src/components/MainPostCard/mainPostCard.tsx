@@ -3,8 +3,7 @@ import React from "react";
 import { UserOutlined } from "@ant-design/icons";
 import styles from "./mainpostCard.module.css";
 import { Badge, Card } from "antd";
-import { Post } from "../../interface/interface"; // Post 인터페이스 임포트
-
+import { Post } from "../../interface/interface";
 interface MainPostCardProps {
   readonly post: Post;
   readonly onClick: () => void;
