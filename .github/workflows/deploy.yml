@@ -3,7 +3,7 @@ name: Frontend CI/CD
 on:
   push:
     branches:
-      - main  # 또는 배포 브랜치명
+      - master 
 
 jobs:
   build-and-deploy:
