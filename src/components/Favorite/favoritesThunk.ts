@@ -1,4 +1,3 @@
-//src/components/Favorite/favoritesThunk.ts
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { RootState } from "../../Redux/store"
 import { API_URL, userMyFavorite } from '../../api'
