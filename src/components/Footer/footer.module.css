@@ -52,21 +52,19 @@ body {
   padding-bottom: 108px;
 }
 
-/* 반응형 디자인: 태블릿 화면 */
 @media (max-width: 768px) {
   .footer {
-    height: 90px; /* 푸터 높이 줄임 */
-    font-size: 28px; /* 텍스트 크기 줄임 */
+    height: 90px; 
+    font-size: 28px; 
   }
   .socialButtons {
-    width: calc(100% - 50px); /* 오른쪽 여백 조정 */
+    width: calc(100% - 50px); 
   }
   .copyright2024 {
-    font-size: 9px; /* 글자 크기 조정 */
+    font-size: 9px; 
   }
 }
 
-/* 반응형 디자인: 모바일 화면 */
 @media (max-width: 480px) {
   .footer {
     height: 70px; 
