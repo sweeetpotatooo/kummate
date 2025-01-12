@@ -66,17 +66,14 @@ const Header: React.FC = () => {
   return (
     <>
       <div className={styles.headerContainer}>
-        {/* 메인 페이지로 이동하는 링크 */}
         <Link to="/MainPage">
           <b>KUMMATE</b>
         </Link>
         <div className={styles.menu}>
           <ul className={styles.nav}>
-            {/* 룸메이트 구해요 페이지로 이동하는 링크 */}
             <Link to="/RoomMate" className={styles.roommate}>
               <li>룸메이트 구해요</li>
             </Link>
-            {/* 채팅 아이콘, 클릭 시 채팅 페이지로 이동 */}
             <div className={styles.chatIcon} onClick={chatOnClick}>
               <RiMessage3Fill style={{ color: "006400" }} size={25} />
             </div>
