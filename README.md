@@ -1,6 +1,6 @@
 # Overview
+![Kummate (51 5 x 72 8 cm)](https://github.com/user-attachments/assets/862a6795-0309-4ddd-bd65-f6871a61714a)
 
-![Kummate (51.5 x 72.8 cm).png](https://prod-files-secure.s3.us-west-2.amazonaws.com/a34fc69a-7cde-4ad6-9007-8b89915b35a6/a2cd8fd1-8615-4f25-89f0-64b3ac904d76/Kummate_(51.5_x_72.8_cm).png)
 
 # 개발 배경
 
