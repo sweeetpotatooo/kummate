@@ -24,8 +24,7 @@
     
 
 # 기술 스택
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/a34fc69a-7cde-4ad6-9007-8b89915b35a6/c5484ac5-9641-460c-a3c9-a6798916fdb8/image.png)
+<img width="870" alt="image" src="https://github.com/user-attachments/assets/79e7caa1-a360-4dae-a5b5-6e3c6f373aad" />
 
 - Frontend
     1. React 
